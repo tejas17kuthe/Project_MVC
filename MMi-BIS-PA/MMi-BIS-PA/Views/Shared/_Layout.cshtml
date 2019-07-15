@@ -6,31 +6,47 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+        .row {
+        height:100%;
+        width:100%;
+        }
+
+    </style>
 </head>
 <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top " style="padding-right: 0px;padding-left: 10px;">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
-        <a class="navbar-brand" href="#"><img src="~/AT_LOGO.ico" alt="AT icon" width="80" height="70"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="col-3" style="padding-left: 0px;">
+            <a class="navbar-brand" href="#"><img src="/AT_LOGO.ico" alt="AT icon" width="80" height="70"></a>
+        </div>
+        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 
-        <div class="collapse navbar-collapse" id="navbarColor03">
-            <ul class="navbar-nav mr-auto">
-       
-            </ul>
+         <span class="navbar-toggler-icon"></span>
+     </button>
+    -->
 
-            <form class="form-inline my-2 my-lg-0">
-                <a class="navbar-brand" href="#"><img src="~/mahindra_rise.png" alt="AT icon" width="200" height="70"></a>
-            </form>
+        <div class="col-6">
+            <h2 class="text-primary text-center">Vision System</h2>
+        </div>
+        <!-- <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav mr-auto"></ul>
+                <!--
+    <form class="form-inline my-2 my-lg-0">
+        <a class="navbar-brand" href="#"><img src="~/mahindra_rise.png" alt="AT icon" width="200" height="70"></a>
+    </form>
+        -->
+        <div class="col-3">
+            <a href="#" class="navbar-brand float-right"><img src="/mahindra_rise.png" alt="AT icon" width="200" height="70"></a>
         </div>
     </nav>
+    
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            
-        </footer>
+        <footer></footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
