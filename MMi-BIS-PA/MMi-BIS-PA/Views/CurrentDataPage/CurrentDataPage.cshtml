@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "CurrentDataPage";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
 <div class="container-fluid" style="height:100%">
@@ -10,7 +11,7 @@
 
         <div class="col-10">
             <div class="container-fluid" style="height:100%">
-                <div class="row h-25">
+                <div class="row" style="height:50px">
                     <div class="col-3">
 
                     </div>
@@ -21,7 +22,7 @@
 
                 </div>
 
-                <div class="row h-50">
+                <div class="row" style="height:100%">
                     @Html.Partial("_DataCard")
                 </div>
 
