@@ -6,37 +6,44 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .container-fluid {
+        height:100%;
+        }
 
+        .row2-height {
+        height:80%;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <div class="container-fluid fixed-top">
+        <div class="row shadow bg-white rounded" >
 
+
+            <div class="col-3 " style="padding-left: 10px;">
+                <div class="row" style="height:10px;">
+
+                </div>
+                <a class="navbar-brand " href="#" ><img src="~/Images/At_new_logo.png" alt="AT icon" width="100%" height="100%"></a>
+            </div>
+
+            <div class="col-6">
+                <h class="text-primary text-center">Vision System For Piston Assembly</h>
+            </div>
+
+            <div class="col-3" style="padding-right:0px;">
+                <a href="#" class="navbar-brand float-right"><img src="~/Images/mahindra_rise.png" alt="AT icon" width="200" height="70"></a>
+            </div>
+
+        </div>
+
+        <div class="row h-75 " style="height:100%; background-color:">
+            @RenderBody()
+        </div>
+
+    </div>
+   
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
