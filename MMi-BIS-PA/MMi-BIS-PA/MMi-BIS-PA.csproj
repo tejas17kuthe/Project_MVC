@@ -210,8 +210,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="At_new_backdrop.png" />
-    <Content Include="At_new_logo.png" />
+    <Content Include="Images\At_new_backdrop.png" />
+    <Content Include="Images\At_new_logo.png" />
     <Content Include="Content\bootstrap-litera.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -221,7 +221,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\pie.png" />
     <Content Include="Images\table.jpg" />
-    <Content Include="mahindra_rise.png" />
+    <Content Include="Images\mahindra_rise.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
