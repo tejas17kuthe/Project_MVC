@@ -300,6 +300,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\CurrentDataPage\CurrentDataPage.cshtml" />
     <Content Include="Views\CurrentDataPage\_DataCard.cshtml" />
+    <Content Include="Views\Reports\ViewReports.cshtml" />
+    <Content Include="Views\Reports\_ReportGenrationMenuStrip.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
