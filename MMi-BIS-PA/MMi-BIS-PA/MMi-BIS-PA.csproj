@@ -302,6 +302,8 @@
     <Content Include="Views\CurrentDataPage\_DataCard.cshtml" />
     <Content Include="Views\Reports\ViewReports.cshtml" />
     <Content Include="Views\Reports\_ReportGenrationMenuStrip.cshtml" />
+    <Content Include="Views\CurrentDataPage\_SearchBar.cshtml" />
+    <Content Include="Views\Shared\_NavBar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
