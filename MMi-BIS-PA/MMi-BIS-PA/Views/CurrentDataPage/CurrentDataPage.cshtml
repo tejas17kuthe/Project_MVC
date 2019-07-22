@@ -6,27 +6,32 @@
 }
 
 <div class="container-fluid" style="height:100%">
-    <div class="row" style="height:inherit">
-        <div class="col-1" style="padding-left: 0px;"></div>
+    <div class="row" style="width:100%">
 
+        @Html.Partial("~/Views/Shared/_NavBar.cshtml")
+    </div>
+    <div class="row" style="height:inherit">
+        <div class="col-1" style="padding-left: 0px;">
+        </div>
+            
         <div class="col-10">
             <div class="container-fluid" style="height:100%">
-                <div class="row" style="height:50px">
+                <div class="row" style="height:150px">
                     <div class="col-3">
-
+                        
                     </div>
                     <div class="col-6 align-content-center" style="text-align:center">
-                       
+                       @Html.Partial("_SearchBar")
                     </div>
                     <div class="col-3"></div>
 
                 </div>
 
-                <div class="row" style="height:100%">
+                <div class="row" style="height:85%">
                     @Html.Partial("_DataCard")
                 </div>
 
-                <div class="row h-25"></div>
+                <div class="row" style="height:50px;"></div>
 
             </div>
         </div>

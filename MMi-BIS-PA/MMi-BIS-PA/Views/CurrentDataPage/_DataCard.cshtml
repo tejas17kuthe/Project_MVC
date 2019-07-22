@@ -1,5 +1,20 @@
-﻿<div class="container-fluid">
-    <div class="card shadow mb-3" style="width: 100%; height:100%">
+﻿<style>
+    .bg-success {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .fail {
+        color: #FFFFFF;
+        background-color: #F53B3B;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="card shadow mb-3" style="width: 100%; height:70%">
         <div class="card-header" style="background-color:#004883; height:50px">
             <div style="float:left; font-weight:bold; color:#fff">Time:</div>
         </div>
@@ -21,14 +36,14 @@
                             <tbody>
                                 <tr>
                                     <th>BG093485903</th>
-                                    <td class="bg-success" style="color:#ffffff; font-weight:bold; text-align:center">PRESENT</td>
-                                    <td style="color:#FFFFFF; background-color:#F53B3B; font-weight:bold; text-align:center">MISSING</td>
-                                    <td>MISSING</td>
+                                    <td>PRESENT</td>
+                                    <td class="fail">MISSING</td>
+                                    <td class="fail">MISSING</td>
                                     <td>700 gm</td><!-- F53B3B-->
                                 </tr>
                                 <tr>
                                     <th>BG093485903</th>
-                                    <td>MISSING</td>
+                                    <td class="fail">MISSING</td>
                                     <td>PRESENT</td>
                                     <td>PRESENT</td>
                                     <td>705 gm</td>
@@ -37,7 +52,7 @@
                                     <th>BG093485903</th>
                                     <td>PRESENT</td>
                                     <td>PRESENT</td>
-                                    <td>MISSING</td>
+                                    <td class="fail">MISSING</td>
                                     <td>704 gm</td>
                                 </tr>
 
