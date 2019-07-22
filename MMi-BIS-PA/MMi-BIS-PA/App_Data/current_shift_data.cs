@@ -1,4 +1,4 @@
-namespace MMi_BIS_PA.Models
+namespace MMi_BIS_PA.App_Data
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,8 @@ namespace MMi_BIS_PA.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("db_mmi_bis_pa.current_data")]
-    public partial class current_data
+    [Table("db_mmi_bis_pa.current_shift_data")]
+    public partial class current_shift_data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -68,5 +68,7 @@ namespace MMi_BIS_PA.Models
         public float? weight_diff { get; set; }
 
         public sbyte? status { get; set; }
+
+        public int current_shift_id { get; set; }
     }
 }

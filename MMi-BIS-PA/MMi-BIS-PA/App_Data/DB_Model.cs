@@ -1,4 +1,4 @@
-namespace MMi_BIS_PA.Models
+namespace MMi_BIS_PA.App_Data
 {
     using System;
     using System.Data.Entity;
