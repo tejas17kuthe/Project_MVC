@@ -4,9 +4,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class=" row">
-        div
+<div class="container-fluid overflow-auto" style="height:100%">
+    <div class="row justify-content-center" style="width:100%">
+
+        @Html.Partial("~/Views/Shared/_NavBar.cshtml")
     </div>
-</div>
+    <div class="row" style="height:inherit; margin-top:10px; margin-bottom:10px">
+        <div class="col-1" style="padding-left: 0px;">
+        </div>
+
+        <div class="col-10" style="margin-top:0px; margin-bottom:30px">
+            <div class="container-fluid" style="height:100%">
+                 <div class="row">
+                      @Html.Partial("_ReportGenrationMenuStrip")
+                  </div>
+
+
+                  <div class="row">
+                      <div class="container-fluid" style="height:100%;margin-top:20px; margin-bottom:0px">
+
+
+                          <div class="row" style="height:85%">
+                              @Html.Partial("~/Views/CurrentDataPage/_DataCard.cshtml")
+                          </div>
+
+                          <div class="row" style="height:85%">
+                              @Html.Partial("~/Views/CurrentDataPage/_DataCard.cshtml")
+                          
+
+                          <div class="row" style="height:50px;"></div>
+
+                      </div>
+
+                  </div>
+
+                </div>
+            </div>
+
+            <div class="col-1"></div>
+
+        </div>
+    </div>
+
 
