@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MMi_BIS_PA.Models;
 
 namespace MMi_BIS_PA.Controllers
 {
@@ -10,7 +11,14 @@ namespace MMi_BIS_PA.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+
+            bool result = connection.AuthenticateUser("tejas", "kuthe");
+
+            if (result)
+                return View();
+            else
+                return Content("Authentication error");
         }
 
         public ActionResult About()
