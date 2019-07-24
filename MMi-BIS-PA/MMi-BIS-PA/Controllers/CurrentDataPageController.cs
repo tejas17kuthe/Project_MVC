@@ -9,7 +9,7 @@ namespace MMi_BIS_PA.Controllers
 {
     public class CurrentDataPageController : Controller
     {
-        // GET: CurrentDataPage
+        [Route("CurrentDataPage/CurrentDataPage")]
         public ActionResult CurrentDataPage()
         {
             

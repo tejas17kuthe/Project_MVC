@@ -25,9 +25,9 @@ namespace MMi_BIS_PA.Controllers
             bool result = connection.AuthenticateUser(user_name,password);
 
             if (result)
-                return RedirectToRoute;
+                return RedirectToRoute(new { Controller="CurrentDataPage", Action= "CurrentDataPage" });
             else
-                return Content("Authentication error");
+                return View();
         }
 
         public ActionResult About()
