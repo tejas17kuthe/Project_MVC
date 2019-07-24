@@ -19,7 +19,7 @@ namespace MMi_BIS_PA.Models
         }
 
         public Boolean AuthenticateUser(string username,string password) {
-            bool result;
+            
             
            using ( DB_Model dbConnect = new DB_Model())
            {
@@ -37,5 +37,20 @@ namespace MMi_BIS_PA.Models
            
 
         }
+
+        public void SetCurrentData(user_info info)
+        {
+            using (DB_Model dbConnect = new DB_Model())
+            {
+                var count = dbConnect.user_info.Add(info);
+
+                dbConnect.SaveChanges();
+
+
+            }
+        }
+
+
+       
      }
 }
