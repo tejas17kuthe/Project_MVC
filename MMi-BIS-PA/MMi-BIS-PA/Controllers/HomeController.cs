@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MMi_BIS_PA.Models;
-using MMi_BIS_PA.App_Data;
+using MMi_BIS_PA.Models;
 
 namespace MMi_BIS_PA.Controllers
 {
@@ -14,22 +14,12 @@ namespace MMi_BIS_PA.Controllers
         {
 
 
-            //if (new MySqlDatabaseInteraction().AuthenticateUser("tejas", "kuthe"))
-            //    return View();
-            //else
-            //    return Content("Authentication error");
+            if (new MySqlDatabaseInteraction().AuthenticateUser("tejas", "kute"))
+                return View();
+            else
+                return Content("Authentication error");
 
-            user_info data = new user_info()
-            {
-              username="tejas kuthe new",
-              password="12345",
-              id = 50
-            
-            };
-
-            new MySqlDatabaseInteraction().SetCurrentData(data);
-
-            return View();
+           
 
         }
 
