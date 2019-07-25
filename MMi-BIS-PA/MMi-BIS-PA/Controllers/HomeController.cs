@@ -14,7 +14,7 @@ namespace MMi_BIS_PA.Controllers
         {
             currentdata data = new currentdata()
             {
-                unicode=1,
+                unicode=2,
                 qr1="muk",
                 c11=1,
                 c12=0,
