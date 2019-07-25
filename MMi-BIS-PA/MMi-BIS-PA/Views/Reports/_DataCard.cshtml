@@ -1,0 +1,101 @@
+﻿@model MMi_BIS_PA.Models.TableData
+<style>
+    .bg-success {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .fail {
+        color: #FFFFFF;
+        background-color: #F53B3B;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="card shadow mb-3" style="width: 100%; height:70%">
+        <div class="card-header" style="background-color:#004883; height:50px">
+            <div style="float:left; font-weight:bold; color:#fff">Time:</div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row" style="height:100%">
+                    <div class="col-8" style="height:100%;">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Barcode</th>
+                                    <th scope="col">Piston Circlip 1</th>
+                                    <th scope="col">Piston Circlip 2</th>
+                                    <th scope="col">Piston Ring</th>
+                                    <th scope="col">Piston Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>BG093485903</th>
+                                    @if (@Model.clip1)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                   
+                                    @if (@Model.clip2)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.ring)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.weight</td><!-- F53B3B-->
+                                </tr>
+                                <tr>
+                                    <th>BG093485903</th>
+                                    <td class="">MISSING</td>
+                                    <td>PRESENT</td>
+                                    <td>PRESENT</td>
+                                    <td>705 gm</td>
+                                </tr>
+                                <tr>
+                                    <th>BG093485903</th>
+                                    <td>PRESENT</td>
+                                    <td>PRESENT</td>
+                                    <td class="fail">MISSING</td>
+                                    <td>704 gm</td>
+                                </tr>
+
+                                <tr>
+                                    <th>BG093485903</th>
+                                    <td>PRESENT</td>
+                                    <td>PRESENT</td>
+                                    <td>PRESENT</td>
+                                    <td>700 gm</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-4" style="height:100%; background-color:"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

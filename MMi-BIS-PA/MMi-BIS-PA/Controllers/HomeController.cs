@@ -20,7 +20,7 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult Index(string user_name,string password) {
 
             if (new MySqlDatabaseInteraction().AuthenticateUser(user_name, password))
-                return RedirectToAction("CurrentDataPage/CurrentDataPage");
+                return RedirectToAction("CurrentDataPage","CurrentDataPage"); //RedirectToAction(<actionName>,<ControllerName>)
             else
                 return View();
 
