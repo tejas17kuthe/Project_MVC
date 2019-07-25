@@ -1,13 +1,10 @@
-﻿
-using MMi_BIS_PA.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-//using MMi_BIS_PA.Models;
-//using MMi_BIS_PA.Models;
-using ConnectToPLC;
+using MMi_BIS_PA.Models;
+using MMi_BIS_PA.Models;
 
 namespace MMi_BIS_PA.Controllers
 {
@@ -20,18 +17,12 @@ namespace MMi_BIS_PA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string user_name,string password)
-        {
-            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+        public ActionResult Index(string user_name,string password) {
 
-            bool result = connection.AuthenticateUser(user_name, password);
-
-            if (result)
-                return RedirectToRoute(new { Controller = "CurrentDataPage", Action = "CurrentDataPage" });
+            if (new MySqlDatabaseInteraction().AuthenticateUser(user_name, password))
+                return RedirectToAction("CurrentDataPage/CurrentDataPage");
             else
                 return View();
-            
-           
 
         }
 
