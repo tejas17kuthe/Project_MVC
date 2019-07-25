@@ -16,21 +16,26 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
+            //new ModbusTCP_IP().GetValueFromPLC();
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(string user_name,string password)
         {
-            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+            //MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
 
-            bool result = connection.AuthenticateUser(user_name,password);
+            //bool result = connection.AuthenticateUser(user_name,password);
 
-            if (result)
-                return RedirectToRoute(new { Controller="CurrentDataPage", Action= "CurrentDataPage" });
-            else
-                return View();
+
+
+
+            //if (result)
+            //    return RedirectToRoute(new { Controller="CurrentDataPage", Action= "CurrentDataPage" });
+            //else
+            //    return View();
+            new ModbusTCP_IP().GetValueFromPLC();
+            return Content("Data accepted from plc");
 
         }
 
