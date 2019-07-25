@@ -12,7 +12,19 @@ namespace MMi_BIS_PA.Models
         {
         }
 
-        public virtual DbSet<currentdata> currentdatas { get; set; }
+        public virtual DbSet<currentdata> currentdatas
+        {
+            get;
+
+            set;
+        }
+
+
+
+
+
+
+
         public virtual DbSet<currentshiftdata> currentshiftdatas { get; set; }
         public virtual DbSet<shiftinfo> shiftinfoes { get; set; }
         public virtual DbSet<userinfo> userinfoes { get; set; }
