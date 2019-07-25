@@ -12,41 +12,42 @@ namespace MMi_BIS_PA.Controllers
     {
         public ActionResult Index()
         {
-            currentdata data = new currentdata()
-            {
-                unicode=2,
-                qr1="muk",
-                c11=1,
-                c12=0,
-                r1=1,
-                w1=900,
-                qr2 = "muk",
-                c21 = 1,
-                c22 = 0,
-                r2 = 1,
-                w2 = 900,
-                qr3 = "muk",
-                c31 = 1,
-                c32 = 0,
-                r3 = 1,
-                w3 = 900,
-                qr4 = "muk",
-                c41 = 1,
-                c42 = 0,
-                r4 = 1,
-                w4 = 900,
-                wd=2,
-                status=0,
-                shiftid=2
+            //currentdata data = new currentdata()
+            //{
+            //    unicode = 2,
+            //    qr1 = "muk",
+            //    c11 = 1,
+            //    c12 = 0,
+            //    r1 = 1,
+            //    w1 = 900,
+            //    qr2 = "muk",
+            //    c21 = 1,
+            //    c22 = 0,
+            //    r2 = 1,
+            //    w2 = 900,
+            //    qr3 = "muk",
+            //    c31 = 1,
+            //    c32 = 0,
+            //    r3 = 1,
+            //    w3 = 900,
+            //    qr4 = "muk",
+            //    c41 = 1,
+            //    c42 = 0,
+            //    r4 = 1,
+            //    w4 = 900,
+            //    wd = 2,
+            //    status = 0,
+            //    shiftid = 2
 
-            };
+            //};
 
-            if (new MySqlDatabaseInteraction().AddCurrentData(data))
-                return View();
-            else
-                return Content("Authentication error");
+            //if (new MySqlDatabaseInteraction().AddCurrentData(data))
+            //    return View();
+            //else
+            //    return Content("Authentication error");
 
-           
+            List<currentdata> data = new MySqlDatabaseInteraction().GetCurrentData();
+            return View();
 
         }
 

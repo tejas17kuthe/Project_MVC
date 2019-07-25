@@ -59,5 +59,98 @@ namespace MMi_BIS_PA.Models
 
         }
 
+        public bool AddCurrentShiftData(currentshiftdata data)
+        {
+
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+
+                    db.currentshiftdatas.Add(data);
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch
+            {
+
+                return false;
+            }
+
+        }
+
+
+        public bool AddUserInfo(userinfo data)
+        {
+
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+
+                    db.userinfoes.Add(data);
+
+                    db.SaveChanges();
+
+                    return true;
+
+
+                }
+            }
+            catch
+            {
+
+                return false;
+            }
+
+
+
+        }
+
+        public bool AddShiftData(shiftinfo data)
+        {
+
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+
+                    db.shiftinfoes.Add(data);
+
+                    db.SaveChanges();
+
+                    return true;
+
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+
+        }
+
+        public List<currentdata> GetCurrentData()
+        {
+
+            
+                using (DB_Model db = new DB_Model())
+                {
+                    string query = "select * from db_mmi_bis_pa.currentdata";
+
+                    var data = db.currentdatas.SqlQuery(query).ToList();
+                    
+
+                    return data;
+
+
+                }
+            
+
+        }
     }
 }
