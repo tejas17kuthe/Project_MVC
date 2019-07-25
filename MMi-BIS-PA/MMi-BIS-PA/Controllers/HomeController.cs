@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MMi_BIS_PA.Models;
-using MMi_BIS_PA.Models;
-
+//using MMi_BIS_PA.Models;
+//using MMi_BIS_PA.Models;
+using ConnectToPLC;
 
 namespace MMi_BIS_PA.Controllers
 {
@@ -16,26 +16,22 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //new ModbusTCP_IP().GetValueFromPLC();
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(string user_name,string password)
         {
-            //MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
 
-            //bool result = connection.AuthenticateUser(user_name,password);
+            bool result = connection.AuthenticateUser(user_name, password);
 
-
-
-
-            //if (result)
-            //    return RedirectToRoute(new { Controller="CurrentDataPage", Action= "CurrentDataPage" });
-            //else
-            //    return View();
-            new ModbusTCP_IP().GetValueFromPLC();
-            return Content("Data accepted from plc");
+            if (result)
+                return RedirectToRoute(new { Controller = "CurrentDataPage", Action = "CurrentDataPage" });
+            else
+                return View();
+            
+           
 
         }
 

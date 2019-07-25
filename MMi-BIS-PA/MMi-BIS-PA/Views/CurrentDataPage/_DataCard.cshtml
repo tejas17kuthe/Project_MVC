@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model MMi_BIS_PA.Models.TableData
+<style>
     .bg-success {
         color: #FFFFFF;
         font-weight: bold;
@@ -36,10 +37,33 @@
                             <tbody>
                                 <tr>
                                     <th>BG093485903</th>
-                                    <td>PRESENT</td>
-                                    <td class="border-danger">MISSING</td>
-                                    <td class="fail">MISSING</td>
-                                    <td>700 gm</td><!-- F53B3B-->
+                                    @if (@Model.clip1)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                   
+                                    @if (@Model.clip2)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.ring)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.weight</td><!-- F53B3B-->
                                 </tr>
                                 <tr>
                                     <th>BG093485903</th>
@@ -71,8 +95,7 @@
                     <div class="col-4" style="height:100%; background-color:"></div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
+</div>
 
-   
