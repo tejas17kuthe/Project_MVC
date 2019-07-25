@@ -5,12 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-<<<<<<< HEAD
+using MMi_BIS_PA.Models;
+using MMi_BIS_PA.Models;
 
-=======
-using MMi_BIS_PA.Models;
-using MMi_BIS_PA.Models;
->>>>>>> origin/EntityFramework_codeFirst
 
 namespace MMi_BIS_PA.Controllers
 {
@@ -19,7 +16,7 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-<<<<<<< HEAD
+
             return View();
         }
 
@@ -34,12 +31,7 @@ namespace MMi_BIS_PA.Controllers
                 return RedirectToRoute(new { Controller="CurrentDataPage", Action= "CurrentDataPage" });
             else
                 return View();
-=======
 
-
-           
-
->>>>>>> origin/EntityFramework_codeFirst
         }
 
         public ActionResult About()

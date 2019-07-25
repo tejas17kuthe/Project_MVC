@@ -10,7 +10,7 @@ namespace MMi_BIS_PA.Models
 {
     public class MySqlDatabaseInteraction
     {
-        
+
 
         public Boolean AuthenticateUser(string username, string password)
         {
@@ -28,22 +28,11 @@ namespace MMi_BIS_PA.Models
                 else
                     return false;
             }
-
-
-
-            public Boolean AddCurrentData
-            using (DB_Model db = new DB_Model())
-            {
-               
-                
-            }
-
-
         }
-
-
-
-
-
     }
+
+
+
+
+
 }
