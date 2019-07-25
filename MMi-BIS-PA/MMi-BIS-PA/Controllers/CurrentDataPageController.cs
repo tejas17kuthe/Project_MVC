@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MMi_BIS_PA.App_Data;
+using MMi_BIS_PA.Models;
 
 namespace MMi_BIS_PA.Controllers
 {
