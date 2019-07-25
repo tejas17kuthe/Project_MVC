@@ -10,29 +10,54 @@ namespace MMi_BIS_PA.Models
 {
     public class MySqlDatabaseInteraction
     {
-
+        
 
         public Boolean AuthenticateUser(string username, string password)
         {
 
-
-            using (DB_Model dbConnect = new DB_Model())
+            try
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.userinfo WHERE username =\"" + username + "\" and password =\"" + password + "\"";
-                var count = dbConnect.userinfoes.SqlQuery(query).ToList();
-
-                if (count.Count() > 0)
+                using (DB_Model dbConnect = new DB_Model())
                 {
-                    return true;
+                    string query = "SELECT * FROM db_mmi_bis_pa.userinfo WHERE username =\"" + username + "\" and password =\"" + password + "\"";
+                    var count = dbConnect.userinfoes.SqlQuery(query).ToList();
+                    
+                        return true;
+                    
+                     
                 }
-                else
-                    return false;
             }
+
+            catch
+            {
+                return false;
+            }
+
         }
+
+        public bool AddCurrentData(currentdata currentdata)
+        {
+
+            try {    
+                    using (DB_Model db = new DB_Model())
+                    {
+
+                        db.currentdatas.Add(currentdata);
+
+                        db.SaveChanges();
+
+                        return true;             
+
+                
+                    }
+            }
+            catch
+            {
+                
+                return false;
+            }
+
+        }
+
     }
-
-
-
-
-
 }
