@@ -29,21 +29,24 @@ namespace MMi_BIS_PA.Models
                     return false;
             }
 
+        }
 
-
-            public Boolean AddCurrentData
+        public bool AddCurrentData(currentdata currentdata)
+        {
             using (DB_Model db = new DB_Model())
             {
-               
+                db.currentdatas.Add(currentdata);
+
+                if (db.SaveChanges() == 1)
+                    return true;
+                else
+                    return false;
+                
+
                 
             }
 
-
         }
-
-
-
-
 
     }
 }
