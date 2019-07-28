@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<MMi_BIS_PA.Models.currentdata>
 @{
     ViewBag.Title = "ViewReports";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,9 +24,12 @@
                       <div class="container-fluid" style="height:100%;margin-top:20px; margin-bottom:0px">
 
 
-                          
+                          @foreach (var d in Model)
+                          {
+                              @Html.Partial("_DataCard",d)
+                          }
 
-                        
+
 
                           <div class="row" style="height:50px;"></div>
 

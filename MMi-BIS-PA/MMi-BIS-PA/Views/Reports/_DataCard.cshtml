@@ -1,4 +1,4 @@
-﻿@model MMi_BIS_PA.Models.TableData
+﻿@model MMi_BIS_PA.Models.currentdata
 <style>
     .bg-success {
         color: #FFFFFF;
@@ -27,26 +27,17 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Barcode</th>
-                                    <th scope="col">Piston Circlip 1</th>
-                                    <th scope="col">Piston Circlip 2</th>
-                                    <th scope="col">Piston Ring</th>
-                                    <th scope="col">Piston Weight</th>
+                                    <th scope="col">QR Code.</th>
+                                    <th scope="col">Circlip 1</th>
+                                    <th scope="col">Circlip 2</th>
+                                    <th scope="col">Ring</th>
+                                    <th scope="col">Weight</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>BG093485903</th>
-                                    @if (@Model.clip1)
-                                    {
-                                        <td>PRESENT</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="fail">Missing</td>
-                                    }
-                                   
-                                    @if (@Model.clip2)
+                                    <th>@Model.qr1</th>
+                                    @if (@Model.c11 != 0)
                                     {
                                         <td>PRESENT</td>
                                     }
@@ -55,7 +46,7 @@
                                         <td class="fail">Missing</td>
                                     }
 
-                                    @if (@Model.ring)
+                                    @if (@Model.c12 != 0)
                                     {
                                         <td>PRESENT</td>
                                     }
@@ -63,29 +54,107 @@
                                     {
                                         <td class="fail">Missing</td>
                                     }
-                                    <td>@Model.weight</td><!-- F53B3B-->
+
+                                    @if (@Model.r1 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w1</td><!-- F53B3B-->
                                 </tr>
                                 <tr>
-                                    <th>BG093485903</th>
-                                    <td class="">MISSING</td>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>705 gm</td>
+                                    <th>@Model.qr2</th>
+                                    @if (@Model.c21 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c22 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r2 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w2</td>
                                 </tr>
                                 <tr>
-                                    <th>BG093485903</th>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td class="fail">MISSING</td>
-                                    <td>704 gm</td>
+                                    <th>@Model.qr3</th>
+                                    @if (@Model.c31 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c32 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r3 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w3</td>
                                 </tr>
 
                                 <tr>
-                                    <th>BG093485903</th>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>700 gm</td>
+                                    <th>@Model.qr4</th>
+                                    @if (@Model.c41 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c42 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r4 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w4</td>
                                 </tr>
 
                             </tbody>

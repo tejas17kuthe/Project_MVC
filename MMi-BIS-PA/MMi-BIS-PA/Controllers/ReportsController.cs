@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMi_BIS_PA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,8 @@ namespace MMi_BIS_PA.Controllers
         // GET: Reports
         public ActionResult ViewReports()
         {
-            return View();
+            List<currentdata> data = new MySqlDatabaseInteraction().GetCurrentData();
+            return View(data);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MMi_BIS_PA.Models
     {
         public int[] GetValueFromPLC()
         {
-            ModbusClient modbusClient = new ModbusClient("192.168.0.33", 502);    //Ip-Address and Port of Modbus-TCP-Server
+            ModbusClient modbusClient = new ModbusClient("192.168.0.36", 502);    //Ip-Address and Port of Modbus-TCP-Server
             modbusClient.Connect();                                                    //Connect to Server
                                                                                        // modbusClient.WriteMultipleCoils(4, new bool[] { true, true, true, true, true, true, true, true, true, true });    //Write Coils starting with Address 5
                                                                                        //bool[] readCoils = modbusClient.ReadCoils(9, 10);                        //Read 10 Coils from Server, starting with address 10
