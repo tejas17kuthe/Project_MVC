@@ -152,5 +152,24 @@ namespace MMi_BIS_PA.Models
             
 
         }
+
+        public List<TableData> GetTableData()
+        {
+
+
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.table_data";
+
+                var data = db.tableData.SqlQuery(query).ToList();
+
+
+                return data;
+
+
+            }
+
+
+        }
     }
 }

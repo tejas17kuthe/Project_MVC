@@ -1,4 +1,4 @@
-﻿@model MMi_BIS_PA.Models.TableData
+﻿@model IEnumerable<MMi_BIS_PA.Models.TableData>
 <style>
     .bg-success {
         color: #FFFFFF;
@@ -35,58 +35,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>BG093485903</th>
-                                    @if (@Model.clip1)
-                                    {
-                                        <td>PRESENT</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="fail">Missing</td>
-                                    }
-                                   
-                                    @if (@Model.clip2)
-                                    {
-                                        <td>PRESENT</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="fail">Missing</td>
-                                    }
 
-                                    @if (@Model.ring)
-                                    {
-                                        <td>PRESENT</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="fail">Missing</td>
-                                    }
-                                    <td>@Model.weight</td><!-- F53B3B-->
-                                </tr>
-                                <tr>
-                                    <th>BG093485903</th>
-                                    <td class="">MISSING</td>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>705 gm</td>
-                                </tr>
-                                <tr>
-                                    <th>BG093485903</th>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td class="fail">MISSING</td>
-                                    <td>704 gm</td>
-                                </tr>
+                                
+                                @foreach (var data in Model)
+                                {
+                                    <tr>
+                                        <th>@data.qrcode</th>
+                                        @if (data.c1 == 1)
+                                        {
+                                            <td>PRESENT</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="fail">Missing</td>
+                                        }
 
-                                <tr>
-                                    <th>BG093485903</th>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>PRESENT</td>
-                                    <td>700 gm</td>
-                                </tr>
+                                        @if (data.c2 == 1)
+                                        {
+                                            <td>PRESENT</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="fail">Missing</td>
+                                        }
+
+                                        @if (data.r == 1)
+                                        {
+                                            <td>PRESENT</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="fail">Missing</td>
+                                        }
+                                        <td>@data.w</td><!-- F53B3B-->
+                                    </tr>
+
+                                }
+
 
                             </tbody>
                         </table>
