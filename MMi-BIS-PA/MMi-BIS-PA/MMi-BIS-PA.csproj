@@ -320,6 +320,7 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Reports\_DataCard.cshtml" />
     <Content Include="Views\Reports\_DynamicDatacardGeneration.cshtml" />
+    <Content Include="Views\CurrentDataPage\_PieChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

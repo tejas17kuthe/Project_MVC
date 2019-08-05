@@ -61,6 +61,7 @@ namespace MMi_BIS_PA.Models
 
         public bool AddCurrentShiftData(currentshiftdata data)
         {
+            //modification needed please check current shift status if the shift have been changed please clean the data and then add new data.
 
             try
             {
