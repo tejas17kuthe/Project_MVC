@@ -12,6 +12,7 @@ namespace MMi_BIS_PA.Controllers
         [Route("CurrentDataPage/CurrentDataPage")]
         public ActionResult CurrentDataPage()
         {
+            
             return View();
         }
 
@@ -52,15 +53,14 @@ namespace MMi_BIS_PA.Controllers
         //    //return View(tblData);
 
         //}
-        //hello
+
+
 
         public PartialViewResult UpdateTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
             return PartialView("_DataCard",i);
-
-
         }
     }
 }

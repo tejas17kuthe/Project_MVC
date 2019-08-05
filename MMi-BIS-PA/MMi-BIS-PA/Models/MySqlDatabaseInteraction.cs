@@ -12,16 +12,16 @@ namespace MMi_BIS_PA.Models
     {
         
 
-        public Boolean AuthenticateUser(string username, string password)
+        public Boolean AuthenticateUser(string name, string pass)
         {
 
             try
             {
-                using (DB_Model dbConnect = new DB_Model())
+                using (DB_Model dbConnect=new DB_Model() )
                 {
-                    string query = "SELECT * FROM db_mmi_bis_pa.userinfo WHERE username =\"" + username + "\" and password =\"" + password + "\"";
-                    var count = dbConnect.userinfoes.SqlQuery(query).ToList();
-                    
+                    //string query = "SELECT * FROM db_mmi_bis_pa.userinfo WHERE username =\"" + username + "\" and password =\"" + password + "\"";
+                    //var count = dbConnect.userinfoes.SqlQuery(query).ToList();
+                    var count = dbConnect.userinfoes.Where(u => u.username == name & u.password==pass).ToList();  
                         return true;
                     
                      
@@ -166,7 +166,7 @@ namespace MMi_BIS_PA.Models
 
                 return data;
 
-
+                
             }
 
 
