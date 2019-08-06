@@ -321,6 +321,9 @@
     <Content Include="Views\Reports\_DataCard_report.cshtml" />
     <Content Include="Views\Reports\_DynamicDatacardGeneration.cshtml" />
     <Content Include="Views\CurrentDataPage\_PieChart.cshtml" />
+    <Content Include="Views\Reports\_LeftAlignedMenuStrip.cshtml" />
+    <Content Include="Views\Reports\_checkBoxMenuStrip.cshtml" />
+    <Content Include="Views\Reports\_PieChart_report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
