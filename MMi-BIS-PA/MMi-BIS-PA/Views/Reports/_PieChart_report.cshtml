@@ -1,4 +1,12 @@
-﻿<div class="container-fluid" style="height:100%;">
+﻿<style>
+    .bg-success {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid" style="height:100%;">
     <div class="row" style="height:50px">
     </div>
     <div class="card shadow mb-3" style="width: 100%; height:50%">
@@ -10,32 +18,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<div class="container-fluid" style="height:100%;width:100%; background-color:#">
-
-    <canvas id="myChart" style="height:100%;width:100%"></canvas>
-
-</div>*@
 
 <script>
     let myChart = document.getElementById('myChart').getContext('2d');
@@ -55,14 +37,14 @@
 
 
                 ],
-                // backgroundColor:'green'
+                // backgroundColor:'green' #20c997  ' #00cc00'
                 backgroundColor: [
-                    ' #ff0066',
-                    '#ff66a3',
-
-                    '#00ccff',
-                    ' #ffff66',
-                    ' #00cc00'
+                    '#ff8400', // old clip color ' #ff0066'
+                    '#ffc400',
+                    '#fff700',
+                    '#ccff00',//old ring color #00ccff
+                   
+                    '#02b84e'//green color
 
                 ],
                 borederWidth: 0,

@@ -23,59 +23,75 @@
             <div class="container-fluid">
                 <div class="row" style="height:100%">
                     <div class="col-8" style="height:100%;">
-
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">QR Code</th>
-                                    <th scope="col">Circlip 1</th>
-                                    <th scope="col">Circlip 2</th>
-                                    <th scope="col">Ring</th>
-                                    <th scope="col">Weight</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                
-                                @foreach (var data in Model)
-                                {
-                                    <tr>
-                                        <th>@data.qrcode</th>
-                                        @if (data.c1 == 1)
-                                        {
-                                            <td>PRESENT</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="fail">Missing</td>
-                                        }
-
-                                        @if (data.c2 == 1)
-                                        {
-                                            <td>PRESENT</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="fail">Missing</td>
-                                        }
-
-                                        @if (data.r == 1)
-                                        {
-                                            <td>PRESENT</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="fail">Missing</td>
-                                        }
-                                        <td>@data.w</td><!-- F53B3B-->
-                                    </tr>
-
-                                }
+                        <div class="container-fluid">
+                            <div class="row-75">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">QR Code</th>
+                                            <th scope="col">Circlip 1</th>
+                                            <th scope="col">Circlip 2</th>
+                                            <th scope="col">Ring</th>
+                                            <th scope="col">Weight</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
 
-                            </tbody>
-                        </table>
+                                        @foreach (var data in Model)
+                {
+                        <tr>
+                            <th>@data.qrcode</th>
+                            @if (data.c1 == 1)
+    {
+                        <td>PRESENT</td>
+}
+else
+{
+                        <td class="fail">Missing</td>
+}
 
+                            @if (data.c2 == 1)
+    {
+                        <td>PRESENT</td>
+}
+else
+{
+                        <td class="fail">Missing</td>
+}
+
+                            @if (data.r == 1)
+    {
+                        <td>PRESENT</td>
+}
+else
+{
+                        <td class="fail">Missing</td>
+}
+                            <td>@data.w</td><!-- F53B3B-->
+                        </tr>
+
+}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" style="height:50px">
+                            </div>
+                            <div class="row" style="height:50px; width:100%">
+
+                                <div class="col-3 justify-content-end">
+                                    <button type="button" class="btn btn-outline-danger btn-lg">Clear Table</button>
+                                </div>
+                                <div class="col-9">
+                                    <div class="alert alert-dismissible alert-success" style="text-align:center">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>Weight Difference : 0.700 gm</strong> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-4" style="height:100%; background-color:">
 
@@ -83,7 +99,7 @@
 
                     </div>
 
-                   
+
                 </div>
             </div>
         </div>
