@@ -3,46 +3,43 @@
     ViewBag.Title = "ViewReports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .your-class {
+        position: absolute;
+        overflow-y: scroll;
+    }
+</style>
 
-<div class="container-fluid overflow-auto" style="height:100%">
-    <div class="row" style="width:100%">
+
+
+<div class="container-fluid overflow-auto" style="height:100%;">
+    <div class="row">
 
         @Html.Partial("~/Views/Shared/_NavBar.cshtml")
     </div>
-    <div class="row" style="height:inherit; margin-top:10px; margin-bottom:10px">
-        <div class="col-1" style="padding-left: 0px;">
+    <div class="row" style="height:100%;">
+
+        <div class="col-3" style="padding-left: 0px;">
+            @Html.Partial("_LeftAlignedMenuStrip")
         </div>
-
-        <div class="col-10" style="margin-top:0px; margin-bottom:30px">
-            <div class="container-fluid" style="height:100%">
-                 <div class="row">
-                      @Html.Partial("_ReportGenrationMenuStrip")
-                  </div>
-
-
-                  <div class="row">
-                      <div class="container-fluid" style="height:100%;margin-top:20px; margin-bottom:0px">
-
-
-                          @foreach (var d in Model)
-                          {
-                              @Html.Partial("_DataCard_report",d)
-                          }
-
-
-
-                          <div class="row" style="height:50px;"></div>
-
-                      </div>
-
-                  </div>
-
+        <div class="col-6 ">
+            <div class="container-fluid overflow-auto">
+                <div class="row" style="height:50px">
+                </div>
+                <div class="row overflow-auto">
+                    @foreach (var data in Model)
+                    {
+                        @Html.Partial("_DataCard_report", data)
+                    }
+                </div>
+                <div class="row" style="height:100px">
                 </div>
             </div>
-
-            <div class="col-1"></div>
-
         </div>
-    </div>
+        <div class="col-3" style="">
+            @Html.Partial("_PieChart_report")
+        </div>
 
+    </div>
+</div>
 

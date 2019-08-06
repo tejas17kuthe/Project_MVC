@@ -1,0 +1,112 @@
+﻿<style>
+    .g {
+        background-color: #fff;
+    }
+
+    .w {
+        background-color: #000;
+    }
+</style>
+<div class="container-fluid" style="height:100%; background-color:white">
+    <div class="row" style="height:50px">
+    </div>
+    <div class="row ">
+        <div class="col-1"></div>
+        <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Year</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select class="browser-default custom-select">
+                <option selected>select Year</option>
+                @for (var i = 2019; i < 2020; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+
+
+            </select>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Month</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select class="browser-default custom-select">
+                <option selected>select Month</option>
+                @for (var i = 1; i < 13; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+
+
+            </select>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Date</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select class="browser-default custom-select">
+                <option selected>select Date</option>
+                @for (var i = 1; i < 31; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+
+
+            </select>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Shift</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select class="browser-default custom-select">
+                <option selected>select Shift</option>
+                @for (var i = 1; i < 3; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+
+
+            </select>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10 justify-content-center" >
+
+            <button type="button" class="btn btn-primary btn-lg">Genrate Report</button>
+        </div>
+        <div class="col-1"></div>
+
+    </div>
+
+</div>
