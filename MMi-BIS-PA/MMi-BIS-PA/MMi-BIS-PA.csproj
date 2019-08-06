@@ -318,7 +318,7 @@
     <Content Include="Views\Reports\_ReportGenrationMenuStrip.cshtml" />
     <Content Include="Views\CurrentDataPage\_SearchBar.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Reports\_DataCard.cshtml" />
+    <Content Include="Views\Reports\_DataCard_report.cshtml" />
     <Content Include="Views\Reports\_DynamicDatacardGeneration.cshtml" />
     <Content Include="Views\CurrentDataPage\_PieChart.cshtml" />
   </ItemGroup>
