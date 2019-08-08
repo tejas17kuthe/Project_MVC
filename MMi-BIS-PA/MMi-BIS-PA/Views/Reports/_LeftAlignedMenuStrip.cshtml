@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .g {
         background-color: #fff;
     }
@@ -7,106 +8,158 @@
         background-color: #000;
     }
 </style>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetYear",
+            success: function (response) {
+                $('#Year').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+               
+                $('#Year').append(options);
+            }
+        });
+    });
+
+
+    $(document).on("change", "#Year", function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetMonths",
+            data: {year: $('#Year option:select').val() },
+            success: function (response) {
+                $('#Month').html('');
+                options = '';
+                options += '<option value="Select">Select</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+
+                $('#Month').append(options);
+            }
+        });
+    });
+    @*AjaxCall(@Url.Action("GetYear","Reports"), null).done(function (response)
+    {
+        if (response.length > 0) {
+            $('#YearDropDown').html('');
+            var options = '';
+            options += '<option value="Select">Select</option>';
+            for (var i = 0; i < response.length; i++) {
+                options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+            }
+            $('#YearDropDown').append(options);
+        }
+    }).fail(function (error) {
+        alert(error.StatusText);
+        });*@
+
+
+</script>
+
+
 <div class="container-fluid" style="height:100%; background-color:white">
-    <div class="row" style="height:50px">
-    </div>
-    <div class="row ">
-        <div class="col-1"></div>
-        <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
-        <div class="col-1"></div>
-
-    </div>
-
-    <div class="row" style="height:25px"></div>
-
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-3 justify-content-center">Year</div>
-        <div class="col-7 justify-content-center align-content-center">
-            <select class="browser-default custom-select">
-                <option selected>select Year</option>
-                @for (var i = 2019; i < 2020; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-
-
-            </select>
+    @using (Html.BeginForm("GenerateReport", "ViewReports"))
+    {
+        <div class="row" style="height:50px">
         </div>
-        <div class="col-1"></div>
+        <div class="row ">
+            <div class="col-1"></div>
+            <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
+            <div class="col-1"></div>
 
-    </div>
-
-    <div class="row" style="height:25px"></div>
-
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-3 justify-content-center">Month</div>
-        <div class="col-7 justify-content-center align-content-center">
-            <select class="browser-default custom-select">
-                <option selected>select Month</option>
-                @for (var i = 1; i < 13; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-
-
-            </select>
         </div>
-        <div class="col-1"></div>
 
-    </div>
+        <div class="row" style="height:25px"></div>
 
-    <div class="row" style="height:25px"></div>
-
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-3 justify-content-center">Date</div>
-        <div class="col-7 justify-content-center align-content-center">
-            <select class="browser-default custom-select">
-                <option selected>select Date</option>
-                @for (var i = 1; i < 31; i++)
-                {
-                    <option value="@i">@i</option>
-                }
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Year</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Year" class="browser-default custom-select form-control">
+                    <option selected>select Year</option>
+                  
 
 
-            </select>
+                </select>
+            </div>
+            <div class="col-1"></div>
+
         </div>
-        <div class="col-1"></div>
 
-    </div>
+        <div class="row" style="height:25px"></div>
 
-    <div class="row" style="height:25px"></div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Month</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Month" class="browser-default custom-select">
+                    <option selected>select Month</option>
+                 
+                </select>
+            </div>
+            <div class="col-1"></div>
 
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-3 justify-content-center">Shift</div>
-        <div class="col-7 justify-content-center align-content-center">
-            <select class="browser-default custom-select">
-                <option selected>select Shift</option>
-                @for (var i = 1; i < 3; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-
-
-            </select>
         </div>
-        <div class="col-1"></div>
 
-    </div>
+        <div class="row" style="height:25px"></div>
 
-    <div class="row" style="height:25px"></div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Date</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select class="browser-default custom-select">
+                    <option selected>select Date</option>
+                    @*@for (var i = 1; i < 31; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }*@
 
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-10 justify-content-center" >
 
-            <button type="button" class="btn btn-primary btn-lg">Genrate Report</button>
+                </select>
+            </div>
+            <div class="col-1"></div>
+
         </div>
-        <div class="col-1"></div>
 
-    </div>
+        <div class="row" style="height:25px"></div>
 
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Shift</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select class="browser-default custom-select">
+                    <option selected>select Shift</option>
+                    @*@for (var i = 1; i < 3; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }*@
+
+
+                </select>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10 justify-content-center">
+
+                <button type="button" class="btn btn-primary btn-lg">Genrate Report</button>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+    }
 </div>
+
+
