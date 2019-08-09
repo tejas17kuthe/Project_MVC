@@ -1,0 +1,74 @@
+﻿@model MMi_BIS_PA.Models.master_table
+@{
+    ViewBag.Title = "Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid" style="height:100%">
+    <div class="row">
+
+        @Html.Partial("~/Views/Shared/_NavBar.cshtml")
+    </div>
+    <div class="row" style="height:inherit">
+        <div class="col-4" style="padding-left: 0px;">
+
+        </div>
+
+        <div class="col-7">
+
+
+            <div class="container-fluid" style="height:100% ">
+
+
+
+                @using (Html.BeginForm("AddMaster", "Master"))
+                {
+
+                <h1><pre>    </pre></h1>   
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IP_Address)
+                        @Html.TextBoxFor(m => m.IP_Address, new { @class = "form-control" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Weight_Diffrence)
+                        @Html.TextBoxFor(m => m.Weight_Diffrence, new { @class = "form-control" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Barcode_Length)
+                        @Html.TextBoxFor(m => m.Barcode_Length, new { @class = "form-control" })
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <div class="col-1"></div>
+
+    </div>
+</div>
+
+
+

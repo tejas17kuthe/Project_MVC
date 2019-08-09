@@ -172,5 +172,30 @@ namespace MMi_BIS_PA.Models
 
 
         }
+        public bool Delete()
+        {
+
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+
+                    string query = "delete from db_mmi_bis_pa.table_data;";
+
+                    var data = db.tableData.SqlQuery(query);
+
+                    db.SaveChanges();
+
+                    return true;
+
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+
+        }
     }
 }

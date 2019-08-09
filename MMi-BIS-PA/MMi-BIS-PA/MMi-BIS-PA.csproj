@@ -227,11 +227,13 @@
     <Compile Include="Controllers\CurrentDataPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\master_table.cs" />
     <Compile Include="Models\currentdata.cs" />
     <Compile Include="Models\currentshiftdata.cs" />
     <Compile Include="Models\DB_Model.cs" />
@@ -325,6 +327,7 @@
     <Content Include="Views\Reports\_LeftAlignedMenuStrip.cshtml" />
     <Content Include="Views\Reports\_checkBoxMenuStrip.cshtml" />
     <Content Include="Views\Reports\_PieChart_report.cshtml" />
+    <Content Include="Views\Master\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

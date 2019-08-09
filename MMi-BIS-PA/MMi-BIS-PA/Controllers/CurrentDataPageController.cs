@@ -61,6 +61,14 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
+        [Route("CurrentDataPage/Delete")]
+        public ActionResult Delete()
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            bool result = sql.Delete();
+            return RedirectToAction("CurrentDataPage");
+        }
+
         public PartialViewResult UpdateTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
