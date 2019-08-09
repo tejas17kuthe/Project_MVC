@@ -135,24 +135,59 @@ namespace MMi_BIS_PA.Models
 
         }
 
+
+        #region retrieving data from the database
         public List<currentdata> GetCurrentData()
         {
-
-            
                 using (DB_Model db = new DB_Model())
                 {
                     string query = "select * from db_mmi_bis_pa.currentdata";
-
                     var data = db.currentdatas.SqlQuery(query).ToList();
-                    
-
                     return data;
-
-
                 }
-            
-
         }
+
+        //function is used in yearly report generation 
+        public List<currentdata> GetCurrentData(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)="+year;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> GetCurrentData(string year,string month)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year +" and month(date_time)="+month;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> GetCurrentData(string year, string month,string day)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month+" and day(date_time)="+day;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> GetCurrentData(string year, string month, string day,string shift)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day+" and shiftid="+shift;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
 
         public List<TableData> GetTableData()
         {
@@ -196,13 +231,11 @@ namespace MMi_BIS_PA.Models
         }
 
 
-        public List<int> GetMonth()
+        public List<int> GetMonth(string year)
         {
-
-
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.currentdata group by month(date_time)";
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year +" group by month(date_time)";
 
                 List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
                 List<int> Month = new List<int>();
@@ -211,13 +244,43 @@ namespace MMi_BIS_PA.Models
                     Month.Add(d.date_time.Month);
                 }
                 return Month;
-
-
             }
-
-
         }
 
 
+        public List<int> GetDate(string year,string month)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)="+ month+   " group by month(date_time)";
+
+                List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
+                List<int> Date = new List<int>();
+                foreach (var d in data)
+                {
+                    Date.Add(d.date_time.Day);
+                }
+                return Date;
+            }
+        }
+
+
+        public List<int> GetShift(string year, string month,string date)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)="+month + " and day(date_time)="+date+" group by shiftid";
+
+                List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
+                List<int> shift = new List<int>();
+                foreach (var d in data)
+                {
+                    shift.Add(d.shiftid);
+                }
+                return shift;
+            }
+        }
+
+        #endregion
     }
 }

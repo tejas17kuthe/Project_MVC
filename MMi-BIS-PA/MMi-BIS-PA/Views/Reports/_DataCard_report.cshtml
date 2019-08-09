@@ -17,8 +17,8 @@
 <div class="container-fluid">
     <div class="card shadow mb-3" style=" width: 100%; height:50%">
         <div class="card-header" style="padding:0;background-color:#004883; height:50px">
-            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Date : @DateTime.Now.Date.ToShortDateString()</div>
-            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Time : @DateTime.Now.ToString("hh:mm tt")</div>
+            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Date : @Model.date_time.Date.ToString("dd-mm-yyyy")</div>
+            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Time : @Model.date_time.ToString("hh:mm tt")</div>
             <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:15%;"></div>
             @if (@Model.c11 != 0 && @Model.c12 != 0 && @Model.r1 != 0 && @Model.c21 != 0 && @Model.c22 != 0 && @Model.r2 != 0 && @Model.c31 != 0 && @Model.c32 != 0 && @Model.r3 != 0 && @Model.c41 != 0 && @Model.c42 != 0 && @Model.r4 != 0)
             {

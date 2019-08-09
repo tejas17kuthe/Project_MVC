@@ -16,39 +16,73 @@ namespace MMi_BIS_PA.Controllers
             return View(data);
         }
         [HttpGet]
-        [Route("Reports/GetYear")]
-        public JsonResult GetYear()
+        [Route("Reports/GetYears")]
+        public JsonResult GetYears()
         {
-            //var year = new List<string>();
-            //year.Add("2019");
-            //year.Add("2020");
-
             MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
             List<int> year = connection.GetYear();
             ViewBag.Year = new SelectList(year, "date_time", "date_time");
             return Json(year, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult GetMonths(int year)
+        [HttpGet]
+        [Route("Reports/GetMonths")]
+        public JsonResult GetMonths(string year)
         {
-            var months = new List<string>();
-           
-                if(year.Equals("2019"))
-                {
-                    months.Add("8");
-                    months.Add("9");
-                    months.Add("10");
-                }
-                else if(year.Equals("2020"))
-                {
-                    months.Add("1");
-                    months.Add("2");
-                    months.Add("3");
-                }
-           
+            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+            List<int> months = connection.GetMonth(year);
 
             return Json(months, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        [Route("Reports/GetDates")]
+        public JsonResult GetDates(string year, string month)
+        {
+            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+            List<int> date = connection.GetDate(year, month);
+
+            return Json(date, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("Reports/GetShifts")]
+        public JsonResult GetShifts(string year, string month, string Date)
+        {
+            MySqlDatabaseInteraction connection = new MySqlDatabaseInteraction();
+            List<int> shift = connection.GetShift(year, month, Date);
+
+            return Json(shift, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public PartialViewResult GenerateReport(string year)
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            return PartialView("_DataCard", i);
+        }
+
+        public PartialViewResult GenerateReport(string year,string month)
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            return PartialView("_DataCard", i);
+        }
+
+        public PartialViewResult GenerateReport(string year,string month,string date)
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            return PartialView("_DataCard", i);
+        }
+
+        public PartialViewResult GenerateReport(string year, string month, string date,string shift)
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            return PartialView("_DataCard", i);
+        }
+
     }
 }
