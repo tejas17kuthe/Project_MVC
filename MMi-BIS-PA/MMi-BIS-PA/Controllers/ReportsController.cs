@@ -55,34 +55,46 @@ namespace MMi_BIS_PA.Controllers
             return Json(shift, JsonRequestBehavior.AllowGet);
         }
 
-
-        public PartialViewResult GenerateReport(string year)
+        [HttpPost]
+        [Route("Reports/GenerateYearReport")]
+        public PartialViewResult GenerateYearReport(string year)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            List<TableData> i = sql.GetTableData();
-            return PartialView("_DataCard", i);
+            List<currentdata> i = sql.GetCurrentData(year);
+            return PartialView("_generateReport", i);
         }
 
-        public PartialViewResult GenerateReport(string year,string month)
+        [HttpPost]
+        [Route("Reports/GenerateMonthReport")]
+        public PartialViewResult GenerateMonthReport(string year,string month)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            List<TableData> i = sql.GetTableData();
-            return PartialView("_DataCard", i);
+            List<currentdata> i = sql.GetCurrentData(year, month);
+            return PartialView("_generateReport", i);
         }
 
-        public PartialViewResult GenerateReport(string year,string month,string date)
+        [HttpPost]
+        [Route("Reports/GenerateDayReport")]
+        public PartialViewResult GenerateDayReport(string year,string month,string day)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            List<TableData> i = sql.GetTableData();
-            return PartialView("_DataCard", i);
+            List<currentdata> i = sql.GetCurrentData(year, month, day);
+            return PartialView("_generateReport", i);
         }
 
-        public PartialViewResult GenerateReport(string year, string month, string date,string shift)
+        [HttpPost]
+        [Route("Reports/GenerateShiftReport")]
+        public ActionResult GenerateShiftReport(string year, string month, string day,string shift)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            List<TableData> i = sql.GetTableData();
-            return PartialView("_DataCard", i);
+            List<currentdata> i = sql.GetCurrentData(year, month, day, shift);
+            return PartialView("_generateReport", i);
         }
 
+
+        public ActionResult UpdateGraph()
+        {
+            return PartialView("_PieChart_report");
+        }
     }
 }

@@ -324,6 +324,7 @@
     <Content Include="Views\Reports\_LeftAlignedMenuStrip.cshtml" />
     <Content Include="Views\Reports\_checkBoxMenuStrip.cshtml" />
     <Content Include="Views\Reports\_PieChart_report.cshtml" />
+    <Content Include="Views\Reports\_generateReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
