@@ -158,6 +158,29 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+        public List<string> GetPieChart(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string failure = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year+ " status=0";   //Query for failure records
+                var failureData = db.currentdatas.SqlQuery(failure).ToList();
+                string success = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " status=0";   //Query for success records
+                var successData = db.currentdatas.SqlQuery(success).ToList();
+                List<string> data = new List<string>();
+
+                int clip1 = 0;
+                int clip2 = 0;
+                int ring = 0;
+                int weight = 0;
+
+                //foreach (var d in failureData)
+                //{
+                //    d.
+                //}
+                return data;
+            }
+        }
+
         public List<currentdata> GetCurrentData(string year,string month)
         {
             using (DB_Model db = new DB_Model())

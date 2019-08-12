@@ -242,7 +242,7 @@
         });
     });
 
-    //Day Radio button ajax code 
+    //Shift Radio button ajax code 
     $(document).ready(function () {
 
         $('#RadioShift').change(function () {
@@ -308,7 +308,7 @@
         });
     });
 
-
+    //Operation after clicking generate report button
     $(document).ready(function () {
 
         $('#generateReportButton').click(function () {
@@ -387,7 +387,8 @@
             }
         });
     });
-    
+
+    //Operation to perform after a user have selected a year from the dropdown menu
     $(document).on("change", "#Year", function () {
         $.ajax({
             type: "GET",
@@ -422,7 +423,7 @@
 
 
    
-
+    //Operation to perform after a user have selected a month from the dropdown menu
     $(document).on("change", "#Month", function () {
         $.ajax({
             type: "GET",
@@ -450,7 +451,7 @@
         });
     });
 
-
+    //Operation to perform after a user have selected a Day from the dropdown menu
     $(document).on("change", "#Day", function () {
         $.ajax({
             type: "GET",

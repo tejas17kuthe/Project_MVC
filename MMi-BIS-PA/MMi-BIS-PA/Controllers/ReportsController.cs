@@ -92,8 +92,14 @@ namespace MMi_BIS_PA.Controllers
         }
 
 
-        public ActionResult UpdateGraph()
+        //update Pie chart for yearly report
+        [HttpPost]
+        [Route("Reports/UpdateGraph")]
+        public ActionResult UpdateGraph(string year)
         {
+
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<currentdata> i = sql.GetCurrentData(year);
             return PartialView("_PieChart_report");
         }
     }
