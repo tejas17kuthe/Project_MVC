@@ -482,92 +482,96 @@
 
 <div class="container-fluid" style="height:100%; background-color:white">
     @*@using (Html.BeginForm("GenerateReport", "ViewReports"))
-    {*@
-        <div class="row" style="height:50px">
+        {*@
+    <div class="row" style="height:50px">
+    </div>
+    <div class="row ">
+        <div class="col-1"></div>
+        <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Year</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Year" class="browser-default custom-select form-control">
+                <option selected>select Year</option>
+
+
+
+            </select>
         </div>
-        <div class="row ">
-            <div class="col-1"></div>
-            <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
-            <div class="col-1"></div>
+        <div class="col-1"></div>
 
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Month</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Month" class="browser-default custom-select">
+                <option selected>select Month</option>
+
+            </select>
         </div>
+        <div class="col-1"></div>
 
-        <div class="row" style="height:25px"></div>
+    </div>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Year</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Year" class="browser-default custom-select form-control">
-                    <option selected>select Year</option>
-                  
+    <div class="row" style="height:25px"></div>
 
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Date</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Day" class="browser-default custom-select">
+                <option selected>select Date</option>
 
-                </select>
-            </div>
-            <div class="col-1"></div>
-
+            </select>
         </div>
+        <div class="col-1"></div>
 
-        <div class="row" style="height:25px"></div>
+    </div>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Month</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Month" class="browser-default custom-select">
-                    <option selected>select Month</option>
-                 
-                </select>
-            </div>
-            <div class="col-1"></div>
+    <div class="row" style="height:25px"></div>
 
-        </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Shift</div>
 
-        <div class="row" style="height:25px"></div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Shift" class="browser-default custom-select">
+                <option selected>select Shift</option>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Date</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Day" class="browser-default custom-select">
-                    <option selected>select Date</option>
-                  
-                </select>
-            </div>
-            <div class="col-1"></div>
-
-        </div>
-
-        <div class="row" style="height:25px"></div>
-
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Shift</div>
-
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Shift" class="browser-default custom-select">
-                    <option selected>select Shift</option>
-                  
-                </select>
-            </div>
-
-            <div class="col-1"></div>
-
+            </select>
         </div>
 
-        <div class="row" style="height:25px"></div>
+        <div class="col-1"></div>
 
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-10 justify-content-center">
+    </div>
 
-                <button id="generateReportButton" type="button" class="btn btn-primary btn-lg">Genrate Report</button>
-            </div>
-            <div class="col-1"></div>
+    <div class="row" style="height:25px"></div>
 
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10 justify-content-center">
+
+            <button id="generateReportButton" type="button" class="btn btn-primary btn-lg">Genrate Report</button>
         </div>
+        <div class="col-1"></div>
+
+    </div>
+    <div class="row" style="height:50px"></div>
+    <div class="row">
+        <div class="col justify-content-end"><button type="button" class="btn btn-outline-success">Export to PDF</button></div>
+        <div class="col"><button type="button" class="btn btn-outline-success">Export to excel</button></div>
+    </div>
     @*}*@
 </div>
-
 
