@@ -26,17 +26,14 @@
             <div class="container-fluid overflow-auto">
                 <div class="row" style="height:50px">
                 </div>
-                <div class="row overflow-auto CardSection">
-                    @foreach (var data in Model)
-                    {
-                        @Html.Partial("_DataCard_report", data)
-                    }
+                <div class="row overflow-auto" id="CardSection">
+                    @Html.Partial("_generateReport",Model)
                 </div>
                 <div class="row" style="height:100px">
                 </div>
             </div>
         </div>
-        <div class="col-3" style="">
+        <div id="CardGraph" class="col-3" style="">
             @Html.Partial("_PieChart_report")
         </div>
 
