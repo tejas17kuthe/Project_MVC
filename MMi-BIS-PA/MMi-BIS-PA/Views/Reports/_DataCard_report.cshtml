@@ -1,0 +1,182 @@
+﻿@model MMi_BIS_PA.Models.currentdata
+<style>
+    .bg-success {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .fail {
+        color: #FFFFFF;
+        background-color: #F53B3B;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="card shadow mb-3" style=" width: 100%; height:50%">
+        <div class="card-header" style="padding:0;background-color:#004883; height:50px">
+            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Date : @Model.date_time.Date.ToString("dd-mm-yyyy")</div>
+            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Time : @Model.date_time.ToString("hh:mm tt")</div>
+            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:15%;"></div>
+            @if (@Model.c11 != 0 && @Model.c12 != 0 && @Model.r1 != 0 && @Model.c21 != 0 && @Model.c22 != 0 && @Model.r2 != 0 && @Model.c31 != 0 && @Model.c32 != 0 && @Model.r3 != 0 && @Model.c41 != 0 && @Model.c42 != 0 && @Model.r4 != 0)
+            {
+                <div class="bg-success" style="padding: 12px 20px 12px 20px; float:left; text-align:center; font-weight :bold; color:#fff; height:100%; width:25%;">Accept</div>
+            }
+            else
+            {
+                <div class="fail" style="padding: 12px 20px 12px 20px; float:left; text-align:center; font-weight :bold; color:#fff; height:100%; width:25%;">Rejected</div>
+            }
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+
+                <div class="row" style="height:100%">
+                    <div class="col" style="height:100%;">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">QR Code.</th>
+                                    <th scope="col">Circlip 1</th>
+                                    <th scope="col">Circlip 2</th>
+                                    <th scope="col">Ring</th>
+                                    <th scope="col">Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>@Model.qr1</th>
+                                    @if (@Model.c11 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c12 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r1 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w1</td><!-- F53B3B-->
+                                </tr>
+                                <tr>
+                                    <th>@Model.qr2</th>
+                                    @if (@Model.c21 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c22 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r2 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w2</td>
+                                </tr>
+                                <tr>
+                                    <th>@Model.qr3</th>
+                                    @if (@Model.c31 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c32 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r3 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w3</td>
+                                </tr>
+
+                                <tr>
+                                    <th>@Model.qr4</th>
+                                    @if (@Model.c41 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.c42 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+
+                                    @if (@Model.r4 != 0)
+                                    {
+                                        <td>PRESENT</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="fail">Missing</td>
+                                    }
+                                    <td>@Model.w4</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,573 @@
+﻿
+<style>
+    .g {
+        background-color: #fff;
+    }
+
+    .w {
+        background-color: #000;
+    }
+</style>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>*@
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetYears",
+            success: function (response) {
+                $('#Year').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+               
+                $('#Year').append(options);
+
+                //reseting day dropdown
+                $('#Year').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Year').append(options);
+                $('#Year').prop("disabled", true)
+
+                //reseting day dropdown
+                $('#Month').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Month').append(options);
+                $('#Month').prop("disabled", true)
+
+                //reseting day dropdown
+                $('#Day').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Day').append(options);
+                $('#Day').prop("disabled", true)
+
+                //reseting shift dropdown
+                $('#Shift').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Shift').append(options);
+                $('#Shift').prop("disabled", true)
+
+
+              
+
+            }
+        });
+    });
+
+
+    //Year Radio button ajax code 
+    $(document).ready(function () {
+
+        $('#RadioYear').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Reports/GetYears",
+                success: function (response) {
+                    if ($('#Year').prop("disabled") == true) {
+                        $('#Year').prop("disabled", false);
+                    }
+                    $('#Year').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                    }
+
+                    $('#Year').append(options);
+
+                    //checking tha selected button
+                    $('#RadioYear').prop('checked', true)
+                    
+                    //unchecking other radio buttons
+                    $('#RadioShift').prop('checked', false)
+                    $('#RadioDay').prop('checked', false)
+                    $('#RadioMonth').prop('checked', false)
+
+                    //reseting day dropdown
+                    $('#Month').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Month').append(options);
+                    $('#Month').prop("disabled", true)
+
+                    //reseting day dropdown
+                    $('#Day').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Day').append(options);
+                    $('#Day').prop("disabled", true)
+
+                    //reseting shift dropdown
+                    $('#Shift').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Shift').append(options);
+                    $('#Shift').prop("disabled", true)
+
+
+
+
+                }
+            });
+        });
+    });
+
+
+
+    //Month Radio button ajax code 
+    $(document).ready(function () {
+
+        $('#RadioMonth').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Reports/GetYears",
+                success: function (response) {
+                    if ($('#Year').prop("disabled") == true) {
+                        $('#Year').prop("disabled", false);
+                    }
+                    $('#Year').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                    }
+
+                    $('#Year').append(options);
+
+
+                    //reseting day dropdown
+                    if ($('#Month').prop("disabled") == true) {
+                        $('#Month').prop("disabled", false);
+                    }
+                    $('#Month').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Month').append(options);
+                   
+                    //checking tha selected button
+                    $('#RadioMonth').prop('checked', true)
+                    
+                    //unchecking other radio buttons
+                    $('#RadioShift').prop('checked', false)
+                    $('#RadioDay').prop('checked', false)
+                    $('#RadioYear').prop('checked', false)
+
+                    //reseting day dropdown
+                    $('#Day').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Day').append(options);
+                    $('#Day').prop("disabled", true)
+
+                    //reseting shift dropdown
+                    $('#Shift').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Shift').append(options);
+                    $('#Shift').prop("disabled", true)
+
+
+
+
+                }
+            });
+        });
+    });
+
+    //Day Radio button ajax code 
+    $(document).ready(function () {
+
+        $('#RadioDay').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Reports/GetYears",
+                success: function (response) {
+                    if ($('#Year').prop("disabled") == true) {
+                        $('#Year').prop("disabled", false);
+                    }
+                    $('#Year').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                    }
+
+                    $('#Year').append(options);
+
+                    //checking tha selected button
+                    $('#RadioDay').prop('checked', true)
+                    
+                    //unchecking other radio buttons
+                    $('#RadioShift').prop('checked', false)
+                    $('#RadioMonth').prop('checked', false)
+                    $('#RadioYear').prop('checked', false)
+
+                    //reseting day dropdown
+                    if ($('#Month').prop("disabled") == true) {
+                        $('#Month').prop("disabled", false);
+                    }
+                    $('#Month').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Month').append(options);
+
+
+                    //reseting day dropdown
+                    if ($('#Day').prop("disabled") == true) {
+                        $('#Day').prop("disabled", false);
+                    }
+                    $('#Day').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Day').append(options);
+                  
+
+                    //reseting shift dropdown
+                    $('#Shift').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Shift').append(options);
+                    $('#Shift').prop("disabled", true)
+
+
+
+
+                }
+            });
+        });
+    });
+
+    //Shift Radio button ajax code 
+    $(document).ready(function () {
+
+        $('#RadioShift').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Reports/GetYears",
+                success: function (response) {
+                    if ($('#Year').prop("disabled") == true) {
+                        $('#Year').prop("disabled", false);
+                    }
+                    $('#Year').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                    }
+
+                    $('#Year').append(options);
+
+                    //checking tha selected button
+                    $('#RadioShift').prop('checked', true)
+
+                    //unchecking other radio buttons
+                    $('#RadioDay').prop('checked',false)
+                    $('#RadioMonth').prop('checked',false)
+                    $('#RadioYear').prop('checked',false)
+
+                    //reseting day dropdown
+                    if ($('#Month').prop("disabled") == true) {
+                        $('#Month').prop("disabled", false);
+                    }
+                    $('#Month').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Month').append(options);
+
+
+                    //reseting day dropdown
+                    if ($('#Day').prop("disabled") == true) {
+                        $('#Day').prop("disabled", false);
+                    }
+                    $('#Day').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Day').append(options);
+
+
+                    //reseting shift dropdown
+                    if ($('#Shift').prop("disabled") == true) {
+                        $('#Shift').prop("disabled", false);
+                    }
+                    $('#Shift').html('');
+                    options = '';
+                    options += '<option value="Select">Select Year</option>';
+                    $('#Shift').append(options);
+                   
+
+
+
+
+                }
+            });
+        });
+    });
+
+    //Operation after clicking generate report button
+    $(document).ready(function () {
+
+        $('#generateReportButton').click(function () {
+
+            if ($('#RadioShift').prop('checked') == true) {
+                var year = $('#Year option:selected').val();
+                var month = $('#Month option:selected').val();
+                var day = $('#Day option:selected').val();
+                var shift = $('#Shift option:selected').val();
+
+                $('#CardSection').load(
+                    "/Reports/GenerateShiftReport",
+                    {
+                        year: $('#Year option:selected').val(),
+                        month: $('#Month option:selected').val(),
+                        day: $('#Day option:selected').val(),
+                        shift: $('#Shift option:selected').val()
+                    }
+
+                );
+
+                $('#CardGraph').load(
+                    "/Reports/UpdateGraph"
+                );
+
+            }
+            else if ($('#RadioDay').prop('checked') == true) {
+                var year = $('#Year option:selected').val();
+                var month = $('#Month option:selected').val();
+                var day = $('#Day option:selected').val();
+
+                $('#CardSection').load(
+                    "/Reports/GenerateDayReport",
+                    {
+                        year: $('#Year option:selected').val(),
+                        month: $('#Month option:selected').val(),
+                        day: $('#Day option:selected').val()
+
+                    }
+
+                );
+
+                $('#CardGraph').load(
+                    "/Reports/UpdateGraph"
+                );
+            }
+            else if ($('#RadioMonth').prop('checked') == true) {
+                var year = $('#Year option:selected').val();
+                var Month = $('#Month option:selected').val();
+
+                $('#CardSection').load(
+                    "/Reports/GenerateMonthReport",
+                    {
+                        year: $('#Year option:selected').val(),
+                        month: $('#Month option:selected').val()
+                    }
+                );
+
+                $('#CardGraph').load(
+                    "/Reports/UpdateGraph"
+                );
+            }
+
+            else if ($('#RadioYear').prop('checked') == true) {
+                var year = $('#Year option:selected').val();
+                $('#CardSection').load(
+                    "/Reports/GenerateYearReport",
+                    {
+                        year: $('#Year option:selected').val(),
+                    }
+                );
+
+                $('#CardGraph').load(
+                    "/Reports/UpdateGraph"
+                );
+            }
+        });
+    });
+
+    //Operation to perform after a user have selected a year from the dropdown menu
+    $(document).on("change", "#Year", function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetMonths",
+            data: { year: $('#Year option:selected').val() },
+            success: function (response) {
+                $('#Month').html('');
+                options = '';
+                options += '<option value="Select">Select Month</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+
+                $('#Month').append(options);
+
+
+                //reseting day dropdown
+                $('#Day').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Day').append(options);
+
+                //reseting shift dropdown
+                $('#Shift').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Shift').append(options);
+            }
+        });
+    });
+
+
+
+   
+    //Operation to perform after a user have selected a month from the dropdown menu
+    $(document).on("change", "#Month", function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetDates",
+            data: {
+                year: $('#Year option:selected').val(),
+                month: $('#Month option:selected').val(),
+            },
+            success: function (response) {
+                $('#Day').html('');
+                options = '';
+                options += '<option value="Select">Select Date</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+
+                $('#Day').append(options);
+
+                //reseting shift dropdown
+                $('#Shift').html('');
+                options = '';
+                options += '<option value="Select">Select Year</option>';
+                $('#Shift').append(options);
+            }
+        });
+    });
+
+    //Operation to perform after a user have selected a Day from the dropdown menu
+    $(document).on("change", "#Day", function () {
+        $.ajax({
+            type: "GET",
+            url: "/Reports/GetShifts",
+            data: {
+                year: $('#Year option:selected').val(),
+                month: $('#Month option:selected').val(),
+                date: $('#Day option:selected').val()
+            },
+            success: function (response) {
+                $('#Shift').html('');
+                options = '';
+                options += '<option value="Select">Select Shift</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+
+                $('#Shift').append(options);
+            }
+        });
+    });
+
+</script>
+
+
+<div class="container-fluid" style="height:100%; background-color:white">
+    @*@using (Html.BeginForm("GenerateReport", "ViewReports"))
+    {*@
+        <div class="row" style="height:50px">
+        </div>
+        <div class="row ">
+            <div class="col-1"></div>
+            <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Year</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Year" class="browser-default custom-select form-control">
+                    <option selected>select Year</option>
+                  
+
+
+                </select>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Month</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Month" class="browser-default custom-select">
+                    <option selected>select Month</option>
+                 
+                </select>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Date</div>
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Day" class="browser-default custom-select">
+                    <option selected>select Date</option>
+                  
+                </select>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3 justify-content-center">Shift</div>
+
+            <div class="col-7 justify-content-center align-content-center">
+                <select id="Shift" class="browser-default custom-select">
+                    <option selected>select Shift</option>
+                  
+                </select>
+            </div>
+
+            <div class="col-1"></div>
+
+        </div>
+
+        <div class="row" style="height:25px"></div>
+
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10 justify-content-center">
+
+                <button id="generateReportButton" type="button" class="btn btn-primary btn-lg">Genrate Report</button>
+            </div>
+            <div class="col-1"></div>
+
+        </div>
+    @*}*@
+</div>
+
+

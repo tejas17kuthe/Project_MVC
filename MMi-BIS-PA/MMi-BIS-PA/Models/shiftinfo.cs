@@ -1,4 +1,4 @@
-namespace MMi_BIS_PA.App_Data
+namespace MMi_BIS_PA.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,8 @@ namespace MMi_BIS_PA.App_Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("db_mmi_bis_pa.shift_details")]
-    public partial class shift_details
+    [Table("db_mmi_bis_pa.shiftinfo")]
+    public partial class shiftinfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

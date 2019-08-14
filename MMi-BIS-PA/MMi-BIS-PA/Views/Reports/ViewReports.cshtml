@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MMi_BIS_PA.Models.currentdata>
+@{
+    ViewBag.Title = "ViewReports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .your-class {
+        position: absolute;
+        overflow-y: scroll;
+    }
+</style>
+
+
+
+<div class="container-fluid overflow-auto" style="height:100%;">
+    <div class="row">
+
+        @Html.Partial("~/Views/Shared/_NavBar.cshtml")
+    </div>
+    <div class="row" style="height:100%;">
+
+        <div class="col-3" style="padding-left: 0px;">
+            @Html.Partial("_LeftAlignedMenuStrip")
+        </div>
+        <div class="col-6 ">
+            <div class="container-fluid overflow-auto">
+                <div class="row" style="height:50px">
+                </div>
+                <div class="row overflow-auto" id="CardSection">
+                    @Html.Partial("_generateReport",Model)
+                </div>
+                <div class="row" style="height:100px">
+                </div>
+            </div>
+        </div>
+        <div id="CardGraph" class="col-3" style="">
+            @Html.Partial("_PieChart_report")
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+

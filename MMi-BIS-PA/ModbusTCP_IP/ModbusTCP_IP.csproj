@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ExternalDLL\EasyModbus.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ExternalDLL\EasyModbus.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EasyModbus">
+      <HintPath>..\..\EasyModbus.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
