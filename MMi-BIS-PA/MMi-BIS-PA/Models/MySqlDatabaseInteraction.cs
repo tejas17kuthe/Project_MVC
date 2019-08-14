@@ -21,8 +21,10 @@ namespace MMi_BIS_PA.Models
                 {
                     string query = "SELECT * FROM db_mmi_bis_pa.userinfo WHERE username =\"" + username + "\" and password =\"" + password + "\"";
                     var count = dbConnect.userinfoes.SqlQuery(query).ToList();
-                    
+                    if (count.Count == 1)
                         return true;
+                    else
+                        return false;
                     
                      
                 }
