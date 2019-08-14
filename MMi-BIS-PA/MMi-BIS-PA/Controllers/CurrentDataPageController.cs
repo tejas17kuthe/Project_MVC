@@ -22,7 +22,7 @@ namespace MMi_BIS_PA.Controllers
         {
 
             string fname1 = qr;
-           
+
 
             string python = @"C:\ProgramData\Anaconda3\python.exe";
 
@@ -31,7 +31,7 @@ namespace MMi_BIS_PA.Controllers
 
             // dummy parameters to send Python script 
             string x = @fname1;
-            
+
 
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
             myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -45,7 +45,7 @@ namespace MMi_BIS_PA.Controllers
             // start python app with 3 arguments  
             // 1st arguments is pointer to itself,  
             // 2nd and 3rd are actual arguments we want to send 
-            myProcessStartInfo.Arguments = myPythonApp + " " + x ;
+            myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
             Process myProcess = new Process();
             // assign start information to the process 
@@ -60,13 +60,16 @@ namespace MMi_BIS_PA.Controllers
             return View();
 
         }
-
+        
         [Route("CurrentDataPage/Delete")]
         public ActionResult Delete()
         {
-            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            bool result = sql.Delete();
-            return RedirectToAction("CurrentDataPage");
+
+            DB_Model db = new DB_Model();
+            db.tableData.RemoveRange(db.tableData);
+            db.SaveChanges();
+            return RedirectToAction("CurrentDataPage", "CurrentDataPage");
+
         }
 
         public PartialViewResult UpdateTable()
@@ -80,8 +83,8 @@ namespace MMi_BIS_PA.Controllers
 
 
     }
-        
 
 
-        
+
+
 }

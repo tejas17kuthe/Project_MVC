@@ -17,6 +17,7 @@
     }
 </style>
 
+@{float diff = 0, st = 0;
 <div class="container-fluid">
     <div class="card shadow mb-3" style="width: 100%; height:65%">
         <div class="card-header" style="padding:0;background-color:#004883; height:50px">
@@ -79,6 +80,9 @@
                                                 <td class="center">@data.w</td><!-- F53B3B-->
                                             </tr>
 
+                                            diff =(float)@data.wd;
+                                            st = (float)@data.set_point;
+
                                         }
 
 
@@ -90,13 +94,24 @@
                             <div class="row" style="height:50px; width:100%">
 
                                 <div class="col-3 justify-content-end">
-                                    <button type="button" class="btn btn-outline-danger btn-lg">Clear Batch</button>
+                                    <button type="button" class="btn btn-outline-danger btn-lg">@Html.ActionLink("Reset", "Delete", "CurrentDataPage")</button>
                                 </div>
+                              
                                 <div class="col-9">
+                                   @if(diff < st)
+                                    {
                                     <div class="alert alert-dismissible alert-success" style="text-align:center">
                                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                        <strong>Weight Difference : 0.700 gm</strong>
+                                        <strong>Weight Difference : @diff</strong>
                                     </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="alert alert-dismissible alert-danger" style="text-align:center">
+                                        <button type="button" class="card-footer" data-dismiss="alert">&times;</button>
+                                        <strong>Weight Difference : @diff</strong>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -114,3 +129,4 @@
     </div>
 </div>
 
+    }
