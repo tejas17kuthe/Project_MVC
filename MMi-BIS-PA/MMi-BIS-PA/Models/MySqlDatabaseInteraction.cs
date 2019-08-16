@@ -281,6 +281,34 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+
+
+        public master_table GetMasterData()
+        {
+
+
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.master_table";
+                master_table master = new master_table();
+                List<master_table> data = db.master_table.SqlQuery(query).ToList();
+                foreach(var d in data)
+                {
+                    master.Id = d.Id;
+                    master.IP_Address = d.IP_Address;
+                    master.Weight_Diffrence = d.Weight_Diffrence;
+                    master.Barcode_Length = d.Barcode_Length;
+
+                }
+                return master;
+                
+
+
+            }
+
+
+        }
+
         #endregion
     }
 }
