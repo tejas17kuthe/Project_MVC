@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -118,17 +119,22 @@ namespace MMi_BIS_PA.Controllers
                     c.status = 0;
                 }
 
-                var shift = new MySqlDatabaseInteraction().getshiftid(new DateTime().ToLocalTime().ToString("HH:MM:ss")).ToList();
-                c.shiftid = shift[0].shift_id;
+                var shift = new MySqlDatabaseInteraction().getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
 
-                if (new MySqlDatabaseInteraction().AddCurrentData(c))
-                {
-                    bool t = true;
-                }
-                else
-                {
-                    bool t2 = false;
-                }
+                c.shiftid = shift[0].shift_id;
+                string date = DateTime.Now.ToString("yyyy-MM-dd");
+                string time = DateTime.Now.ToString("HH:mm:ss");
+                string dateT = date + " " + time;
+                c.date_time = DateTime.Parse(dateT);
+                
+                new MySqlDatabaseInteraction().AddCurrentData(c);
+                //if (new MySqlDatabaseInteraction().AddCurrentData(c))
+                //{s                //    bool t = true;
+                //}
+                //else
+                //{
+                //    bool t2 = false;
+                //}
             }
             return PartialView("_DataCard", i);
 
