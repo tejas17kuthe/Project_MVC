@@ -40,8 +40,8 @@ namespace MMi_BIS_PA.Models
         public bool AddCurrentData(currentdata currentdata)
         {
 
-            try
-            {
+            //try
+            //{
                 using (DB_Model db = new DB_Model())
                     {
 
@@ -53,12 +53,12 @@ namespace MMi_BIS_PA.Models
 
 
                 }
-            }
-            catch (Exception e)
-            {
+            //}
+            //catch (Exception e)
+            //{
 
-                return false;
-            }
+            //    return false;
+            //}
 
         }
 
@@ -339,7 +339,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where \'16:12:00\' between start_time and end_time";
+                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where\'"+time+ "\' between start_time and end_time";
 
                 List<shiftinfo> data = db.shiftinfoes.SqlQuery(query).ToList();
 
@@ -347,6 +347,19 @@ namespace MMi_BIS_PA.Models
 
             }
         }
+
+        //public List<DateTime> getdatetime()
+        //{
+        //    using (DB_Model db = new DB_Model())
+        //    {
+        //        string query = "SELECT now()";
+
+        //        List<DateTime> data = db.tableData.;
+
+        //        return data;
+
+        //    }
+        //}
 
         #endregion
     }
