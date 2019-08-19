@@ -17,6 +17,7 @@ namespace MMi_BIS_PA.Models
         public virtual DbSet<shiftinfo> shiftinfoes { get; set; }
         public virtual DbSet<userinfo> userinfoes { get; set; }
         public virtual DbSet<TableData> tableData { get; set; }
+        public virtual DbSet<master_table> master_table { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

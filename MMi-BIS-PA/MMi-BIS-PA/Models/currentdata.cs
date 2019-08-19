@@ -66,5 +66,7 @@ namespace MMi_BIS_PA.Models
         public sbyte? status { get; set; }
 
         public int shiftid { get; set; }
+
+        public DateTime date_time { get; set; }
     }
 }

@@ -22,8 +22,9 @@
             <div class="card border-primary mb-5" style="max-width: 40rem;">
 
                 <div class="card-body">
-                    
-                    <form action="/Home/Index" method="post">
+                    <!-- What happen if database contains same username and password entry multiple times -->
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
                         <div class="form-group row">
                             <label for="user_name" class="col-md-4 col-form-label text-md-right">User Name</label>
                             <div class="col-md-6">
@@ -50,7 +51,7 @@
                                 Login
                             </button>
                         </div>
-                        </form>
+                    }
                 </div>
             </div>
         </div>

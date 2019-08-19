@@ -227,11 +227,13 @@
     <Compile Include="Controllers\CurrentDataPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\master_table.cs" />
     <Compile Include="Models\currentdata.cs" />
     <Compile Include="Models\currentshiftdata.cs" />
     <Compile Include="Models\DB_Model.cs" />
@@ -256,6 +258,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\excel.png" />
     <Content Include="Images\pie.png" />
     <Content Include="Images\table.jpg" />
     <Content Include="Images\mahindra_rise.png" />
@@ -264,6 +268,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -318,11 +323,17 @@
     <Content Include="Views\Reports\_ReportGenrationMenuStrip.cshtml" />
     <Content Include="Views\CurrentDataPage\_SearchBar.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Reports\_DataCard.cshtml" />
+    <Content Include="Views\Reports\_DataCard_report.cshtml" />
     <Content Include="Views\Reports\_DynamicDatacardGeneration.cshtml" />
+    <Content Include="Views\CurrentDataPage\_PieChart.cshtml" />
+    <Content Include="Views\Reports\_LeftAlignedMenuStrip.cshtml" />
+    <Content Include="Views\Reports\_checkBoxMenuStrip.cshtml" />
+    <Content Include="Views\Reports\_PieChart_report.cshtml" />
+    <Content Include="Views\Master\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Download_Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

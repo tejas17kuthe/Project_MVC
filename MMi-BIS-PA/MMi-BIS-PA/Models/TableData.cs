@@ -23,5 +23,9 @@ namespace MMi_BIS_PA.Models
         public sbyte? r { get; set; }
 
         public float? w { get; set; }
+
+        public float? wd { get; set; }
+
+        public float? set_point { get; set; }
     }
 }
