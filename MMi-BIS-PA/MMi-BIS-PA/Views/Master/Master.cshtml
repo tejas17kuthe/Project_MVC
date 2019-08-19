@@ -1,4 +1,8 @@
 ﻿@model MMi_BIS_PA.Models.master_table
+
+
+
+
 @{
     ViewBag.Title = "Master";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -30,7 +34,7 @@
     </div>
     <div class="row"><pre>   </pre></div>
     <div class="row"><pre>   </pre></div>
-    
+
     <div class="row">
         <div class="col-3">
 
@@ -39,7 +43,7 @@
             <div class="card shadow mb-3" style="width: 100%; height:100%">
                 <div class="card-header" style="padding:0;background-color:#004883; height:50px">
                     <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:100%;">Master </div>
-                   
+
 
                 </div>
                 <div class="card-body">
@@ -53,28 +57,34 @@
 
                                     <div class="container-fluid" style="height:100% ">
 
-
+                                       
 
                                         @using (Html.BeginForm("AddMaster", "Master"))
                                         {
 
                                             <h1><pre>    </pre></h1>
-
-
+                                           
+                                            
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.IP_Address)
+                                                <label for="wd" class="col-md-4 col-form-label text-md-left">IP Address</label>
+
                                                 @Html.TextBoxFor(m => m.IP_Address, new { @class = "form-control" })
 
+
                                             </div>
+                                           
 
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Weight_Diffrence)
+                                                <label for="wd" class="col-md-4 col-form-label text-md-left">Weight Diffrence</label>
+
                                                 @Html.TextBoxFor(m => m.Weight_Diffrence, new { @class = "form-control" })
 
+
                                             </div>
 
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Barcode_Length)
+                                                <label for="wd" class="col-md-4 col-form-label text-md-left">Barcode Length</label>
+
                                                 @Html.TextBoxFor(m => m.Barcode_Length, new { @class = "form-control" })
 
                                             </div>
@@ -82,7 +92,7 @@
 
                                             <button type="submit" class="btn btn-primary">Save</button>
 
-                                          }
+                                        }
 
 
 

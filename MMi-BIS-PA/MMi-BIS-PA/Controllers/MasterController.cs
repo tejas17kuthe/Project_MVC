@@ -9,17 +9,36 @@ namespace MMi_BIS_PA.Controllers
 {
     public class MasterController : Controller
     {
+
+        private DB_Model db;
+
+        private MySqlDatabaseInteraction sql;
+
+        public MasterController()
+        {
+            db = new DB_Model();
+            sql = new MySqlDatabaseInteraction();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
         // GET: Master
         public ActionResult Master()
         {
-
-            return View();
+            master_table master = sql.GetMasterData();
+            return View(master);
         }
+
+       
+       
 
         [HttpPost]
         public ActionResult AddMaster(master_table data )
         {
-            DB_Model db = new DB_Model();
+        
+            db.master_table.RemoveRange(db.master_table);
             db.master_table.Add(data);
             db.SaveChanges();
             return RedirectToAction("Master", "Master");
