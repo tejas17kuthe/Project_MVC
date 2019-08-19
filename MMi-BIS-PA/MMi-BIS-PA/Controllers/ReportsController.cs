@@ -105,9 +105,9 @@ namespace MMi_BIS_PA.Controllers
             return PartialView("_PieChart_report");
         }
 
-        [HttpPost]
-        [Route("Reports/GenerateExcelFile")]
-        public void GenerateExcelFile(string year)
+        [HttpGet]
+        [Route("Reports/GenerateYearlyExcelFile")]
+        public FileResult GenerateYearlyExcelFile(string year)
         {
 
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
@@ -276,8 +276,562 @@ namespace MMi_BIS_PA.Controllers
                     changeCsvPageCunter++;
                     spacing++;
                 }
+
+               
             }
             
+           // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
+            string fileName = "Yearly.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+
+        }
+
+
+        //Generate shiftwise report
+        [HttpGet]
+        [Route("Reports/GenerateShiftWiseExcelFile")]
+        public FileResult GenerateShiftWiseExcelFile(string year,string month,string day,string shift)
+        {
+
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<currentdata> i = sql.GetCurrentData(year,month,day,shift);
+            StringBuilder csv = new StringBuilder();
+            int changeCsvPageCunter = 0; // this counter is taken because I want to divide data into 5 tables in one page
+            int spacing = 0;
+            foreach (currentdata d in i)
+            {
+                csv.AppendLine(",,Yearly Report,,");
+                csv.AppendLine("");
+
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string rowOneData = "";
+                string rowTwoData = "";
+                string rowThreeData = "";
+                string rowFourData = "";
+
+                #region Logic for row one of csv file
+                if (d.c11 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.c12 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.r1 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                rowOneData += d.w1;
+                #endregion
+
+                #region Logic for row Two of csv file
+                if (d.c21 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.c22 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.r2 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                rowTwoData += d.w2;
+                #endregion
+
+                #region Logic for row Three of csv file
+                if (d.c31 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.c32 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.r3 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                rowThreeData += d.w3;
+                #endregion
+
+                #region Logic for row Four of csv file
+                if (d.c41 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.c42 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.r4 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                rowFourData += d.w4;
+                #endregion
+
+                string weightDifference = ",,Weight Difference," + d.wd;
+
+                if (changeCsvPageCunter % 5 == 0)
+                {
+                    if (spacing % 5 == 0 & spacing > 0)
+                    {
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                    }
+                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine("");//row 2
+                    csv.AppendLine(dateTimeAndStatusHeader); //row 3
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
+                    csv.AppendLine(rowOneData); //row5
+                    csv.AppendLine(rowTwoData);//row6
+                    csv.AppendLine(rowThreeData);//row7
+                    csv.AppendLine(rowFourData);//row8
+                    csv.AppendLine("");//row9
+                    csv.AppendLine(weightDifference);//row10
+                    csv.AppendLine("");//row11
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+                else
+                {
+                    csv.AppendLine(dateTimeAndStatusHeader);
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight");
+                    csv.AppendLine(rowOneData);
+                    csv.AppendLine(rowTwoData);
+                    csv.AppendLine(rowThreeData);
+                    csv.AppendLine(rowFourData);
+                    csv.AppendLine("");
+                    csv.AppendLine(weightDifference);
+                    csv.AppendLine("");// row 9
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+
+
+            }
+
+            // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
+            string fileName = "Yearly.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+
+        }
+
+        //generate Monthlyreport
+        [HttpGet]
+        [Route("Reports/GenerateMonthlyExcelFile")]
+        public FileResult GenerateMonthlyExcelFile(string year,string month)
+        {
+
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<currentdata> i = sql.GetCurrentData(year,month);
+            StringBuilder csv = new StringBuilder();
+            int changeCsvPageCunter = 0; // this counter is taken because I want to divide data into 5 tables in one page
+            int spacing = 0;
+            foreach (currentdata d in i)
+            {
+                csv.AppendLine(",,Yearly Report,,");
+                csv.AppendLine("");
+
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string rowOneData = "";
+                string rowTwoData = "";
+                string rowThreeData = "";
+                string rowFourData = "";
+
+                #region Logic for row one of csv file
+                if (d.c11 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.c12 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.r1 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                rowOneData += d.w1;
+                #endregion
+
+                #region Logic for row Two of csv file
+                if (d.c21 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.c22 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.r2 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                rowTwoData += d.w2;
+                #endregion
+
+                #region Logic for row Three of csv file
+                if (d.c31 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.c32 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.r3 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                rowThreeData += d.w3;
+                #endregion
+
+                #region Logic for row Four of csv file
+                if (d.c41 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.c42 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.r4 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                rowFourData += d.w4;
+                #endregion
+
+                string weightDifference = ",,Weight Difference," + d.wd;
+
+                if (changeCsvPageCunter % 5 == 0)
+                {
+                    if (spacing % 5 == 0 & spacing > 0)
+                    {
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                    }
+                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine("");//row 2
+                    csv.AppendLine(dateTimeAndStatusHeader); //row 3
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
+                    csv.AppendLine(rowOneData); //row5
+                    csv.AppendLine(rowTwoData);//row6
+                    csv.AppendLine(rowThreeData);//row7
+                    csv.AppendLine(rowFourData);//row8
+                    csv.AppendLine("");//row9
+                    csv.AppendLine(weightDifference);//row10
+                    csv.AppendLine("");//row11
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+                else
+                {
+                    csv.AppendLine(dateTimeAndStatusHeader);
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight");
+                    csv.AppendLine(rowOneData);
+                    csv.AppendLine(rowTwoData);
+                    csv.AppendLine(rowThreeData);
+                    csv.AppendLine(rowFourData);
+                    csv.AppendLine("");
+                    csv.AppendLine(weightDifference);
+                    csv.AppendLine("");// row 9
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+
+
+            }
+
+            // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
+            string fileName = "Yearly.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+
+        }
+
+
+        //Generate daily report
+        [HttpGet]
+        [Route("Reports/GenerateDailyExcelFile")]
+        public FileResult GenerateDailyExcelFile(string year,string month,string day)
+        {
+
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<currentdata> i = sql.GetCurrentData(year,month,day);
+            StringBuilder csv = new StringBuilder();
+            int changeCsvPageCunter = 0; // this counter is taken because I want to divide data into 5 tables in one page
+            int spacing = 0;
+            foreach (currentdata d in i)
+            {
+                csv.AppendLine(",,Yearly Report,,");
+                csv.AppendLine("");
+
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string rowOneData = "";
+                string rowTwoData = "";
+                string rowThreeData = "";
+                string rowFourData = "";
+
+                #region Logic for row one of csv file
+                if (d.c11 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.c12 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                if (d.r1 != 0)
+                {
+                    rowOneData += "PRESENT,";
+                }
+                else
+                {
+                    rowOneData += "ABSENT,";
+                }
+                rowOneData += d.w1;
+                #endregion
+
+                #region Logic for row Two of csv file
+                if (d.c21 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.c22 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                if (d.r2 != 0)
+                {
+                    rowTwoData += "PRESENT,";
+                }
+                else
+                {
+                    rowTwoData += "ABSENT,";
+                }
+                rowTwoData += d.w2;
+                #endregion
+
+                #region Logic for row Three of csv file
+                if (d.c31 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.c32 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                if (d.r3 != 0)
+                {
+                    rowThreeData += "PRESENT,";
+                }
+                else
+                {
+                    rowThreeData += "ABSENT,";
+                }
+                rowThreeData += d.w3;
+                #endregion
+
+                #region Logic for row Four of csv file
+                if (d.c41 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.c42 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                if (d.r4 != 0)
+                {
+                    rowFourData += "PRESENT,";
+                }
+                else
+                {
+                    rowFourData += "ABSENT,";
+                }
+                rowFourData += d.w4;
+                #endregion
+
+                string weightDifference = ",,Weight Difference," + d.wd;
+
+                if (changeCsvPageCunter % 5 == 0)
+                {
+                    if (spacing % 5 == 0 & spacing > 0)
+                    {
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                        csv.AppendLine("");
+                    }
+                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine("");//row 2
+                    csv.AppendLine(dateTimeAndStatusHeader); //row 3
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
+                    csv.AppendLine(rowOneData); //row5
+                    csv.AppendLine(rowTwoData);//row6
+                    csv.AppendLine(rowThreeData);//row7
+                    csv.AppendLine(rowFourData);//row8
+                    csv.AppendLine("");//row9
+                    csv.AppendLine(weightDifference);//row10
+                    csv.AppendLine("");//row11
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+                else
+                {
+                    csv.AppendLine(dateTimeAndStatusHeader);
+                    csv.AppendLine("Clip 1,Clip 2,Ring,Weight");
+                    csv.AppendLine(rowOneData);
+                    csv.AppendLine(rowTwoData);
+                    csv.AppendLine(rowThreeData);
+                    csv.AppendLine(rowFourData);
+                    csv.AppendLine("");
+                    csv.AppendLine(weightDifference);
+                    csv.AppendLine("");// row 9
+                    changeCsvPageCunter++;
+                    spacing++;
+                }
+
+
+            }
+
+            // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
+            string fileName = "Yearly.csv";
+            return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+
         }
     }
 }
