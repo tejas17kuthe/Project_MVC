@@ -258,6 +258,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\excel.png" />
     <Content Include="Images\pie.png" />
     <Content Include="Images\table.jpg" />
     <Content Include="Images\mahindra_rise.png" />
@@ -331,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Download_Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

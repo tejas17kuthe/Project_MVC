@@ -10,8 +10,8 @@
 </style>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>*@
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>*@
 <script>
     $(document).ready(function () {
         $.ajax({
@@ -24,7 +24,7 @@
                 for (var i = 0; i < response.length; i++) {
                     options += '<option value="' + response[i] + '">' + response[i] + '</option>';
                 }
-               
+
                 $('#Year').append(options);
 
                 //reseting day dropdown
@@ -56,14 +56,14 @@
                 $('#Shift').prop("disabled", true)
 
 
-              
+
 
             }
         });
     });
 
 
-    //Year Radio button ajax code 
+    //Year Radio button ajax code
     $(document).ready(function () {
 
         $('#RadioYear').change(function () {
@@ -85,7 +85,7 @@
 
                     //checking tha selected button
                     $('#RadioYear').prop('checked', true)
-                    
+
                     //unchecking other radio buttons
                     $('#RadioShift').prop('checked', false)
                     $('#RadioDay').prop('checked', false)
@@ -122,7 +122,7 @@
 
 
 
-    //Month Radio button ajax code 
+    //Month Radio button ajax code
     $(document).ready(function () {
 
         $('#RadioMonth').change(function () {
@@ -151,10 +151,10 @@
                     options = '';
                     options += '<option value="Select">Select Year</option>';
                     $('#Month').append(options);
-                   
+
                     //checking tha selected button
                     $('#RadioMonth').prop('checked', true)
-                    
+
                     //unchecking other radio buttons
                     $('#RadioShift').prop('checked', false)
                     $('#RadioDay').prop('checked', false)
@@ -182,7 +182,7 @@
         });
     });
 
-    //Day Radio button ajax code 
+    //Day Radio button ajax code
     $(document).ready(function () {
 
         $('#RadioDay').change(function () {
@@ -204,7 +204,7 @@
 
                     //checking tha selected button
                     $('#RadioDay').prop('checked', true)
-                    
+
                     //unchecking other radio buttons
                     $('#RadioShift').prop('checked', false)
                     $('#RadioMonth').prop('checked', false)
@@ -228,7 +228,7 @@
                     options = '';
                     options += '<option value="Select">Select Year</option>';
                     $('#Day').append(options);
-                  
+
 
                     //reseting shift dropdown
                     $('#Shift').html('');
@@ -245,7 +245,7 @@
         });
     });
 
-    //Shift Radio button ajax code 
+    //Shift Radio button ajax code
     $(document).ready(function () {
 
         $('#RadioShift').change(function () {
@@ -269,9 +269,9 @@
                     $('#RadioShift').prop('checked', true)
 
                     //unchecking other radio buttons
-                    $('#RadioDay').prop('checked',false)
-                    $('#RadioMonth').prop('checked',false)
-                    $('#RadioYear').prop('checked',false)
+                    $('#RadioDay').prop('checked', false)
+                    $('#RadioMonth').prop('checked', false)
+                    $('#RadioYear').prop('checked', false)
 
                     //reseting day dropdown
                     if ($('#Month').prop("disabled") == true) {
@@ -301,7 +301,7 @@
                     options = '';
                     options += '<option value="Select">Select Year</option>';
                     $('#Shift').append(options);
-                   
+
 
 
 
@@ -391,6 +391,10 @@
         });
     });
 
+
+
+
+
     //Operation to perform after a user have selected a year from the dropdown menu
     $(document).on("change", "#Year", function () {
         $.ajax({
@@ -419,13 +423,20 @@
                 options = '';
                 options += '<option value="Select">Select Year</option>';
                 $('#Shift').append(options);
+
+                if ($('#RadioYear').prop('checked') == true) {
+                    $('#excelButton').html('');
+                    options = '';
+                    options += '<a href="/Reports/GenerateYearlyExcelFile?year=' + $('#Year option:selected').val() + '">Export to Excel</a>';
+                    $('#excelButton').append(options);
+                }
             }
         });
     });
 
 
 
-   
+
     //Operation to perform after a user have selected a month from the dropdown menu
     $(document).on("change", "#Month", function () {
         $.ajax({
@@ -450,6 +461,14 @@
                 options = '';
                 options += '<option value="Select">Select Year</option>';
                 $('#Shift').append(options);
+
+
+                if ($('#RadioMonth').prop('checked') == true) {
+                    $('#excelButton').html('');
+                    options = '';
+                    options += '<a href="/Reports/GenerateMonthlyExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '">Export to Excel</a>';
+                    $('#excelButton').append(options);
+                }
             }
         });
     });
@@ -473,8 +492,25 @@
                 }
 
                 $('#Shift').append(options);
+
+                //logic for export to pdf dynamic changing
+                if ($('#RadioDay').prop('checked') == true) {
+                    $('#excelButton').html('');
+                    options = '';
+                    options += '<a href="/Reports/GenerateDailyExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '&day=' + $('#Day option:selected').val() + '">Export to Excel</a>';
+                    $('#excelButton').append(options);
+                }
             }
         });
+    });
+
+    $(document).on("change", "#Shift", function () {
+        if ($('#RadioShift').prop('checked') == true) {
+            $('#excelButton').html('');
+            options = '';
+            options += '<a href="/Reports/GenerateShiftWiseExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '&day=' + $('#Day option:selected').val() + '&shift=' + $('#Shift option:selected').val() + '">Export to Excel</a>';
+            $('#excelButton').append(options);
+        }
     });
 
 </script>
@@ -482,92 +518,99 @@
 
 <div class="container-fluid" style="height:100%; background-color:white">
     @*@using (Html.BeginForm("GenerateReport", "ViewReports"))
-    {*@
-        <div class="row" style="height:50px">
+        {*@
+    <div class="row" style="height:50px">
+    </div>
+    <div class="row ">
+        <div class="col-1"></div>
+        <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
+        <div class="col-1"></div>
+
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Year</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Year" class="browser-default custom-select form-control">
+                <option selected>select Year</option>
+
+
+
+            </select>
         </div>
-        <div class="row ">
-            <div class="col-1"></div>
-            <div class="col-10 justify-content-center align-content-center">@Html.Partial("_checkBoxMenuStrip")</div>
-            <div class="col-1"></div>
+        <div class="col-1"></div>
 
+    </div>
+
+    <div class="row" style="height:25px"></div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Month</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Month" class="browser-default custom-select">
+                <option selected>select Month</option>
+
+            </select>
         </div>
+        <div class="col-1"></div>
 
-        <div class="row" style="height:25px"></div>
+    </div>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Year</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Year" class="browser-default custom-select form-control">
-                    <option selected>select Year</option>
-                  
+    <div class="row" style="height:25px"></div>
 
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Date</div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Day" class="browser-default custom-select">
+                <option selected>select Date</option>
 
-                </select>
-            </div>
-            <div class="col-1"></div>
-
+            </select>
         </div>
+        <div class="col-1"></div>
 
-        <div class="row" style="height:25px"></div>
+    </div>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Month</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Month" class="browser-default custom-select">
-                    <option selected>select Month</option>
-                 
-                </select>
-            </div>
-            <div class="col-1"></div>
+    <div class="row" style="height:25px"></div>
 
-        </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3 justify-content-center">Shift</div>
 
-        <div class="row" style="height:25px"></div>
+        <div class="col-7 justify-content-center align-content-center">
+            <select id="Shift" class="browser-default custom-select">
+                <option selected>select Shift</option>
 
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Date</div>
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Day" class="browser-default custom-select">
-                    <option selected>select Date</option>
-                  
-                </select>
-            </div>
-            <div class="col-1"></div>
-
-        </div>
-
-        <div class="row" style="height:25px"></div>
-
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-3 justify-content-center">Shift</div>
-
-            <div class="col-7 justify-content-center align-content-center">
-                <select id="Shift" class="browser-default custom-select">
-                    <option selected>select Shift</option>
-                  
-                </select>
-            </div>
-
-            <div class="col-1"></div>
-
+            </select>
         </div>
 
-        <div class="row" style="height:25px"></div>
+        <div class="col-1"></div>
 
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-10 justify-content-center">
+    </div>
 
-                <button id="generateReportButton" type="button" class="btn btn-primary btn-lg">Genrate Report</button>
-            </div>
-            <div class="col-1"></div>
+    <div class="row" style="height:25px"></div>
 
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10 justify-content-center">
+
+            <button id="generateReportButton" type="button" class="btn btn-primary btn-lg">Genrate Report</button>
         </div>
+        <div class="col-1"></div>
+
+    </div>
+    <div class="row" style="height:50px"></div>
+    <div class="row">
+
+        <!--<div class="col justify-content-end"><button id="pdfButton" type="button" class="btn btn-outline-success">Export to PDF</button></div>
+        -->
+        <div class="col" id="ExcelDiv"><button id="excelButton" type="button" class="btn btn-outline-success"> <a href="#">Excel</a></button></div>
+
+    </div>
     @*}*@
 </div>
-
 
