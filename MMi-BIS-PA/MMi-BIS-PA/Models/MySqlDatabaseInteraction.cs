@@ -28,7 +28,7 @@ namespace MMi_BIS_PA.Models
                 }
             }
 
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -38,22 +38,23 @@ namespace MMi_BIS_PA.Models
         public bool AddCurrentData(currentdata currentdata)
         {
 
-            try {    
-                    using (DB_Model db = new DB_Model())
+            try
+            {
+                using (DB_Model db = new DB_Model())
                     {
 
                         db.currentdatas.Add(currentdata);
 
                         db.SaveChanges();
 
-                        return true;             
+                        return true;
 
-                
-                    }
+
+                }
             }
-            catch
+            catch (Exception e)
             {
-                
+
                 return false;
             }
 
@@ -307,6 +308,19 @@ namespace MMi_BIS_PA.Models
             }
 
 
+        }
+
+        public List<shiftinfo> getshiftid(string time)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where \'16:12:00\' between start_time and end_time";
+
+                List<shiftinfo> data = db.shiftinfoes.SqlQuery(query).ToList();
+
+                return data;
+
+            }
         }
 
         #endregion
