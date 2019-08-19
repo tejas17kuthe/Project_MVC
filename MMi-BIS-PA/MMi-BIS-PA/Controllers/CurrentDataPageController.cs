@@ -60,7 +60,7 @@ namespace MMi_BIS_PA.Controllers
             return View();
 
         }
-        
+
         [Route("CurrentDataPage/Delete")]
         public ActionResult Delete()
         {
@@ -76,15 +76,70 @@ namespace MMi_BIS_PA.Controllers
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
+            if (i.Count == 4)
+            {
+                currentdata c = new currentdata();
+                //row 1 data collection
+                c.qr1 = i[0].qrcode;
+                c.c11 = i[0].c1;
+                c.c12 = i[0].c2;
+                c.r1 = i[0].r;
+                c.w1 = i[0].w;
+
+                //row 2 data collection
+                c.qr2 = i[1].qrcode;
+                c.c21 = i[1].c1;
+                c.c22 = i[1].c2;
+                c.r2 = i[1].r;
+                c.w2 = i[1].w;
+
+                //row 3 data collection
+                c.qr3 = i[2].qrcode;
+                c.c31 = i[2].c1;
+                c.c32 = i[2].c2;
+                c.r3 = i[2].r;
+                c.w3 = i[2].w;
+
+                //row 4 data collection
+                c.qr4 = i[3].qrcode;
+                c.c41 = i[3].c1;
+                c.c42 = i[3].c2;
+                c.r4 = i[3].r;
+                c.w4 = i[3].w;
+
+                c.wd = i[3].wd;
+
+                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 || c.wd < i[3].set_point)
+                {
+                    c.status = 1;
+                }
+                else
+                {
+                    c.status = 0;
+                }
+
+                var shift = new MySqlDatabaseInteraction().getshiftid(new DateTime().ToLocalTime().ToString("HH:MM:ss")).ToList();
+                c.shiftid = shift[0].shift_id;
+
+                if (new MySqlDatabaseInteraction().AddCurrentData(c))
+                {
+                    bool t = true;
+                }
+                else
+                {
+                    bool t2 = false;
+                }
+            }
             return PartialView("_DataCard", i);
+
+
+
 
 
         }
 
 
+
+
     }
-
-
-
-
 }

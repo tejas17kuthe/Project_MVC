@@ -30,7 +30,7 @@ namespace MMi_BIS_PA.Models
                 }
             }
 
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -40,22 +40,23 @@ namespace MMi_BIS_PA.Models
         public bool AddCurrentData(currentdata currentdata)
         {
 
-            try {    
-                    using (DB_Model db = new DB_Model())
+            try
+            {
+                using (DB_Model db = new DB_Model())
                     {
 
                         db.currentdatas.Add(currentdata);
 
                         db.SaveChanges();
 
-                        return true;             
+                        return true;
 
-                
-                    }
+
+                }
             }
-            catch
+            catch (Exception e)
             {
-                
+
                 return false;
             }
 
@@ -303,6 +304,47 @@ namespace MMi_BIS_PA.Models
                     shift.Add(d.shiftid);
                 }
                 return shift;
+            }
+        }
+
+
+
+        public master_table GetMasterData()
+        {
+
+
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.master_table";
+                master_table master = new master_table();
+                List<master_table> data = db.master_table.SqlQuery(query).ToList();
+                foreach(var d in data)
+                {
+                    master.Id = d.Id;
+                    master.IP_Address = d.IP_Address;
+                    master.Weight_Diffrence = d.Weight_Diffrence;
+                    master.Barcode_Length = d.Barcode_Length;
+
+                }
+                return master;
+                
+
+
+            }
+
+
+        }
+
+        public List<shiftinfo> getshiftid(string time)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where \'16:12:00\' between start_time and end_time";
+
+                List<shiftinfo> data = db.shiftinfoes.SqlQuery(query).ToList();
+
+                return data;
+
             }
         }
 
