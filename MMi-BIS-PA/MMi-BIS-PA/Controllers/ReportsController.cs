@@ -15,6 +15,7 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult ViewReports()
         {
             List<currentdata> data = new MySqlDatabaseInteraction().GetCurrentData();
+            UpdatePieChart();
             return View(data);
         }
         [HttpGet]
@@ -71,6 +72,7 @@ namespace MMi_BIS_PA.Controllers
         public PartialViewResult GenerateMonthReport(string year,string month)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            UpdatePieChart(year, month);
             List<currentdata> i = sql.GetCurrentData(year, month);
             return PartialView("_generateReport", i);
         }
@@ -80,6 +82,7 @@ namespace MMi_BIS_PA.Controllers
         public PartialViewResult GenerateDayReport(string year,string month,string day)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            UpdatePieChart(year, month, day);
             List<currentdata> i = sql.GetCurrentData(year, month, day);
             return PartialView("_generateReport", i);
         }
@@ -89,6 +92,7 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult GenerateShiftReport(string year, string month, string day,string shift)
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            UpdatePieChart(year, month, day, shift);
             List<currentdata> i = sql.GetCurrentData(year, month, day, shift);
             return PartialView("_generateReport", i);
         }
@@ -101,6 +105,7 @@ namespace MMi_BIS_PA.Controllers
         {
 
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            UpdatePieChart(year);
             List<currentdata> i = sql.GetCurrentData(year);
             return PartialView("_PieChart_report");
         }
@@ -832,6 +837,217 @@ namespace MMi_BIS_PA.Controllers
             string fileName = "Yearly.csv";
             return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
 
+        }
+
+
+        public void UpdatePieChart()
+        {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
+
+        public void UpdatePieChart(string year)
+        {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart(year);
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
+
+        public void UpdatePieChart(string year,string month)
+        {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart(year,month);
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
+
+        public void UpdatePieChart(string year, string month,string day)
+        {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart(year,month,day);
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
+
+        public void UpdatePieChart(string year, string month, string day,string shift)
+        {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart(year,month,day,shift);
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
         }
     }
 }
