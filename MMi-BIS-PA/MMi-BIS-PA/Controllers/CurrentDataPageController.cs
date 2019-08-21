@@ -15,6 +15,7 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult CurrentDataPage()
         {
+            UpdatePieChart();
             return View();
         }
 
@@ -52,7 +53,7 @@ namespace MMi_BIS_PA.Controllers
             // assign start information to the process 
             myProcess.StartInfo = myProcessStartInfo;
 
-            Console.WriteLine("Calling Python script with arguments {0} ", x);
+           // Console.WriteLine("Calling Python script with arguments {0} ", x);
             // start the process 
             myProcess.Start();
             myProcess.WaitForExit();
@@ -66,9 +67,7 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult Delete()
         {
 
-            DB_Model db = new DB_Model();
-            db.tableData.RemoveRange(db.tableData);
-            db.SaveChanges();
+            new MySqlDatabaseInteraction().RemoveTableData();
             return RedirectToAction("CurrentDataPage", "CurrentDataPage");
 
         }
@@ -110,7 +109,7 @@ namespace MMi_BIS_PA.Controllers
 
                 c.wd = i[3].wd;
 
-                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 || c.wd < i[3].set_point)
+                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 && c.wd < i[3].set_point)
                 {
                     c.status = 1;
                 }
@@ -128,6 +127,10 @@ namespace MMi_BIS_PA.Controllers
                 c.date_time = DateTime.Parse(dateT);
                 
                 new MySqlDatabaseInteraction().AddCurrentData(c);
+
+                new MySqlDatabaseInteraction().RemoveTableData();
+
+               // UpdatePieChart();
                 //if (new MySqlDatabaseInteraction().AddCurrentData(c))
                 //{s                //    bool t = true;
                 //}
@@ -135,7 +138,9 @@ namespace MMi_BIS_PA.Controllers
                 //{
                 //    bool t2 = false;
                 //}
+               
             }
+            UpdatePieChart();
             return PartialView("_DataCard", i);
 
 
@@ -144,7 +149,46 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
+        public void UpdatePieChart() {
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1+=1;
+                }
 
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
 
 
     }

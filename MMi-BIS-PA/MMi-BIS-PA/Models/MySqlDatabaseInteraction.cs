@@ -62,6 +62,29 @@ namespace MMi_BIS_PA.Models
 
         }
 
+       
+
+        public bool RemoveTableData()
+        {
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+                    db.tableData.RemoveRange(db.tableData);
+                    db.SaveChanges();
+                 }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+          
+
+
+        }
+        
+
         public bool AddCurrentShiftData(currentshiftdata data)
         {
             //modification needed please check current shift status if the shift have been changed please clean the data and then add new data.
@@ -194,6 +217,8 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+       
+
         public List<currentdata> GetCurrentData(string year, string month,string day)
         {
             using (DB_Model db = new DB_Model())
@@ -204,6 +229,8 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+      
+
         public List<currentdata> GetCurrentData(string year, string month, string day,string shift)
         {
             using (DB_Model db = new DB_Model())
@@ -213,6 +240,8 @@ namespace MMi_BIS_PA.Models
                 return data;
             }
         }
+
+       
 
 
         public List<TableData> GetTableData()
@@ -360,6 +389,78 @@ namespace MMi_BIS_PA.Models
 
         //    }
         //}
+
+        #region pieChart update
+
+        public List<currentdata> UpdatePieChart()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0";
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public int SuccessfulCycleCount()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status!=0";
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data.Count;
+            }
+        }
+
+        public List<currentdata> UpdatePieChart(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and  year(date_time) =" + year;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> UpdatePieChart(string year, string month)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where  status=0 and year(date_time)=" + year + " and month(date_time)=" + month;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> UpdatePieChart(string year, string month, string day)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> UpdatePieChart(string year, string month, string day, string shift)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public float GetWeightDifferenceSetPoint()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                master_table m = GetMasterData();
+                return m.Weight_Diffrence;
+            }
+        }
+        #endregion
 
         #endregion
     }
