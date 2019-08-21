@@ -26,7 +26,7 @@
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid overflow-auto" style="height:100%">
     <div class="row">
 
         @Html.Partial("~/Views/Shared/_NavBar.cshtml")
@@ -47,10 +47,10 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="container-fluid">
+                    <div class="container-fluid overflow-auto">
                         <div class="row" style="height:100%">
 
-                            <div class="container-fluid" style="height:100%">
+                            <div class="container-fluid " style="height:100%">
 
                                 <div class="row" style="height:inherit">
 
@@ -62,7 +62,6 @@
                                         @using (Html.BeginForm("AddMaster", "Master"))
                                         {
 
-                                            <h1><pre>    </pre></h1>
                                            
                                             
                                             <div class="form-group">
