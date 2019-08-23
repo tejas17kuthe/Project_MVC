@@ -48,19 +48,19 @@
                                         <tbody>
 
 
-                                            @{ bool loopSuccess = false;}
+                                            @{ bool loopSuccess = true;}
                                             @{ var data = Model.ToList();}
 
                                             @for (int i = 1; i <= 4; i++)
                                             {
                                                 for (int j = 0; j < data.Count; j++)
                                                 {
-                                                    if (data[j].job_count == i)
+                                                    if (@data[j].job_count == i)
                                                     {
                                                         loopSuccess = true;
                                                         <tr>
-                                                            <th class="center">data[j].qrcode</th>
-                                                            @if (data[j].c1 == 1)
+                                                            <th class="center">@data[j].qrcode.</th>
+                                                            @if (@data[j].c1 == 1)
                                                             {
                                                                 <td class="center">PRESENT</td>
                                                             }
@@ -69,7 +69,7 @@
                                                                 <td class="fail">Missing</td>
                                                             }
 
-                                                            @if (data[j].c2 == 1)
+                                                            @if (@data[j].c2 == 1)
                                                             {
                                                                 <td class="center">PRESENT</td>
                                                             }
@@ -78,7 +78,7 @@
                                                                 <td class="fail">Missing</td>
                                                             }
 
-                                                            @if (data[j].r == 1)
+                                                            @if (@data[j].r == 1)
                                                             {
                                                                 <td class="center">PRESENT</td>
                                                             }
@@ -86,23 +86,28 @@
                                                             {
                                                                 <td class="fail">Missing</td>
                                                             }
-                                                            <td class="center">data[j].w</td><!-- F53B3B-->
+                                                            <td class="center">@data[j].w</td><!-- F53B3B-->
                                                         </tr>
                                                         diff = (float)@data[j].wd;
                                                         st = (float)@data[j].set_point;
                                                         break;
                                                     }
+                                                    else
+                                                    {
+                                                        loopSuccess = false;
+                                                    }
+
 
                                                 }
-                                                if (!loopSuccess)
+                                                if (loopSuccess == false)
                                                 {
                                                     loopSuccess = false;
                                                     <tr>
-                                                        <td>----</td>
-                                                        <td>----</td>
-                                                        <td>----</td>
-                                                        <td>----</td>
-                                                        <td>----</td>
+                                                        <td class="center">-</td>
+                                                        <td class="center">-</td>
+                                                        <td class="center">-</td>
+                                                        <td class="center">-</td>
+                                                        <td class="center">-</td>
                                                     </tr>
                                                     diff = 0;
                                                     st = 0;

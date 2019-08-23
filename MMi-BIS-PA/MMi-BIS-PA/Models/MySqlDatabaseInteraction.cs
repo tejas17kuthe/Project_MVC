@@ -250,7 +250,7 @@ namespace MMi_BIS_PA.Models
 
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.table_data";
+                string query = "select * from db_mmi_bis_pa.table_data order by job_count asc";
 
                 var data = db.tableData.SqlQuery(query).ToList();
 
