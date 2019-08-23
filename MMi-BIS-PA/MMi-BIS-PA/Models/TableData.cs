@@ -27,5 +27,9 @@ namespace MMi_BIS_PA.Models
         public float? wd { get; set; }
 
         public float? set_point { get; set; }
+
+        public int? job_count { get; set; }
+
+        public int? set_count { get; set; }
     }
 }

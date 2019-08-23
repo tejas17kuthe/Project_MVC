@@ -12,121 +12,147 @@
         font-weight: bold;
         text-align: center;
     }
-    .center{
-        text-align:center;
+
+    .center {
+        text-align: center;
     }
 </style>
 
 @{float diff = 0, st = 0;
-<div class="container-fluid">
-    <div class="card shadow mb-3" style="width: 100%; height:65%">
-        <div class="card-header" style="padding:0;background-color:#004883; height:50px">
-            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:25%;">Date : @DateTime.Now.Date.ToShortDateString()</div>
-            <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:25%;"></div>
-            <div style="float:left; font-weight:bold; color:#fff; height:100%; width:25%;"></div>
+    <div class="container-fluid">
+        <div class="card shadow mb-3" style="width: 100%; height:65%">
+            <div class="card-header" style="padding:0;background-color:#004883; height:50px">
+                <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:25%;">Date : @DateTime.Now.Date.ToShortDateString()</div>
+                <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:25%;"></div>
+                <div style="float:left; font-weight:bold; color:#fff; height:100%; width:25%;"></div>
 
-            <div style="padding: 12px 20px 12px 20px; float:left; text-align:right; font-weight :bold; color:#fff; height:100%; width:25%;">Time : @DateTime.Now.ToString("hh:mm tt")</div>
+                <div style="padding: 12px 20px 12px 20px; float:left; text-align:right; font-weight :bold; color:#fff; height:100%; width:25%;">Time : @DateTime.Now.ToString("hh:mm tt")</div>
 
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
-                <div class="row" style="height:100%">
-                    <div class="col-8" style="height:100%;">
-                        <div class="container-fluid">
-                            <div class="row-75">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th class="center" scope="col">QR Code</th>
-                                            <th class="center" scope="col">Circlip 1</th>
-                                            <th class="center" scope="col">Circlip 2</th>
-                                            <th class="center" scope="col">Ring</th>
-                                            <th class="center" scope="col">Weight</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                        @foreach (var data in Model)
-                                        {
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row" style="height:100%">
+                        <div class="col-8" style="height:100%;">
+                            <div class="container-fluid">
+                                <div class="row-75">
+                                    <table class="table table-hover">
+                                        <thead>
                                             <tr>
-                                                <th class="center">@data.qrcode</th>
-                                                @if (data.c1 == 1)
-                                                {
-                                                    <td class="center">PRESENT</td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="fail">Missing</td>
-                                                }
-
-                                                @if (data.c2 == 1)
-                                                {
-                                                    <td class="center">PRESENT</td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="fail">Missing</td>
-                                                }
-
-                                                @if (data.r == 1)
-                                                {
-                                                    <td class="center">PRESENT</td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="fail">Missing</td>
-                                                }
-                                                <td class="center">@data.w</td><!-- F53B3B-->
+                                                <th class="center" scope="col">QR Code</th>
+                                                <th class="center" scope="col">Circlip 1</th>
+                                                <th class="center" scope="col">Circlip 2</th>
+                                                <th class="center" scope="col">Ring</th>
+                                                <th class="center" scope="col">Weight</th>
                                             </tr>
-
-                                            diff =(float)@data.wd;
-                                            st = (float)@data.set_point;
-
-                                        }
+                                        </thead>
+                                        <tbody>
 
 
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row" style="height:50px">
-                            </div>
-                            <div class="row" style="height:50px; width:100%">
+                                            @{ bool loopSuccess = false;}
+                                            @{ var data = Model.ToList();}
 
-                                <div class="col-3 justify-content-end">
-                                    <button type="button" class="btn btn-outline-danger btn-lg">@Html.ActionLink("Reset", "Delete", "CurrentDataPage")</button>
+                                            @for (int i = 1; i <= 4; i++)
+                                            {
+                                                for (int j = 0; j < data.Count; j++)
+                                                {
+                                                    if (data[j].job_count == i)
+                                                    {
+                                                        loopSuccess = true;
+                                                        <tr>
+                                                            <th class="center">data[j].qrcode</th>
+                                                            @if (data[j].c1 == 1)
+                                                            {
+                                                                <td class="center">PRESENT</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="fail">Missing</td>
+                                                            }
+
+                                                            @if (data[j].c2 == 1)
+                                                            {
+                                                                <td class="center">PRESENT</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="fail">Missing</td>
+                                                            }
+
+                                                            @if (data[j].r == 1)
+                                                            {
+                                                                <td class="center">PRESENT</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="fail">Missing</td>
+                                                            }
+                                                            <td class="center">data[j].w</td><!-- F53B3B-->
+                                                        </tr>
+                                                        diff = (float)@data[j].wd;
+                                                        st = (float)@data[j].set_point;
+                                                        break;
+                                                    }
+
+                                                }
+                                                if (!loopSuccess)
+                                                {
+                                                    loopSuccess = false;
+                                                    <tr>
+                                                        <td>----</td>
+                                                        <td>----</td>
+                                                        <td>----</td>
+                                                        <td>----</td>
+                                                        <td>----</td>
+                                                    </tr>
+                                                    diff = 0;
+                                                    st = 0;
+                                                }
+
+                                            }
+
+
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                              
-                                <div class="col-9">
-                                   @if(diff < st)
-                                    {
-                                    <div class="alert alert-dismissible alert-success" style="text-align:center">
-                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                        <strong>Weight Difference : @diff</strong>
+                                <div class="row" style="height:50px">
+                                </div>
+                                <div class="row" style="height:50px; width:100%">
+
+                                    <div class="col-3 justify-content-end">
+                                        <button type="button" class="btn btn-outline-danger btn-lg">@Html.ActionLink("Reset", "Delete", "CurrentDataPage")</button>
                                     </div>
-                                    }
-                                    else
-                                    {
-                                    <div class="alert alert-dismissible alert-danger" style="text-align:center">
-                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                        <strong>Weight Difference : @diff</strong>
+
+                                    <div class="col-9">
+                                        @if (diff < st)
+                                        {
+                                            <div class="alert alert-dismissible alert-success" style="text-align:center">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <strong>Weight Difference : @diff</strong>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-dismissible alert-danger" style="text-align:center">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <strong>Weight Difference : @diff</strong>
+                                            </div>
+                                        }
                                     </div>
-                                    }
                                 </div>
                             </div>
                         </div>
+                        <div class="col-4" style="height:100%; background-color:">
+
+                            @Html.Partial("_PieChart")
+
+                        </div>
+
+
                     </div>
-                    <div class="col-4" style="height:100%; background-color:">
-
-                        @Html.Partial("_PieChart")
-
-                    </div>
-
-
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-    }
+}

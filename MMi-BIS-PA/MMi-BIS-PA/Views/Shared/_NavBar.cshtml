@@ -1,40 +1,38 @@
-﻿<!--
-<nav class="navbar navbar-expand-sm shadow  justify-content-center" style="width:100%; font-weight:bold;">
-    <ul class="navbar-nav navbar-center">
-        <li class="nav-item">
-            @Html.ActionLink("Current Data", "CurrentDataPage", "CurrentDataPage")
-        </li>
+﻿@*<nav class="navbar navbar-expand-sm shadow  justify-content-center" style="width:100%; font-weight:bold;">
+        <ul class="navbar-nav navbar-center">
+            <li class="nav-item">
+                @Html.ActionLink("Current Data", "CurrentDataPage", "CurrentDataPage")
+            </li>
 
-        <li><pre>  </pre>  </li>
-        <li><pre>  </pre>  </li>
+            <li><pre>  </pre>  </li>
+            <li><pre>  </pre>  </li>
 
-        <li class="nav-item">
-            @Html.ActionLink("Reports", "ViewReports", "Reports")
-        </li>
+            <li class="nav-item">
+                @Html.ActionLink("Reports", "ViewReports", "Reports")
+            </li>
 
-        <li><pre>  </pre>  </li>
-        <li><pre>  </pre>  </li>
+            <li><pre>  </pre>  </li>
+            <li><pre>  </pre>  </li>
 
-        <li class="nav-item">
-            @Html.ActionLink("Master", "Master", "Master")
-        </li>
-    </ul>
-</nav>
--->
+            <li class="nav-item">
+                @Html.ActionLink("Master", "Master", "Master")
+            </li>
+        </ul>
+    </nav>*@
 
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-info justify-content-center" style="width:100%;font-weight:bold; ">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light shadow" style="width:100%;font-weight:bold; ">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="@Url.Action("CurrentDataPage", "CurrentDataPage")">Current Page</a>
-              
+    <div id="topheader" class="collapse navbar-collapse justify-content-center" id="navbarColor01">
+        <ul class="navbar-nav d-flex">
+            <li class="nav-item">
+                <a class="nav-link active" href="@Url.Action("CurrentDataPage", "CurrentDataPage")">Current Page</a>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("ViewReports","Reports")">Reports</span></a>
@@ -42,15 +40,23 @@
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Master","Master")">Master Page</span></a>
             </li>
-            
+
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-danger my-2 my-sm-0" type="submit">@Html.ActionLink("Logout", "Index", "Home")</button>
-     
-        </form>
+
     </div>
+    <form class="form-inline my-2 my-lg-0 justify-content-end" style="float:right">
+        @*<button class="btn btn-outline-success my-2 my-sm-0" type="submit">*@ @Html.ActionLink("Logout", "Index", "Home", null, new { @class = "btn btn-outline-success my-2 my-sm-0" })@*</button>*@
+    </form>
 </nav>
 
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#topheader nav-item a').on('click', function () {
+            $(this).addClass('active')
+        })
+    });
+</script>
 
 
 <!--

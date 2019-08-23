@@ -79,6 +79,7 @@ namespace MMi_BIS_PA.Controllers
             if (i.Count == 4)
             {
                 currentdata c = new currentdata();
+                c.unicode = (int)i[0].set_count; 
                 //row 1 data collection
                 c.qr1 = i[0].qrcode;
                 c.c11 = i[0].c1;
