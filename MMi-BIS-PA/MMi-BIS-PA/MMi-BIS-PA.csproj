@@ -260,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDLL\EasyModbus.dll" />
+    <Content Include="ExternalDLL\Interop.CoreScanner.dll" />
     <Content Include="Images\At_new_backdrop.png" />
     <Content Include="Images\At_new_logo.png" />
     <Content Include="Content\bootstrap-litera.css" />
