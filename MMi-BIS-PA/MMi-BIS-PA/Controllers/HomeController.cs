@@ -18,9 +18,11 @@ namespace MMi_BIS_PA.Controllers
 
         [HttpPost]
         public ActionResult Index(string user_name,string password) {
-
+            LoginData id = new LoginData();
+            id.userName = user_name;
+            id.password = password;
             if (new MySqlDatabaseInteraction().AuthenticateUser(user_name, password))
-                return RedirectToAction("CurrentDataPage","CurrentDataPage"); //RedirectToAction(<actionName>,<ControllerName>)
+                return RedirectToAction("CurrentDataPage","CurrentDataPage",id); //RedirectToAction(<actionName>,<ControllerName>)
             else
                 return View();
 

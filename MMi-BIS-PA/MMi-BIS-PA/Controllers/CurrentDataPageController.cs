@@ -6,61 +6,83 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MMi_BIS_PA.Models;
+using CoreScanner;
+using System.Xml;
 
 namespace MMi_BIS_PA.Controllers
 {
     public class CurrentDataPageController : Controller
     {
+        static CCoreScannerClass ccs;
+        static string barcodeData;
+        LoginData id;
+
+        public CurrentDataPageController()
+        {
+            InitializeBarcodeReader();
+            
+        }
+
         [Route("CurrentDataPage/CurrentDataPage")]
         [HttpGet]
-        public ActionResult CurrentDataPage()
+        public ActionResult CurrentDataPage(LoginData id)
         {
+           
             UpdatePieChart();
+            this.id = id;
+           barcodeData = "tejas kuthe";
+            ViewBag.userName = this.id.userName;
+            ViewBag.password = this.id.password;
             return View();
         }
 
         [HttpPost]
         public ActionResult CurrentDataPage(string qr)
         {
-
-            string fname1 = qr;
-
-
-            string python = @"C:\ProgramData\Anaconda3\python.exe";
-
-            // python app to call 
-            string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
-
-            // dummy parameters to send Python script 
-            string x = @fname1;
+            try
+            {
+                string fname1 = qr;
 
 
-            ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
-            myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            myProcessStartInfo.CreateNoWindow = true;
+                string python = @"C:\ProgramData\Anaconda3\python.exe";
+
+                // python app to call 
+                string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
+
+                // dummy parameters to send Python script 
+                string x = @fname1;
 
 
-            // make sure we can read the output from stdout 
-            myProcessStartInfo.UseShellExecute = false;
-            myProcessStartInfo.RedirectStandardOutput = true;
+                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
+                myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                myProcessStartInfo.CreateNoWindow = true;
 
-            // start python app with 3 arguments  
-            // 1st arguments is pointer to itself,  
-            // 2nd and 3rd are actual arguments we want to send 
-            myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
-            Process myProcess = new Process();
-            // assign start information to the process 
-            myProcess.StartInfo = myProcessStartInfo;
+                // make sure we can read the output from stdout 
+                myProcessStartInfo.UseShellExecute = false;
+                myProcessStartInfo.RedirectStandardOutput = true;
 
-           // Console.WriteLine("Calling Python script with arguments {0} ", x);
-            // start the process 
-            myProcess.Start();
-            myProcess.WaitForExit();
-            myProcess.Close();
+                // start python app with 3 arguments  
+                // 1st arguments is pointer to itself,  
+                // 2nd and 3rd are actual arguments we want to send 
+                myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
-            return View();
+                Process myProcess = new Process();
+                // assign start information to the process 
+                myProcess.StartInfo = myProcessStartInfo;
 
+                // Console.WriteLine("Calling Python script with arguments {0} ", x);
+                // start the process 
+                myProcess.Start();
+                myProcess.WaitForExit();
+                myProcess.Close();
+
+                return View();
+            }
+            catch(Exception e)
+            {
+                return Content("There is some problem with the driver please check connection");
+            }
         }
 
         [Route("CurrentDataPage/Delete")]
@@ -76,6 +98,7 @@ namespace MMi_BIS_PA.Controllers
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
+            ViewBag.Barcode = barcodeData;
             if (i.Count == 4)
             {
                 currentdata c = new currentdata();
@@ -191,6 +214,79 @@ namespace MMi_BIS_PA.Controllers
             ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
         }
 
+
+        private void InitializeBarcodeReader()
+        {
+            //Instantiate CoreScanner Class
+            ccs = new CCoreScannerClass();
+            //Call Open API
+            short[] scannerTypes = new short[1];//Scanner Types you are interested in
+            scannerTypes[0] = 1; // 1 for all scanner types
+            short numberOfScannerTypes = 1; // Size of the scannerTypes array
+            int status; // Extended API return code
+            ccs.Open(0, scannerTypes, numberOfScannerTypes, out status);
+            // Subscribe for barcode events in cCoreScannerClass
+            ccs.BarcodeEvent += new _ICoreScannerEvents_BarcodeEventEventHandler(OnBarcodeEvent);
+            // Let's subscribe for events
+            int opcode = 1001; // Method for Subscribe events
+            string outXML; // XML Output
+            string inXML = "<inArgs>" +
+             "<cmdArgs>" +
+             "<arg-int>1</arg-int>" + // Number of events you want to subscribe
+             "<arg-int>1</arg-int>" + // Comma separated event IDs
+             "</cmdArgs>" +
+             "</inArgs>";
+            ccs.ExecCommand(opcode, ref inXML, out outXML, out status);
+        }
+
+        void OnBarcodeEvent(short eventType, ref string pscanData)
+        {
+            string hashcode = "";
+            string barcode = "";
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pscanData);
+
+            XmlElement root = doc.DocumentElement;
+            XmlNodeList elemList = root.GetElementsByTagName("datalabel");
+            if (elemList.Count > 0)
+            {
+                for (int i = 0; i < elemList.Count; i++)
+                {
+                    hashcode = elemList[i].InnerXml;
+                }
+            }
+           
+            barcodeData = getbarcode(hashcode);
+            ViewBag.Barcode = barcodeData;
+            CurrentDataPage(barcodeData);
+            //this.Invoke((MethodInvoker)delegate { txtBarcode.Text = barcode; });
+        }
+
+        string getbarcode(string b)
+        {
+            try
+            {
+                string hex = string.Empty;
+                string ascii = string.Empty;
+
+                for (int i = 0; i < b.Length; i += 4)
+                {
+                    String hs = string.Empty;
+
+                    hs = b.Substring(i, 4);
+
+                    uint decval = System.Convert.ToUInt32(hs, 16);
+                    char character = System.Convert.ToChar(decval);
+                    ascii += character;
+                    i++;
+                }
+
+                return ascii;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            return string.Empty;
+        }
 
     }
 }

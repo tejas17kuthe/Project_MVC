@@ -25,7 +25,7 @@ namespace MMi_BIS_PA.Controllers
             db.Dispose();
         }
         // GET: Master
-        public ActionResult Master()
+        public ActionResult Master(LoginData id)
         {
             master_table master = sql.GetMasterData();
             return View(master);

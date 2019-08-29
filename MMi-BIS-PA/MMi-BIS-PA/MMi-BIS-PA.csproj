@@ -51,6 +51,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.CoreScanner">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Zebra Technologies\Barcode Scanners\Scanner SDK\Scanner SDK\Sample Applications\bin\Interop.CoreScanner.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -237,6 +241,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Barcode.cs" />
+    <Compile Include="Models\LoginAndDataModel.cs" />
+    <Compile Include="Models\LoginData.cs" />
     <Compile Include="Models\master_table.cs" />
     <Compile Include="Models\currentdata.cs" />
     <Compile Include="Models\currentshiftdata.cs" />
