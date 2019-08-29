@@ -13,7 +13,22 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+                string liciencekey = "3e66b20e04b95ef9b95936a1357ac98e";
+                License.License key = new License.License();
+                key.Getkey();
+             
+
+                if (liciencekey == key.License_key)
+                {
+                    return View();
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Contact AT for Licience key');</script>");
+                }
+            
+
+            
         }
 
         [HttpPost]
