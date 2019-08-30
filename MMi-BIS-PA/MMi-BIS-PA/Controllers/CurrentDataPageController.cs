@@ -16,11 +16,11 @@ namespace MMi_BIS_PA.Controllers
         static CCoreScannerClass ccs;
         static string barcodeData;
         LoginData id;
-
+        int i;
         public CurrentDataPageController()
         {
             InitializeBarcodeReader();
-            
+            int i = 0;
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -94,6 +94,7 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
+        [OutputCache(NoStore = true, Location = System.Web.UI.OutputCacheLocation.Client, Duration = 2)]
         public PartialViewResult UpdateTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
