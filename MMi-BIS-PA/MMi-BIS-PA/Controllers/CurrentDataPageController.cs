@@ -16,21 +16,23 @@ namespace MMi_BIS_PA.Controllers
         static CCoreScannerClass ccs;
         static string barcodeData;
         LoginData id;
-        int i;
+        static ProcessStartInfo myProcessStartInfo;
+
         public CurrentDataPageController()
         {
             InitializeBarcodeReader();
-            int i = 0;
+            string python = @"C:\ProgramData\Anaconda3\python.exe";
+            myProcessStartInfo = new ProcessStartInfo(python);
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
         [HttpGet]
         public ActionResult CurrentDataPage(LoginData id)
         {
-           
+
             UpdatePieChart();
             this.id = id;
-           barcodeData = "tejas kuthe";
+            barcodeData = "tejas kuthe";
             ViewBag.userName = this.id.userName;
             ViewBag.password = this.id.password;
             return View();
@@ -41,45 +43,45 @@ namespace MMi_BIS_PA.Controllers
         {
             try
             {
-                string fname1 = qr;
+                //string fname1 = qr;
 
 
-                string python = @"C:\ProgramData\Anaconda3\python.exe";
+                //string python = @"C:\ProgramData\Anaconda3\python.exe";
 
-                // python app to call 
-                string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
+                //// python app to call 
+                //string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
 
-                // dummy parameters to send Python script 
-                string x = @fname1;
-
-
-                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
-                myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                myProcessStartInfo.CreateNoWindow = true;
+                //// dummy parameters to send Python script 
+                //string x = @fname1;
 
 
-                // make sure we can read the output from stdout 
-                myProcessStartInfo.UseShellExecute = false;
-                myProcessStartInfo.RedirectStandardOutput = true;
+                //ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
+                //myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                //myProcessStartInfo.CreateNoWindow = true;
 
-                // start python app with 3 arguments  
-                // 1st arguments is pointer to itself,  
-                // 2nd and 3rd are actual arguments we want to send 
-                myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
-                Process myProcess = new Process();
-                // assign start information to the process 
-                myProcess.StartInfo = myProcessStartInfo;
+                //// make sure we can read the output from stdout 
+                //myProcessStartInfo.UseShellExecute = false;
+                //myProcessStartInfo.RedirectStandardOutput = true;
 
-                // Console.WriteLine("Calling Python script with arguments {0} ", x);
-                // start the process 
-                myProcess.Start();
-                myProcess.WaitForExit();
-                myProcess.Close();
+                //// start python app with 3 arguments  
+                //// 1st arguments is pointer to itself,  
+                //// 2nd and 3rd are actual arguments we want to send 
+                //myProcessStartInfo.Arguments = myPythonApp + " " + x;
+
+                //Process myProcess = new Process();
+                //// assign start information to the process 
+                //myProcess.StartInfo = myProcessStartInfo;
+
+                //// Console.WriteLine("Calling Python script with arguments {0} ", x);
+                //// start the process 
+                //myProcess.Start();
+                //myProcess.WaitForExit();
+                //myProcess.Close();
 
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Content("There is some problem with the driver please check connection");
             }
@@ -94,7 +96,6 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
-        [OutputCache(NoStore = true, Location = System.Web.UI.OutputCacheLocation.Client, Duration = 2)]
         public PartialViewResult UpdateTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
@@ -103,7 +104,7 @@ namespace MMi_BIS_PA.Controllers
             if (i.Count == 4)
             {
                 currentdata c = new currentdata();
-                c.unicode = (int)i[0].set_count; 
+                
                 //row 1 data collection
                 c.qr1 = i[0].qrcode;
                 c.c11 = i[0].c1;
@@ -150,12 +151,12 @@ namespace MMi_BIS_PA.Controllers
                 string time = DateTime.Now.ToString("HH:mm:ss");
                 string dateT = date + " " + time;
                 c.date_time = DateTime.Parse(dateT);
-                
+
                 new MySqlDatabaseInteraction().AddCurrentData(c);
 
                 new MySqlDatabaseInteraction().RemoveTableData();
 
-               // UpdatePieChart();
+                // UpdatePieChart();
                 //if (new MySqlDatabaseInteraction().AddCurrentData(c))
                 //{s                //    bool t = true;
                 //}
@@ -163,7 +164,7 @@ namespace MMi_BIS_PA.Controllers
                 //{
                 //    bool t2 = false;
                 //}
-               
+
             }
             UpdatePieChart();
             return PartialView("_DataCard", i);
@@ -174,7 +175,8 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
-        public void UpdatePieChart() {
+        public void UpdatePieChart()
+        {
             List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
             int c1 = 0;
             int c2 = 0;
@@ -184,7 +186,7 @@ namespace MMi_BIS_PA.Controllers
             {
                 if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
                 {
-                    c1+=1;
+                    c1 += 1;
                 }
 
 
@@ -240,7 +242,7 @@ namespace MMi_BIS_PA.Controllers
             ccs.ExecCommand(opcode, ref inXML, out outXML, out status);
         }
 
-        void OnBarcodeEvent(short eventType, ref string pscanData)
+        public void OnBarcodeEvent(short eventType, ref string pscanData)
         {
             string hashcode = "";
             string barcode = "";
@@ -256,10 +258,11 @@ namespace MMi_BIS_PA.Controllers
                     hashcode = elemList[i].InnerXml;
                 }
             }
-           
+
             barcodeData = getbarcode(hashcode);
             ViewBag.Barcode = barcodeData;
-            CurrentDataPage(barcodeData);
+            CallPythonDriver(barcodeData);
+           
             //this.Invoke((MethodInvoker)delegate { txtBarcode.Text = barcode; });
         }
 
@@ -289,5 +292,48 @@ namespace MMi_BIS_PA.Controllers
             return string.Empty;
         }
 
+        private void CallPythonDriver(string qr)
+        {
+            try
+            {
+                string fname1 = qr;
+
+                // python app to call 
+                string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
+
+                // dummy parameters to send Python script 
+                string x = @fname1;
+
+
+                
+                myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                myProcessStartInfo.CreateNoWindow = true;
+
+
+                // make sure we can read the output from stdout 
+                myProcessStartInfo.UseShellExecute = false;
+                myProcessStartInfo.RedirectStandardOutput = true;
+
+                // start python app with 3 arguments  
+                // 1st arguments is pointer to itself,  
+                // 2nd and 3rd are actual arguments we want to send 
+                myProcessStartInfo.Arguments = myPythonApp + " " + x;
+
+                Process myProcess = new Process();
+                // assign start information to the process 
+                myProcess.StartInfo = myProcessStartInfo;
+
+                // Console.WriteLine("Calling Python script with arguments {0} ", x);
+                // start the process 
+                myProcess.Start();
+                myProcess.WaitForExit();
+                myProcess.Close();
+            }
+            catch (Exception e)
+            {
+                // return Content("There is some problem with the driver please check connection");
+            }
+        }
     }
 }
+

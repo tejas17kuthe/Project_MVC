@@ -88,7 +88,8 @@
                                                             }
                                                             <td class="center">@data[j].w</td><!-- F53B3B-->
                                                         </tr>
-                                                        diff = (float)@data[j].wd;
+                                                        if (diff < (float)@data[j].wd)
+                                                        { diff = (float)@data[j].wd; }
                                                         st = (float)@data[j].set_point;
                                                         break;
                                                     }
@@ -109,8 +110,8 @@
                                                         <td class="center">-</td>
                                                         <td class="center">-</td>
                                                     </tr>
-                                                    diff = 0;
-                                                    st = 0;
+                                                    //diff = diff;
+                                                    //st = 0;
                                                 }
 
                                             }
