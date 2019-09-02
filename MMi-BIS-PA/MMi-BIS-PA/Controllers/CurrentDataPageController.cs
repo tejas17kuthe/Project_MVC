@@ -292,8 +292,15 @@ namespace MMi_BIS_PA.Controllers
             return string.Empty;
         }
 
+  
+
+
+
+
+
         private void CallPythonDriver(string qr)
         {
+
             try
             {
                 string fname1 = qr;
@@ -305,7 +312,7 @@ namespace MMi_BIS_PA.Controllers
                 string x = @fname1;
 
 
-                
+
                 myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 myProcessStartInfo.CreateNoWindow = true;
 
@@ -320,14 +327,22 @@ namespace MMi_BIS_PA.Controllers
                 myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
                 Process myProcess = new Process();
-                // assign start information to the process 
-                myProcess.StartInfo = myProcessStartInfo;
+                Process[] pname = Process.GetProcessesByName("notepad");
+
+               if (pname.Length < 2)
+
+                { 
+                    // assign start information to the process 
+                    myProcess.StartInfo = myProcessStartInfo;
 
                 // Console.WriteLine("Calling Python script with arguments {0} ", x);
-                // start the process 
+                // start the process
+
                 myProcess.Start();
                 myProcess.WaitForExit();
                 myProcess.Close();
+                }
+
             }
             catch (Exception e)
             {
