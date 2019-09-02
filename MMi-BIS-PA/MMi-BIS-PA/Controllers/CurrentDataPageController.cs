@@ -17,12 +17,15 @@ namespace MMi_BIS_PA.Controllers
         static string barcodeData;
         LoginData id;
         static ProcessStartInfo myProcessStartInfo;
-
+        PiechartData p;
+        int i;
         public CurrentDataPageController()
         {
             InitializeBarcodeReader();
             string python = @"C:\ProgramData\Anaconda3\python.exe";
             myProcessStartInfo = new ProcessStartInfo(python);
+            p = new PiechartData();
+            i = 0;
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -33,8 +36,8 @@ namespace MMi_BIS_PA.Controllers
             UpdatePieChart();
             this.id = id;
             barcodeData = "tejas kuthe";
-            ViewBag.userName = this.id.userName;
-            ViewBag.password = this.id.password;
+            //ViewBag.userName = this.id.userName;
+            //ViewBag.password = this.id.password;
             return View();
         }
 
@@ -96,15 +99,16 @@ namespace MMi_BIS_PA.Controllers
 
         }
 
+
         public PartialViewResult UpdateTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
-            ViewBag.Barcode = barcodeData;
+            ViewBag.Barcode = ++this.i;
             if (i.Count == 4)
             {
                 currentdata c = new currentdata();
-                
+
                 //row 1 data collection
                 c.qr1 = i[0].qrcode;
                 c.c11 = i[0].c1;
@@ -154,7 +158,7 @@ namespace MMi_BIS_PA.Controllers
 
                 new MySqlDatabaseInteraction().AddCurrentData(c);
 
-                new MySqlDatabaseInteraction().RemoveTableData();
+               
 
                 // UpdatePieChart();
                 //if (new MySqlDatabaseInteraction().AddCurrentData(c))
@@ -167,7 +171,7 @@ namespace MMi_BIS_PA.Controllers
 
             }
             UpdatePieChart();
-            return PartialView("_DataCard", i);
+            return PartialView("_DataCardContent", i);
 
 
 
@@ -210,12 +214,17 @@ namespace MMi_BIS_PA.Controllers
                 }
             }
 
-            ViewBag.clip1 = c1;
-            ViewBag.clip2 = c2;
-            ViewBag.ring = r;
-            ViewBag.weight = w;
-            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
-        }
+
+            p.clip1 = c1;
+            p.clip2 = c2;
+            p.ring = r;
+            p.weight = w;
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+
+        
+           ViewBag.pieData = p;
+       
+    }
 
 
         private void InitializeBarcodeReader()
@@ -261,7 +270,16 @@ namespace MMi_BIS_PA.Controllers
 
             barcodeData = getbarcode(hashcode);
             ViewBag.Barcode = barcodeData;
-            CallPythonDriver(barcodeData);
+
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> temp = sql.GetTableData();
+            ViewBag.Barcode = ++this.i;
+            if (temp.Count == 4)
+            {
+                new MySqlDatabaseInteraction().RemoveTableData();
+            }
+
+                CallPythonDriver(barcodeData);
            
             //this.Invoke((MethodInvoker)delegate { txtBarcode.Text = barcode; });
         }

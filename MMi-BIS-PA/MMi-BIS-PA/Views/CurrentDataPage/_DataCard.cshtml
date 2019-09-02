@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MMi_BIS_PA.Models.TableData>
+﻿@using MMi_BIS_PA.Models
 <style>
     .bg-success {
         color: #FFFFFF;
@@ -32,126 +32,13 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row" style="height:100%">
-                        <div class="col-8" style="height:100%;">
-                            <div class="container-fluid">
-                                <div class="row-75">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="center" scope="col">@ViewBag.Barcode</th>
-                                                <th class="center" scope="col">Circlip 1</th>
-                                                <th class="center" scope="col">Circlip 2</th>
-                                                <th class="center" scope="col">Ring</th>
-                                                <th class="center" scope="col">Weight</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-                                            @{ bool loopSuccess = true;}
-                                            @{ var data = Model.ToList();}
-
-                                            @for (int i = 1; i <= 4; i++)
-                                            {
-                                                for (int j = 0; j < data.Count; j++)
-                                                {
-                                                    if (@data[j].job_count == i)
-                                                    {
-                                                        loopSuccess = true;
-                                                        <tr>
-                                                            <th class="center">@data[j].qrcode.</th>
-                                                            @if (@data[j].c1 == 1)
-                                                            {
-                                                                <td class="center">PRESENT</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td class="fail">Missing</td>
-                                                            }
-
-                                                            @if (@data[j].c2 == 1)
-                                                            {
-                                                                <td class="center">PRESENT</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td class="fail">Missing</td>
-                                                            }
-
-                                                            @if (@data[j].r == 1)
-                                                            {
-                                                                <td class="center">PRESENT</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td class="fail">Missing</td>
-                                                            }
-                                                            <td class="center">@data[j].w</td><!-- F53B3B-->
-                                                        </tr>
-                                                        if (diff < (float)@data[j].wd)
-                                                        { diff = (float)@data[j].wd; }
-                                                        st = (float)@data[j].set_point;
-                                                        break;
-                                                    }
-                                                    else
-                                                    {
-                                                        loopSuccess = false;
-                                                    }
-
-
-                                                }
-                                                if (loopSuccess == false)
-                                                {
-                                                    loopSuccess = false;
-                                                    <tr>
-                                                        <td class="center">-</td>
-                                                        <td class="center">-</td>
-                                                        <td class="center">-</td>
-                                                        <td class="center">-</td>
-                                                        <td class="center">-</td>
-                                                    </tr>
-                                                    //diff = diff;
-                                                    //st = 0;
-                                                }
-
-                                            }
-
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row" style="height:50px">
-                                </div>
-                                <div class="row" style="height:50px; width:100%">
-
-                                    <div class="col-3 justify-content-end">
-                                        <button type="button" class="btn btn-outline-danger btn-lg">@Html.ActionLink("Reset", "Delete", "CurrentDataPage")</button>
-                                    </div>
-
-                                    <div class="col-9">
-                                        @if (diff < st)
-                                        {
-                                            <div class="alert alert-dismissible alert-success" style="text-align:center">
-                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                <strong>Weight Difference : @diff</strong>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="alert alert-dismissible alert-danger" style="text-align:center">
-                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                <strong>Weight Difference : @diff</strong>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="dataCard" class="col-8" style="height:100%;">
+                            @{ Html.RenderAction("UpdateTable");}
                         </div>
-                        <div class="col-4" style="height:100%; background-color:">
+                        <div id="piechart" class="col-4" style="height:100%; background-color:">
 
                             @Html.Partial("_PieChart")
-
+                            <button id="updatePie" type="button" class="btn btn-outline-danger btn-lg">update Chard</button>
                         </div>
 
 
@@ -162,3 +49,57 @@
     </div>
 
 }
+
+
+
+
+
+@{
+    var pieData = ViewBag.pieData;
+}
+
+
+
+
+<script>
+    //let myChart = document.getElementById('myChart').getContext('2d');
+    $(document).ready(function () {
+        //alert("executed")
+       updateChart();
+    });
+
+
+     function updateChart() {
+        // console.log("inside update chart");
+        //massPopChart.destroy();
+        massPopChart.data.datasets[0].data = [
+           @pieData.clip1,
+           @pieData.clip2,
+           @pieData.ring,
+           @pieData.weight,
+           @pieData.TotalSuccessfulCycles
+            //12,11,21,31,200
+
+         ];
+         // console.dir(massPopChart);
+         console.log("");
+        console.log(@pieData.clip1);
+        console.log(@pieData.clip2);
+        console.log(@pieData.ring);
+        console.log(@pieData.weight);
+        console.log(@pieData.TotalSuccessfulCycles);
+         massPopChart.update();
+
+    }
+
+
+
+    $(document).ready(function () {
+
+        $('#updatePie').click(function () {
+            updateChart();
+        });
+    });
+
+
+</script>

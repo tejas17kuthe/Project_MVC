@@ -245,6 +245,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModbusTCP_IP.cs" />
     <Compile Include="Models\MySqlDatabaseInteraction.cs" />
+    <Compile Include="Models\PiechartData.cs" />
     <Compile Include="Models\shiftinfo.cs" />
     <Compile Include="Models\TableData.cs" />
     <Compile Include="Models\userinfo.cs" />
@@ -345,9 +346,11 @@
     <Content Include="Views\Reports\_PieChart_report.cshtml" />
     <Content Include="Views\Master\Master.cshtml" />
     <Content Include="Views\Reports\_generateReport.cshtml" />
+    <Content Include="Views\CurrentDataPage\_DataCardContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BarcodeScannerInstall\" />
     <Folder Include="Download_Reports\" />
   </ItemGroup>
   <ItemGroup>

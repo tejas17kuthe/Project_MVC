@@ -1,9 +1,34 @@
-﻿@model MMi_BIS_PA.Models.LoginData
+﻿
+@model MMi_BIS_PA.Models.LoginData
 @{
     ViewBag.Title = "CurrentDataPage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+   
+    function updateTbl() {
+        //alert("inside function")
+        window.setInterval(function () {           
+            $('#dataCard').load("/CurrentDataPage/UpdateTable");
+            updateChart();         
+        }, 2000);
+    }
+
+    function myFunction() {
+
+    }
+
+    $(document).ready(function () {
+        //alert("executed")
+        updateTbl();
+    });
+
+
+
+</script>
 
 <div class="container-fluid overflow-auto" style="height:100%">
     <div class="row">
@@ -22,22 +47,22 @@
 
                     </div>
 
-                    <div class="col-6 align-content-center" style="text-align:center">
-                    
-                            @Html.Partial("_SearchBar")
-                           
-                       
+                    <div id="barcodeLabel" class="col-6 align-content-center" style="text-align:center">
+
+                        @Html.Partial("_SearchBar")
+
+
                     </div>
                     <div class="col-3"></div>
 
                 </div>
 
-                <div class="row" style="height:85%">
-                    @{Html.RenderAction("UpdateTable");}
+                <div  class="row" style="height:85%">
+                    @Html.Partial("_DataCard")
                 </div>
 
                 <div class="row" style="height:50px;"></div>
-
+                
             </div>
         </div>
 
@@ -45,12 +70,6 @@
 
     </div>
 </div>
-
-
-
-
-
-
 
 
 
