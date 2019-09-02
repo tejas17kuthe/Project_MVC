@@ -1,14 +1,33 @@
-﻿@model MMi_BIS_PA.Models.LoginData
+﻿
+@model MMi_BIS_PA.Models.LoginData
 @{
     ViewBag.Title = "CurrentDataPage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script type=”text/javascript”>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+   
+    function updateTbl() {
+        //alert("inside function")
+        window.setInterval(function () {           
+            $('#dataCard').load("/CurrentDataPage/UpdateTable");
+            updateChart();         
+        }, 2000);
+    }
 
-    setInterval(“$(‘#_recentfive’).load(‘CurrentDataPage/UpdateTable’)”,2000);
+    function myFunction() {
+
+    }
+
+    $(document).ready(function () {
+        //alert("executed")
+        updateTbl();
+    });
+
+
+
 </script>
 
 <div class="container-fluid overflow-auto" style="height:100%">
@@ -38,12 +57,12 @@
 
                 </div>
 
-                <div id="dataCard" class="row" style="height:85%">
-                    @{Html.RenderAction("UpdateTable");}
+                <div  class="row" style="height:85%">
+                    @Html.Partial("_DataCard")
                 </div>
 
                 <div class="row" style="height:50px;"></div>
-
+                
             </div>
         </div>
 
@@ -51,12 +70,6 @@
 
     </div>
 </div>
-
-
-
-
-
-
 
 
 

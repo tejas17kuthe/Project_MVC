@@ -1,8 +1,17 @@
-﻿<div class="container-fluid" style="height:100%;width:100%; background-color:#">
+﻿
+
+<div class="container-fluid" style="height:100%;width:100%; background-color:#">
 
     <canvas id="myChart" style="height:100%;width:100%"></canvas>
 
 </div>
+
+@{
+    var pieData = ViewBag.pieData;
+}
+
+
+
 
 <script>
     let myChart = document.getElementById('myChart').getContext('2d');
@@ -10,15 +19,15 @@
     let massPopChart = new Chart(myChart,{
       type:'pie',
       data:{
-        
+
         datasets:[{
           label:'Population',
           data:[
-           @ViewBag.clip1,
-           @ViewBag.clip2,
-           @ViewBag.ring,
-           @ViewBag.weight,
-           @ViewBag.TotalSuccessfulCycles
+           @pieData.clip1,
+           @pieData.clip2,
+           @pieData.ring,
+           @pieData.weight,
+           @pieData.TotalSuccessfulCycles
 
 
           ],
@@ -49,4 +58,7 @@
       }
 
     });
+
+   
 </script>
+
