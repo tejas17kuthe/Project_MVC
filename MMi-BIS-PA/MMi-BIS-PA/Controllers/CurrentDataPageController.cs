@@ -18,13 +18,18 @@ namespace MMi_BIS_PA.Controllers
         LoginData id;
         static ProcessStartInfo myProcessStartInfo;
         PiechartData p;
+        Barcode b;
         int i;
+        static string barcode = "";
+        bool initializeFlag;
+
         public CurrentDataPageController()
         {
-            InitializeBarcodeReader();
+           
             string python = @"C:\ProgramData\Anaconda3\python.exe";
             myProcessStartInfo = new ProcessStartInfo(python);
             p = new PiechartData();
+            b = new Barcode();
             i = 0;
         }
 
@@ -32,10 +37,15 @@ namespace MMi_BIS_PA.Controllers
         [HttpGet]
         public ActionResult CurrentDataPage(LoginData id)
         {
+            InitializeBarcodeReader();
+            initializeFlag = true;
 
             UpdatePieChart();
             this.id = id;
-            barcodeData = "tejas kuthe";
+            barcodeData = "Please Scan the QR Code";
+            b.Data = barcodeData;
+            //b.Data = "No Barcode Scanned";
+            //ViewBag.Barcode = b;
             //ViewBag.userName = this.id.userName;
             //ViewBag.password = this.id.password;
             return View();
@@ -44,44 +54,9 @@ namespace MMi_BIS_PA.Controllers
         [HttpPost]
         public ActionResult CurrentDataPage(string qr)
         {
+            InitializeBarcodeReader();
             try
             {
-                //string fname1 = qr;
-
-
-                //string python = @"C:\ProgramData\Anaconda3\python.exe";
-
-                //// python app to call 
-                //string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
-
-                //// dummy parameters to send Python script 
-                //string x = @fname1;
-
-
-                //ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
-                //myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                //myProcessStartInfo.CreateNoWindow = true;
-
-
-                //// make sure we can read the output from stdout 
-                //myProcessStartInfo.UseShellExecute = false;
-                //myProcessStartInfo.RedirectStandardOutput = true;
-
-                //// start python app with 3 arguments  
-                //// 1st arguments is pointer to itself,  
-                //// 2nd and 3rd are actual arguments we want to send 
-                //myProcessStartInfo.Arguments = myPythonApp + " " + x;
-
-                //Process myProcess = new Process();
-                //// assign start information to the process 
-                //myProcess.StartInfo = myProcessStartInfo;
-
-                //// Console.WriteLine("Calling Python script with arguments {0} ", x);
-                //// start the process 
-                //myProcess.Start();
-                //myProcess.WaitForExit();
-                //myProcess.Close();
-
                 return View();
             }
             catch (Exception e)
@@ -100,7 +75,7 @@ namespace MMi_BIS_PA.Controllers
         }
 
 
-        public PartialViewResult UpdateTable()
+        public void AddDataIntoCurrentTable()
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
@@ -158,26 +133,27 @@ namespace MMi_BIS_PA.Controllers
 
                 new MySqlDatabaseInteraction().AddCurrentData(c);
 
-               
-
-                // UpdatePieChart();
-                //if (new MySqlDatabaseInteraction().AddCurrentData(c))
-                //{s                //    bool t = true;
-                //}
-                //else
-                //{
-                //    bool t2 = false;
-                //}
-
+               // new MySqlDatabaseInteraction().RemoveTableData();
             }
-            UpdatePieChart();
-            return PartialView("_DataCardContent", i);
-
-
-
-
 
         }
+
+        public PartialViewResult UpdateBarcode()
+        {
+            b.Data = barcodeData.ToString();
+            ViewBag.Barcode = b;
+            return PartialView("_SearchBar");
+        }
+
+        public PartialViewResult UpdateTable()
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            UpdatePieChart();
+            return PartialView("_DataCardContent", i);
+        }
+
+
 
         public void UpdatePieChart()
         {
@@ -220,15 +196,17 @@ namespace MMi_BIS_PA.Controllers
             p.ring = r;
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.Barcode = barcodeData;
+            
 
-        
-           ViewBag.pieData = p;
-       
-    }
+            ViewBag.pieData = p;
+
+        }
 
 
         private void InitializeBarcodeReader()
         {
+
             //Instantiate CoreScanner Class
             ccs = new CCoreScannerClass();
             //Call Open API
@@ -249,12 +227,22 @@ namespace MMi_BIS_PA.Controllers
              "</cmdArgs>" +
              "</inArgs>";
             ccs.ExecCommand(opcode, ref inXML, out outXML, out status);
+            string text = "initialized " + status.ToString();
+            //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\logs\mahindra.txt"))
+            //{
+            //    file.WriteLine(text);
+            //}
+           
+            //System.IO.File.WriteAllText(@"E:\logs\mahindra.txt", text);
+
+           
+
         }
 
         public void OnBarcodeEvent(short eventType, ref string pscanData)
         {
             string hashcode = "";
-            string barcode = "";
+            
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(pscanData);
 
@@ -269,18 +257,23 @@ namespace MMi_BIS_PA.Controllers
             }
 
             barcodeData = getbarcode(hashcode);
-            ViewBag.Barcode = barcodeData;
+            //b.Data = barcode;
+            //ViewBag.Barcode = b;
+            string textbar = "Barcode " + barcodeData;
+            bool flag = barcodeData.Equals(barcode);
+            //if (!flag)
+            //{
+            //    barcode = barcodeData;
+            //    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\logs\barcode.txt", true))
+            //    {
+            //        file.WriteLine(textbar);
+            //        file.Close();
+            //    }
+            //}
+            AddDataIntoCurrentTable();
 
-            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
-            List<TableData> temp = sql.GetTableData();
-            ViewBag.Barcode = ++this.i;
-            if (temp.Count == 4)
-            {
-                new MySqlDatabaseInteraction().RemoveTableData();
-            }
+            CallPythonDriver(barcodeData);
 
-                CallPythonDriver(barcodeData);
-           
             //this.Invoke((MethodInvoker)delegate { txtBarcode.Text = barcode; });
         }
 
@@ -310,7 +303,7 @@ namespace MMi_BIS_PA.Controllers
             return string.Empty;
         }
 
-  
+
 
 
 
@@ -345,21 +338,21 @@ namespace MMi_BIS_PA.Controllers
                 myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
                 Process myProcess = new Process();
-                Process[] pname = Process.GetProcessesByName("notepad");
+               // Process[] pname = Process.GetProcessesByName("notepad");
 
-               if (pname.Length < 2)
+                //if (pname.Length < 2)
 
-                { 
+                //{
                     // assign start information to the process 
                     myProcess.StartInfo = myProcessStartInfo;
 
-                // Console.WriteLine("Calling Python script with arguments {0} ", x);
-                // start the process
+                    // Console.WriteLine("Calling Python script with arguments {0} ", x);
+                    // start the process
 
-                myProcess.Start();
-                myProcess.WaitForExit();
-                myProcess.Close();
-                }
+                    myProcess.Start();
+                    myProcess.WaitForExit();
+                    myProcess.Close();
+               // }
 
             }
             catch (Exception e)

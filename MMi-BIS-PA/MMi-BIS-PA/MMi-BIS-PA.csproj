@@ -274,6 +274,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile4.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile5.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile6.pubxml" />

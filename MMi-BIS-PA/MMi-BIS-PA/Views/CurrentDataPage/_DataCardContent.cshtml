@@ -20,6 +20,10 @@
     }
 </style>
 @{float diff = 0, st = 0; }
+@{ var Barcode = ViewBag.b; }
+@{
+    var pieData = ViewBag.pieData;
+}
 
 <div class="container-fluid">
     <div class="row-75">
@@ -133,12 +137,11 @@
                     <strong>Weight Difference : @diff</strong>
                 </div>
             }
+            <strong>@pieData.Barcode</strong>
         </div>
     </div>
 </div>
-@{
-    var pieData = ViewBag.pieData;
-}
+
 
 <script>
 

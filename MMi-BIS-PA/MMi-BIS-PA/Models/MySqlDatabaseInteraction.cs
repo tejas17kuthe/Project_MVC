@@ -40,8 +40,6 @@ namespace MMi_BIS_PA.Models
         public bool AddCurrentData(currentdata currentdata)
         {
 
-            //try
-            //{
                 using (DB_Model db = new DB_Model())
                     {
 
@@ -53,12 +51,6 @@ namespace MMi_BIS_PA.Models
 
 
                 }
-            //}
-            //catch (Exception e)
-            //{
-
-            //    return false;
-            //}
 
         }
 

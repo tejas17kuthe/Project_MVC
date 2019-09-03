@@ -11,8 +11,10 @@
    
     function updateTbl() {
         //alert("inside function")
-        window.setInterval(function () {           
+        window.setInterval(function () {   
+            $('#barcode').load("/CurrentDataPage/UpdateBarcode");
             $('#dataCard').load("/CurrentDataPage/UpdateTable");
+           
             updateChart();         
         }, 2000);
     }
@@ -47,9 +49,9 @@
 
                     </div>
 
-                    <div id="barcodeLabel" class="col-6 align-content-center" style="text-align:center">
+                    <div id="barcode" class="col-6 align-content-center" style="text-align:center">
 
-                        @Html.Partial("_SearchBar")
+                        @{ Html.RenderAction("UpdateBarcode");}
 
 
                     </div>

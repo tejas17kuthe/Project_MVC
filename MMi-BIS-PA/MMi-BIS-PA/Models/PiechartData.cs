@@ -12,5 +12,6 @@ namespace MMi_BIS_PA.Models
         public int ring { get; set; }
         public int weight { get; set; }
         public int TotalSuccessfulCycles { get; set; }
+        public string Barcode { get; set; }
     }
 }
