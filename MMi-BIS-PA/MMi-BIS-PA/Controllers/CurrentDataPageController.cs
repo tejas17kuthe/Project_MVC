@@ -22,18 +22,16 @@ namespace MMi_BIS_PA.Controllers
         int i;
         static string barcode = "";
         static int barcodeEventCallCount;
+        static int barcodeEventCallCount2;
         static List<string> scannedBarcodeList;
         bool initializeFlag;
-
+        static int tableCount;
         public CurrentDataPageController()
         {
-
-            string python = @"C:\ProgramData\Anaconda3\python.exe";
-            myProcessStartInfo = new ProcessStartInfo(python);
             p = new PiechartData();
             b = new Barcode();
-            i = 0;
-          
+
+
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -41,6 +39,11 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult CurrentDataPage(LoginData id)
         {
             InitializeBarcodeReader();
+            string python = @"C:\ProgramData\Anaconda3\python.exe";
+            myProcessStartInfo = new ProcessStartInfo(python);
+           
+            i = 0;
+            scannedBarcodeList = new List<string>();
             barcodeEventCallCount = 0;
             initializeFlag = true;
             barcode = "initial QR Code";
@@ -48,6 +51,7 @@ namespace MMi_BIS_PA.Controllers
             this.id = id;
             barcodeData = "Please Scan the QR Code";
             b.Data = barcodeData;
+
             //b.Data = "No Barcode Scanned";
             //ViewBag.Barcode = b;
             //ViewBag.userName = this.id.userName;
@@ -215,6 +219,7 @@ namespace MMi_BIS_PA.Controllers
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
+            tableCount = i.Count;
             UpdatePieChart();
             return PartialView("_DataCardContent", i);
         }
@@ -301,7 +306,7 @@ namespace MMi_BIS_PA.Controllers
         public void OnBarcodeEvent(short eventType, ref string pscanData)
         {
 
-            // ++barcodeEventCallCount;
+            ++barcodeEventCallCount2;
             string hashcode = "";
 
             XmlDocument doc = new XmlDocument();
@@ -317,14 +322,26 @@ namespace MMi_BIS_PA.Controllers
                 }
             }
             string temp = getbarcode(hashcode);
+            if (tableCount < 1)
+            {
+                scannedBarcodeList.Clear();
+
+            }
+
+            if (tableCount == 1)
+            {
+                scannedBarcodeList.Clear();
+                scannedBarcodeList.Add(barcodeData);
+            }
+
             bool countFlag = temp.Equals(barcode);
-            if (!countFlag && !scannedBarcodeList.Contains(temp))
+            if (!countFlag)
             {
                 if (barcodeEventCallCount == 0)
                 {
                     barcodeEventCallCount = 1;
                     barcodeData = temp;
-                    scannedBarcodeList.Add(barcodeData);
+                    //scannedBarcodeList.Add(barcodeData);
                     barcode = barcodeData;
                     AddDataIntoCurrentTable();
                     CallPythonDriver(barcodeData);
@@ -337,7 +354,7 @@ namespace MMi_BIS_PA.Controllers
             else
             {
                 barcodeEventCallCount = 0;
-                barcodeData = "same";
+               //barcodeData = barcodeEventCallCount2.ToString();
             }
             //if (barcodeEventCallCount == 1)
             //{
@@ -428,7 +445,7 @@ namespace MMi_BIS_PA.Controllers
 
                     // Console.WriteLine("Calling Python script with arguments {0} ", x);
                     // start the process
-
+                    
                     myProcess.Start();
                     myProcess.WaitForExit();
                     myProcess.Close();
