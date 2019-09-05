@@ -10,7 +10,14 @@
     </div>
     <div class="row" style="height:20%;">
         <div class="col">
-            <h1>@Barcode.Data</h1>
+            @if (Barcode.Data == "same")
+            {
+                <h1 class="danger">Same Barcode Scanned</h1>
+            }
+            else
+            {
+                <h1>@Barcode.Data</h1>
+            }
         </div>
 
 

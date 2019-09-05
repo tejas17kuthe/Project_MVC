@@ -126,6 +126,7 @@ namespace MMi_BIS_PA.Models
 
         }
 
+        
 
         public bool AddUserInfo(userinfo data)
         {
@@ -180,6 +181,17 @@ namespace MMi_BIS_PA.Models
 
 
         #region retrieving data from the database
+
+        public int GetCurrentShiftTotalJobCount()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata group by shiftid";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data.Count;
+            }
+        }
+
         public int GetCurrentShiftDataShiftID()
         {
             using (DB_Model db = new DB_Model())
@@ -424,12 +436,12 @@ namespace MMi_BIS_PA.Models
 
         #region pieChart update
 
-        public List<currentdata> UpdatePieChart()
+        public List<currentshiftdata> UpdatePieChart()
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where status=0";
-                var data = db.currentdatas.SqlQuery(query).ToList();
+                string query = "select * from db_mmi_bis_pa.currentshiftdata where status=0";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
@@ -438,8 +450,8 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where status!=0";
-                var data = db.currentdatas.SqlQuery(query).ToList();
+                string query = "select * from db_mmi_bis_pa.currentshiftdata where status!=0";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
                 return data.Count;
             }
         }

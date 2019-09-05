@@ -215,7 +215,7 @@ namespace MMi_BIS_PA.Controllers
 
         public void UpdatePieChart()
         {
-            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
+            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
             int c1 = 0;
             int c2 = 0;
             int r = 0;
@@ -335,7 +335,7 @@ namespace MMi_BIS_PA.Controllers
             else
             {
                 barcodeEventCallCount = 0;
-               // barcodeData = "Same QR Code Scanned";
+                barcodeData = "same";
             }
             //if (barcodeEventCallCount == 1)
             //{
