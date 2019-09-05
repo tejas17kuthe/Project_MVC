@@ -456,6 +456,15 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+        public int CurrentShiftTotalJobCount()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data.Count;
+            }
+        }
         public List<currentdata> UpdatePieChart(string year)
         {
             using (DB_Model db = new DB_Model())

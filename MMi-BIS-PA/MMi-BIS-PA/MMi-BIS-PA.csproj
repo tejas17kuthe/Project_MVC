@@ -350,6 +350,7 @@
     <Content Include="Views\Master\Master.cshtml" />
     <Content Include="Views\Reports\_generateReport.cshtml" />
     <Content Include="Views\CurrentDataPage\_DataCardContent.cshtml" />
+    <Content Include="Views\CurrentDataPage\_totalCurrentJobCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
