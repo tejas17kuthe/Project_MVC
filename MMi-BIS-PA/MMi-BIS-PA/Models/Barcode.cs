@@ -8,5 +8,6 @@ namespace MMi_BIS_PA.Models
     public class Barcode
     {
         public string Data { get; set; }
+        public int CurrentShiftTotalJobCount { get; set; }
     }
 }

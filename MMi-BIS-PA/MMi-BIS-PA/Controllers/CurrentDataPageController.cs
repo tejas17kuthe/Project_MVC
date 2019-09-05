@@ -22,7 +22,7 @@ namespace MMi_BIS_PA.Controllers
         int i;
         static string barcode = "";
         static int barcodeEventCallCount;
-
+        static List<string> scannedBarcodeList;
         bool initializeFlag;
 
         public CurrentDataPageController()
@@ -191,6 +191,7 @@ namespace MMi_BIS_PA.Controllers
                     new MySqlDatabaseInteraction().AddCurrentData(c);
                     new MySqlDatabaseInteraction().AddCurrentShiftData(c2,shift[0].shift_id);
                     new MySqlDatabaseInteraction().RemoveTableData();
+                    scannedBarcodeList.Clear();
                 }
             }
 
@@ -201,6 +202,13 @@ namespace MMi_BIS_PA.Controllers
             b.Data = barcodeData;
             ViewBag.Barcode = b;
             return PartialView("_SearchBar");
+        }
+
+        public PartialViewResult UpdateTotalCurrentShiftJobCount()
+        {
+            b.CurrentShiftTotalJobCount = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
+            ViewBag.TotalCurrentShiftJobDone = b;
+            return PartialView("_totalCurrentJobCount");
         }
 
         public PartialViewResult UpdateTable()
@@ -227,15 +235,10 @@ namespace MMi_BIS_PA.Controllers
                     c1 += 1;
                 }
 
-
-
-
                 if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
                 {
                     c2 += 1;
                 }
-
-
 
                 if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
                 {
@@ -248,14 +251,12 @@ namespace MMi_BIS_PA.Controllers
                 }
             }
 
-
             p.clip1 = c1;
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
             p.Barcode = barcodeData;
-
 
             ViewBag.pieData = p;
 
@@ -317,12 +318,13 @@ namespace MMi_BIS_PA.Controllers
             }
             string temp = getbarcode(hashcode);
             bool countFlag = temp.Equals(barcode);
-            if (!countFlag)
+            if (!countFlag && !scannedBarcodeList.Contains(temp))
             {
                 if (barcodeEventCallCount == 0)
                 {
                     barcodeEventCallCount = 1;
                     barcodeData = temp;
+                    scannedBarcodeList.Add(barcodeData);
                     barcode = barcodeData;
                     AddDataIntoCurrentTable();
                     CallPythonDriver(barcodeData);

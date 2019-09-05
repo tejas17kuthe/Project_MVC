@@ -14,7 +14,8 @@
         window.setInterval(function () {   
             $('#barcode').load("/CurrentDataPage/UpdateBarcode");
             $('#dataCard').load("/CurrentDataPage/UpdateTable");
-           
+            $('#jobCount').load("/CurrentDataPage/UpdateTotalCurrentShiftJobCount");
+         
             updateChart();         
         }, 2000);
     }
