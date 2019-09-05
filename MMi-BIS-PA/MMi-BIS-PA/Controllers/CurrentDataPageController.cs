@@ -86,6 +86,7 @@ namespace MMi_BIS_PA.Controllers
             ViewBag.Barcode = ++this.i;
             if (i.Count == 4)
             {
+                #region Creating CurrentData object
                 currentdata c = new currentdata();
 
                 //row 1 data collection
@@ -134,11 +135,61 @@ namespace MMi_BIS_PA.Controllers
                 string time = DateTime.Now.ToString("HH:mm:ss");
                 string dateT = date + " " + time;
                 c.date_time = DateTime.Parse(dateT);
+                #endregion
+
+                #region currentShiftData
+                currentshiftdata c2 = new currentshiftdata();
+
+                //row 1 data collection
+                c2.qr1 = i[0].qrcode;
+                c2.c11 = i[0].c1;
+                c2.c12 = i[0].c2;
+                c2.r1 = i[0].r;
+                c2.w1 = i[0].w;
+
+                //row 2 data collection
+                c2.qr2 = i[1].qrcode;
+                c2.c21 = i[1].c1;
+                c2.c22 = i[1].c2;
+                c2.r2 = i[1].r;
+                c2.w2 = i[1].w;
+
+                //row 3 data collection
+                c2.qr3 = i[2].qrcode;
+                c2.c31 = i[2].c1;
+                c2.c32 = i[2].c2;
+                c2.r3 = i[2].r;
+                c2.w3 = i[2].w;
+
+                //row 4 data collection
+                c2.qr4 = i[3].qrcode;
+                c2.c41 = i[3].c1;
+                c2.c42 = i[3].c2;
+                c2.r4 = i[3].r;
+                c2.w4 = i[3].w;
+
+                c2.wd = i[3].wd;
+
+                if (c2.c11 != 0 && c2.c12 != 0 && c2.r1 != 0 && c2.c21 != 0 && c2.c22 != 0 && c2.r2 != 0 && c2.c31 != 0 && c2.c32 != 0 && c2.r3 != 0 && c2.c41 != 0 && c2.c42 != 0 && c2.r4 != 0 && c2.wd < i[3].set_point)
+                {
+                    c2.status = 1;
+                }
+                else
+                {
+                    c2.status = 0;
+                }
+
+                var currentShift = new MySqlDatabaseInteraction().getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
+
+                c2.shiftid = shift[0].shift_id;
+                c2.date_time = DateTime.Parse(dateT);
+                #endregion
 
 
                 if (barcodeEventCallCount == 1)
                 {
                     new MySqlDatabaseInteraction().AddCurrentData(c);
+                    new MySqlDatabaseInteraction().AddCurrentShiftData(c2,shift[0].shift_id);
                     new MySqlDatabaseInteraction().RemoveTableData();
                 }
             }

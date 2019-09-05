@@ -44,7 +44,6 @@ namespace MMi_BIS_PA.Models
                     {
 
                         db.currentdatas.Add(currentdata);
-
                         db.SaveChanges();
 
                         return true;
@@ -75,9 +74,29 @@ namespace MMi_BIS_PA.Models
 
 
         }
-        
 
-        public bool AddCurrentShiftData(currentshiftdata data)
+
+        public bool RemoveCurrentShiftData()
+        {
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+                    db.currentshiftdatas.RemoveRange(db.currentshiftdatas);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+
+
+        }
+
+        public bool AddCurrentShiftData(currentshiftdata data,int shift)
         {
             //modification needed please check current shift status if the shift have been changed please clean the data and then add new data.
 
@@ -85,9 +104,15 @@ namespace MMi_BIS_PA.Models
             {
                 using (DB_Model db = new DB_Model())
                 {
-
-                    db.currentshiftdatas.Add(data);
-
+                    if (shift != GetCurrentShiftDataShiftID())
+                    {
+                        db.currentshiftdatas.Add(data);
+                    }
+                    else
+                    {
+                        RemoveCurrentShiftData();
+                        db.currentshiftdatas.Add(data);
+                    }
                     db.SaveChanges();
 
                     return true;
@@ -155,6 +180,21 @@ namespace MMi_BIS_PA.Models
 
 
         #region retrieving data from the database
+        public int GetCurrentShiftDataShiftID()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata group by shiftid";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                int shift = -1;
+                foreach(var d in data)
+                {
+                    shift = d.shiftid;
+                }
+                return shift;
+            }
+        }
+
         public List<currentdata> GetCurrentData()
         {
                 using (DB_Model db = new DB_Model())
