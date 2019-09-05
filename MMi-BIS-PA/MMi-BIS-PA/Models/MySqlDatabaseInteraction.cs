@@ -104,7 +104,7 @@ namespace MMi_BIS_PA.Models
             {
                 using (DB_Model db = new DB_Model())
                 {
-                    if (shift != GetCurrentShiftDataShiftID())
+                    if (shift == GetCurrentShiftDataShiftID())
                     {
                         db.currentshiftdatas.Add(data);
                     }
