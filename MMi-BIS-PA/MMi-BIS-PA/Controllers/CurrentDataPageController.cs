@@ -18,19 +18,22 @@ namespace MMi_BIS_PA.Controllers
         LoginData id;
         static ProcessStartInfo myProcessStartInfo;
         PiechartData p;
-        Barcode b;
+        static Barcode b;
         int i;
         static string barcode = "";
+        static int barcodeEventCallCount;
+
         bool initializeFlag;
 
         public CurrentDataPageController()
         {
-           
+
             string python = @"C:\ProgramData\Anaconda3\python.exe";
             myProcessStartInfo = new ProcessStartInfo(python);
             p = new PiechartData();
             b = new Barcode();
             i = 0;
+          
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -38,8 +41,9 @@ namespace MMi_BIS_PA.Controllers
         public ActionResult CurrentDataPage(LoginData id)
         {
             InitializeBarcodeReader();
+            barcodeEventCallCount = 0;
             initializeFlag = true;
-
+            barcode = "initial QR Code";
             UpdatePieChart();
             this.id = id;
             barcodeData = "Please Scan the QR Code";
@@ -131,16 +135,19 @@ namespace MMi_BIS_PA.Controllers
                 string dateT = date + " " + time;
                 c.date_time = DateTime.Parse(dateT);
 
-                new MySqlDatabaseInteraction().AddCurrentData(c);
 
-               // new MySqlDatabaseInteraction().RemoveTableData();
+                if (barcodeEventCallCount == 1)
+                {
+                    new MySqlDatabaseInteraction().AddCurrentData(c);
+                    new MySqlDatabaseInteraction().RemoveTableData();
+                }
             }
 
         }
 
         public PartialViewResult UpdateBarcode()
         {
-            b.Data = barcodeData.ToString();
+            b.Data = barcodeData;
             ViewBag.Barcode = b;
             return PartialView("_SearchBar");
         }
@@ -197,7 +204,7 @@ namespace MMi_BIS_PA.Controllers
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
             p.Barcode = barcodeData;
-            
+
 
             ViewBag.pieData = p;
 
@@ -232,17 +239,19 @@ namespace MMi_BIS_PA.Controllers
             //{
             //    file.WriteLine(text);
             //}
-           
+
             //System.IO.File.WriteAllText(@"E:\logs\mahindra.txt", text);
 
-           
+
 
         }
 
         public void OnBarcodeEvent(short eventType, ref string pscanData)
         {
+
+            // ++barcodeEventCallCount;
             string hashcode = "";
-            
+
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(pscanData);
 
@@ -255,24 +264,41 @@ namespace MMi_BIS_PA.Controllers
                     hashcode = elemList[i].InnerXml;
                 }
             }
-
-            barcodeData = getbarcode(hashcode);
-            //b.Data = barcode;
-            //ViewBag.Barcode = b;
-            string textbar = "Barcode " + barcodeData;
-            bool flag = barcodeData.Equals(barcode);
-            //if (!flag)
+            string temp = getbarcode(hashcode);
+            bool countFlag = temp.Equals(barcode);
+            if (!countFlag)
+            {
+                if (barcodeEventCallCount == 0)
+                {
+                    barcodeEventCallCount = 1;
+                    barcodeData = temp;
+                    barcode = barcodeData;
+                    AddDataIntoCurrentTable();
+                    CallPythonDriver(barcodeData);
+                }
+                else
+                {
+                    barcodeData = "Driver is running Please wait";
+                }
+            }
+            else
+            {
+                barcodeEventCallCount = 0;
+               // barcodeData = "Same QR Code Scanned";
+            }
+            //if (barcodeEventCallCount == 1)
             //{
-            //    barcode = barcodeData;
-            //    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\logs\barcode.txt", true))
-            //    {
-            //        file.WriteLine(textbar);
-            //        file.Close();
-            //    }
-            //}
-            AddDataIntoCurrentTable();
 
-            CallPythonDriver(barcodeData);
+            //    //b.Data = barcode;
+            //    //ViewBag.Barcode = b;
+            //    string textbar = "Barcode " + barcodeData;
+            //    bool flag = barcodeData.Equals(barcode);
+            //    if (!flag)
+            //    {
+
+            //    }
+
+            //}
 
             //this.Invoke((MethodInvoker)delegate { txtBarcode.Text = barcode; });
         }
@@ -311,38 +337,39 @@ namespace MMi_BIS_PA.Controllers
 
         private void CallPythonDriver(string qr)
         {
-
-            try
+            if (barcodeEventCallCount == 1)
             {
-                string fname1 = qr;
+                try
+                {
+                    string fname1 = qr;
 
-                // python app to call 
-                string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
+                    // python app to call 
+                    string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
 
-                // dummy parameters to send Python script 
-                string x = @fname1;
-
-
-
-                myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                myProcessStartInfo.CreateNoWindow = true;
+                    // dummy parameters to send Python script 
+                    string x = @fname1;
 
 
-                // make sure we can read the output from stdout 
-                myProcessStartInfo.UseShellExecute = false;
-                myProcessStartInfo.RedirectStandardOutput = true;
 
-                // start python app with 3 arguments  
-                // 1st arguments is pointer to itself,  
-                // 2nd and 3rd are actual arguments we want to send 
-                myProcessStartInfo.Arguments = myPythonApp + " " + x;
+                    myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    myProcessStartInfo.CreateNoWindow = true;
 
-                Process myProcess = new Process();
-               // Process[] pname = Process.GetProcessesByName("notepad");
 
-                //if (pname.Length < 2)
+                    // make sure we can read the output from stdout 
+                    myProcessStartInfo.UseShellExecute = false;
+                    myProcessStartInfo.RedirectStandardOutput = true;
 
-                //{
+                    // start python app with 3 arguments  
+                    // 1st arguments is pointer to itself,  
+                    // 2nd and 3rd are actual arguments we want to send 
+                    myProcessStartInfo.Arguments = myPythonApp + " " + x;
+
+                    Process myProcess = new Process();
+                    // Process[] pname = Process.GetProcessesByName("notepad");
+
+                    //if (pname.Length < 2)
+
+                    //{
                     // assign start information to the process 
                     myProcess.StartInfo = myProcessStartInfo;
 
@@ -352,12 +379,15 @@ namespace MMi_BIS_PA.Controllers
                     myProcess.Start();
                     myProcess.WaitForExit();
                     myProcess.Close();
-               // }
+                    barcodeEventCallCount = 0;
+                    barcodeData = "Please Scan the QR Code";
+                    // }
 
-            }
-            catch (Exception e)
-            {
-                // return Content("There is some problem with the driver please check connection");
+                }
+                catch (Exception e)
+                {
+                    // return Content("There is some problem with the driver please check connection");
+                }
             }
         }
     }
