@@ -74,13 +74,12 @@ namespace MMi_BIS_PA.Controllers
         }
 
         [Route("CurrentDataPage/Delete")]
-        public ActionResult Delete()
+        public PartialViewResult Delete()
         {
             barcodeEventCallCount2 = 0;
             barcodeData = "Please scan the Barcode";
             new MySqlDatabaseInteraction().RemoveTableData();
-            return RedirectToAction("CurrentDataPage", "CurrentDataPage");
-
+            return UpdateTable();
         }
 
 
@@ -424,16 +423,17 @@ namespace MMi_BIS_PA.Controllers
             {
                 try
                 {
-                    string fname1 = qr;
+
+                    string python = @"C:\ProgramData\Anaconda3\python.exe";
 
                     // python app to call 
                     string myPythonApp = "C:\\ProgramData\\Anaconda3\\driver.py";
 
                     // dummy parameters to send Python script 
-                    string x = @fname1;
+                    string x = qr.ToString();
 
 
-
+                    ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
                     myProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     myProcessStartInfo.CreateNoWindow = true;
 
@@ -448,20 +448,15 @@ namespace MMi_BIS_PA.Controllers
                     myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
                     Process myProcess = new Process();
-                    // Process[] pname = Process.GetProcessesByName("notepad");
-
-                    //if (pname.Length < 2)
-
-                    //{
                     // assign start information to the process 
                     myProcess.StartInfo = myProcessStartInfo;
 
-                    // Console.WriteLine("Calling Python script with arguments {0} ", x);
-                    // start the process
-                    
+                    Console.WriteLine("Calling Python script with arguments {0}", x);
+                    // start the process 
                     myProcess.Start();
                     myProcess.WaitForExit();
                     myProcess.Close();
+
                     AddDataIntoCurrentTable();
                     barcodeEventCallCount2 = 0;
                     barcodeData = "Please Scan the QR Code";
