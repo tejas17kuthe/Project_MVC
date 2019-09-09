@@ -21,7 +21,7 @@ namespace MMi_BIS_PA.Controllers
         static Barcode b;
         int i;
         static string barcode = "";
-        static int barcodeEventCallCount;
+        int barcodeEventCallCount;
         static int barcodeEventCallCount2;
         static List<string> scannedBarcodeList;
         bool initializeFlag;
@@ -76,12 +76,23 @@ namespace MMi_BIS_PA.Controllers
         [Route("CurrentDataPage/Delete")]
         public ActionResult Delete()
         {
-
+            barcodeEventCallCount2 = 0;
+            barcodeData = "Please scan the Barcode";
             new MySqlDatabaseInteraction().RemoveTableData();
             return RedirectToAction("CurrentDataPage", "CurrentDataPage");
 
         }
 
+
+        public void RemoveTableData()
+        {
+            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            List<TableData> i = sql.GetTableData();
+            if(i.Count == 4)
+            {
+                new MySqlDatabaseInteraction().RemoveTableData();
+            }
+        }
 
         public void AddDataIntoCurrentTable()
         {
@@ -194,7 +205,8 @@ namespace MMi_BIS_PA.Controllers
                 {
                     new MySqlDatabaseInteraction().AddCurrentData(c);
                     new MySqlDatabaseInteraction().AddCurrentShiftData(c2,shift[0].shift_id);
-                    new MySqlDatabaseInteraction().RemoveTableData();
+                    
+                    
                     scannedBarcodeList.Clear();
                 }
             }
@@ -335,25 +347,26 @@ namespace MMi_BIS_PA.Controllers
             }
 
             bool countFlag = temp.Equals(barcode);
+
             if (!countFlag)
             {
-                if (barcodeEventCallCount == 0)
+                if (barcodeEventCallCount2 == 1)
                 {
                     barcodeEventCallCount = 1;
                     barcodeData = temp;
                     //scannedBarcodeList.Add(barcodeData);
                     barcode = barcodeData;
-                    AddDataIntoCurrentTable();
+                    RemoveTableData();
                     CallPythonDriver(barcodeData);
                 }
                 else
                 {
-                    barcodeData = "Driver is running Please wait";
+                    //barcodeData = "Driver is running Please wait";
                 }
             }
             else
             {
-                barcodeEventCallCount = 0;
+                barcodeEventCallCount2 = 0;
                //barcodeData = barcodeEventCallCount2.ToString();
             }
             //if (barcodeEventCallCount == 1)
@@ -449,7 +462,8 @@ namespace MMi_BIS_PA.Controllers
                     myProcess.Start();
                     myProcess.WaitForExit();
                     myProcess.Close();
-                    barcodeEventCallCount = 0;
+                    AddDataIntoCurrentTable();
+                    barcodeEventCallCount2 = 0;
                     barcodeData = "Please Scan the QR Code";
                     // }
 

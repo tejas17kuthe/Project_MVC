@@ -57,6 +57,7 @@ namespace MMi_BIS_PA.Models
 
         public bool RemoveTableData()
         {
+            
             try
             {
                 using (DB_Model db = new DB_Model())
