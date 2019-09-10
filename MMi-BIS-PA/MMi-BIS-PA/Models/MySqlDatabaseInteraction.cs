@@ -132,7 +132,7 @@ namespace MMi_BIS_PA.Models
             {
                 using (DB_Model db = new DB_Model())
                 {
-                    if (shift == GetCurrentShiftDataShiftID() && IfDateTimeIsSame(data.date_time))
+                    if (shift == GetCurrentShiftDataShiftID())
                     {
                         db.currentshiftdatas.Add(data);
                     }
@@ -474,12 +474,22 @@ namespace MMi_BIS_PA.Models
 
         #region pieChart update
 
-        public List<currentshiftdata> UpdatePieChart()
+        public List<currentshiftdata> UpdateCurrentShiftDataPieChart()
         {
             using (DB_Model db = new DB_Model())
             {
                 string query = "select * from db_mmi_bis_pa.currentshiftdata where status=0";
                 var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> UpdatePieChart()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata where status=0";
+                var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }

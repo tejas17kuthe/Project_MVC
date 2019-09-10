@@ -14,10 +14,12 @@ namespace MMi_BIS_PA.Controllers
         // GET: Reports
         public ActionResult ViewReports()
         {
-            List<currentdata> data = new MySqlDatabaseInteraction().GetCurrentData();
+            List<currentshiftdata> data = new MySqlDatabaseInteraction().GetCurrentShiftData();
             UpdatePieChart();
             return View(data);
         }
+
+
         [HttpGet]
         [Route("Reports/GetYears")]
         public JsonResult GetYears()
@@ -840,9 +842,51 @@ namespace MMi_BIS_PA.Controllers
         }
 
 
+        public void UpdateCurrentShiftDataPieChart()
+        {
+            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdateCurrentShiftDataPieChart();
+            int c1 = 0;
+            int c2 = 0;
+            int r = 0;
+            int w = 0;
+            foreach (var data in d)
+            {
+                if (data.c11 == 0 || data.c21 == 0 || data.c31 == 0 || data.c41 == 0)
+                {
+                    c1 += 1;
+                }
+
+
+
+
+                if (data.c12 == 0 || data.c22 == 0 || data.c32 == 0 || data.c42 == 0)
+                {
+                    c2 += 1;
+                }
+
+
+
+                if (data.r1 == 0 || data.r2 == 0 || data.r3 == 0 || data.r4 == 0)
+                {
+                    r += 1;
+                }
+
+                if (data.wd > new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
+                {
+                    w += 1;
+                }
+            }
+
+            ViewBag.clip1 = c1;
+            ViewBag.clip2 = c2;
+            ViewBag.ring = r;
+            ViewBag.weight = w;
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+        }
+
         public void UpdatePieChart()
         {
-            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
+            List<currentdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
             int c1 = 0;
             int c2 = 0;
             int r = 0;

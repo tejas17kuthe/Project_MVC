@@ -242,7 +242,7 @@ namespace MMi_BIS_PA.Controllers
 
         public void UpdatePieChart()
         {
-            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdatePieChart();
+            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdateCurrentShiftDataPieChart();
             int c1 = 0;
             int c2 = 0;
             int r = 0;
