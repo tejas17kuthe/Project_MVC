@@ -77,7 +77,7 @@ namespace MMi_BIS_PA.Controllers
         public PartialViewResult Delete()
         {
             barcodeEventCallCount2 = 0;
-            barcodeData = "Please scan the Barcode";
+            barcodeData = "Please scan the QR Code";
             new MySqlDatabaseInteraction().RemoveTableData();
             return UpdateTable();
         }
@@ -133,7 +133,7 @@ namespace MMi_BIS_PA.Controllers
 
                 c.wd = i[3].wd;
 
-                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 && c.wd < i[3].set_point)
+                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 || c.wd < i[3].set_point)
                 {
                     c.status = 1;
                 }
@@ -184,7 +184,7 @@ namespace MMi_BIS_PA.Controllers
 
                 c2.wd = i[3].wd;
 
-                if (c2.c11 != 0 && c2.c12 != 0 && c2.r1 != 0 && c2.c21 != 0 && c2.c22 != 0 && c2.r2 != 0 && c2.c31 != 0 && c2.c32 != 0 && c2.r3 != 0 && c2.c41 != 0 && c2.c42 != 0 && c2.r4 != 0 && c2.wd < i[3].set_point)
+                if (c2.c11 != 0 && c2.c12 != 0 && c2.r1 != 0 && c2.c21 != 0 && c2.c22 != 0 && c2.r2 != 0 && c2.c31 != 0 && c2.c32 != 0 && c2.r3 != 0 && c2.c41 != 0 && c2.c42 != 0 && c2.r4 != 0 || c2.wd < i[3].set_point)
                 {
                     c2.status = 1;
                 }
@@ -202,6 +202,8 @@ namespace MMi_BIS_PA.Controllers
 
                 if (barcodeEventCallCount == 1)
                 {
+                    //float setpoint = (float)i[0].set_point;
+                    //new MySqlDatabaseInteraction().UpdateWeightDifferenceSetPoint(setpoint);
                     new MySqlDatabaseInteraction().AddCurrentData(c);
                     new MySqlDatabaseInteraction().AddCurrentShiftData(c2,shift[0].shift_id);
                     
@@ -222,6 +224,7 @@ namespace MMi_BIS_PA.Controllers
         public PartialViewResult UpdateTotalCurrentShiftJobCount()
         {
             b.CurrentShiftTotalJobCount = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
+            b.weightSetPoint = new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint();
             ViewBag.TotalCurrentShiftJobDone = b;
             return PartialView("_totalCurrentJobCount");
         }

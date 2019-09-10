@@ -10,7 +10,7 @@ namespace MMi_BIS_PA.Models
 {
     public class MySqlDatabaseInteraction
     {
-        
+
 
         public Boolean AuthenticateUser(string username, string password)
         {
@@ -25,12 +25,12 @@ namespace MMi_BIS_PA.Models
                         return true;
                     else
                         return false;
-                    
-                     
+
+
                 }
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
@@ -40,38 +40,38 @@ namespace MMi_BIS_PA.Models
         public bool AddCurrentData(currentdata currentdata)
         {
 
-                using (DB_Model db = new DB_Model())
-                    {
+            using (DB_Model db = new DB_Model())
+            {
 
-                        db.currentdatas.Add(currentdata);
-                        db.SaveChanges();
+                db.currentdatas.Add(currentdata);
+                db.SaveChanges();
 
-                        return true;
+                return true;
 
 
-                }
+            }
 
         }
 
-       
+
 
         public bool RemoveTableData()
         {
-            
+
             try
             {
                 using (DB_Model db = new DB_Model())
                 {
                     db.tableData.RemoveRange(db.tableData);
                     db.SaveChanges();
-                 }
+                }
                 return true;
             }
             catch
             {
                 return false;
             }
-          
+
 
 
         }
@@ -97,7 +97,34 @@ namespace MMi_BIS_PA.Models
 
         }
 
-        public bool AddCurrentShiftData(currentshiftdata data,int shift)
+        public bool IfDateTimeIsSame(DateTime date)
+        {
+            try
+            {
+                using (DB_Model db = new DB_Model())
+                {
+                    string query = "select * from db_mmi_bis_pa.currentshiftdata where day(date_time)!=" + date.Day;
+
+                    var d = db.currentshiftdatas.SqlQuery(query).ToList();
+
+                    if (d.Count == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+
+                return false;
+            }
+        }
+
+        public bool AddCurrentShiftData(currentshiftdata data, int shift)
         {
             //modification needed please check current shift status if the shift have been changed please clean the data and then add new data.
 
@@ -105,7 +132,7 @@ namespace MMi_BIS_PA.Models
             {
                 using (DB_Model db = new DB_Model())
                 {
-                    if (shift == GetCurrentShiftDataShiftID())
+                    if (shift == GetCurrentShiftDataShiftID() && IfDateTimeIsSame(data.date_time))
                     {
                         db.currentshiftdatas.Add(data);
                     }
@@ -127,7 +154,7 @@ namespace MMi_BIS_PA.Models
 
         }
 
-        
+
 
         public bool AddUserInfo(userinfo data)
         {
@@ -200,7 +227,7 @@ namespace MMi_BIS_PA.Models
                 string query = "select * from db_mmi_bis_pa.currentshiftdata group by shiftid";
                 var data = db.currentshiftdatas.SqlQuery(query).ToList();
                 int shift = -1;
-                foreach(var d in data)
+                foreach (var d in data)
                 {
                     shift = d.shiftid;
                 }
@@ -208,14 +235,24 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+        public List<currentshiftdata> GetCurrentShiftData()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
         public List<currentdata> GetCurrentData()
         {
-                using (DB_Model db = new DB_Model())
-                {
-                    string query = "select * from db_mmi_bis_pa.currentdata";
-                    var data = db.currentdatas.SqlQuery(query).ToList();
-                    return data;
-                }
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata";
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
         }
 
         //function is used in yearly report generation 
@@ -223,7 +260,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)="+year;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
@@ -233,7 +270,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string failure = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year+ " status=0";   //Query for failure records
+                string failure = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " status=0";   //Query for failure records
                 var failureData = db.currentdatas.SqlQuery(failure).ToList();
                 string success = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " status=0";   //Query for success records
                 var successData = db.currentdatas.SqlQuery(success).ToList();
@@ -252,41 +289,41 @@ namespace MMi_BIS_PA.Models
             }
         }
 
-        public List<currentdata> GetCurrentData(string year,string month)
+        public List<currentdata> GetCurrentData(string year, string month)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year +" and month(date_time)="+month;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
-       
 
-        public List<currentdata> GetCurrentData(string year, string month,string day)
+
+        public List<currentdata> GetCurrentData(string year, string month, string day)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month+" and day(date_time)="+day;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
-      
 
-        public List<currentdata> GetCurrentData(string year, string month, string day,string shift)
+
+        public List<currentdata> GetCurrentData(string year, string month, string day, string shift)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day+" and shiftid="+shift;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
-       
+
 
 
         public List<TableData> GetTableData()
@@ -314,9 +351,9 @@ namespace MMi_BIS_PA.Models
 
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.currentdata group by year(date_time)" ;
-                
-                List<currentdata> data= db.currentdatas.SqlQuery(query).ToList();
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata group by year(date_time)";
+
+                List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
                 List<int> year = new List<int>();
                 foreach (var d in data)
                 {
@@ -335,7 +372,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year +" group by month(date_time)";
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " group by month(date_time)";
 
                 List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
                 List<int> Month = new List<int>();
@@ -348,11 +385,11 @@ namespace MMi_BIS_PA.Models
         }
 
 
-        public List<int> GetDate(string year,string month)
+        public List<int> GetDate(string year, string month)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)="+ month+   " group by month(date_time)";
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)=" + month + " group by date(date_time)";
 
                 List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
                 List<int> Date = new List<int>();
@@ -365,11 +402,11 @@ namespace MMi_BIS_PA.Models
         }
 
 
-        public List<int> GetShift(string year, string month,string date)
+        public List<int> GetShift(string year, string month, string date)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)="+month + " and day(date_time)="+date+" group by shiftid";
+                string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " and month(date_time)=" + month + " and day(date_time)=" + date + " group by shiftid";
 
                 List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
                 List<int> shift = new List<int>();
@@ -392,7 +429,7 @@ namespace MMi_BIS_PA.Models
                 string query = "SELECT * FROM db_mmi_bis_pa.master_table";
                 master_table master = new master_table();
                 List<master_table> data = db.master_table.SqlQuery(query).ToList();
-                foreach(var d in data)
+                foreach (var d in data)
                 {
                     master.Id = d.Id;
                     master.IP_Address = d.IP_Address;
@@ -401,7 +438,7 @@ namespace MMi_BIS_PA.Models
 
                 }
                 return master;
-                
+
 
 
             }
@@ -413,7 +450,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where\'"+time+ "\' between start_time and end_time";
+                string query = "SELECT * FROM db_mmi_bis_pa.shiftinfo where\'" + time + "\' between start_time and end_time";
 
                 List<shiftinfo> data = db.shiftinfoes.SqlQuery(query).ToList();
 
@@ -512,6 +549,16 @@ namespace MMi_BIS_PA.Models
             {
                 master_table m = GetMasterData();
                 return m.Weight_Diffrence;
+            }
+        }
+
+        public void UpdateWeightDifferenceSetPoint(float setpoint)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "UPDATE `db_mmi_bis_pa`.`master_table` SET `Weight_diffrence` = " + setpoint + " WHERE (`Id` = '2')";
+                var data = db.master_table.SqlQuery(query).ToList();
+
             }
         }
         #endregion
