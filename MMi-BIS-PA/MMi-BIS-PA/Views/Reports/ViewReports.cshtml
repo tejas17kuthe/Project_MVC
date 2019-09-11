@@ -27,7 +27,7 @@
                 <div class="row" style="height:50px">
                 </div>
                 <div class="row overflow-auto" id="CardSection">
-                    @Html.Partial("_generateReport",Model)
+                    @Html.Partial("_generateReport", Model)
                 </div>
                 <div class="row" style="height:100px">
                 </div>
@@ -41,7 +41,32 @@
 </div>
 
 
+@{
+    var pieData = ViewBag.pieData;
+}
 
+
+<script>
+    //let myChart = document.getElementById('myChart').getContext('2d');
+    //$(document).ready(function () {
+    //    //alert("executed")
+    //   updateChart();
+    //});
+
+
+    
+
+
+
+    $(document).ready(function () {
+
+        $('#updatePie').click(function () {
+            updateChart();
+        });
+    });
+
+
+</script>
 
 
 

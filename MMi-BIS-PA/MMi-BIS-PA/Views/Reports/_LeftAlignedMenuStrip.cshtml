@@ -329,13 +329,32 @@
                         month: $('#Month option:selected').val(),
                         day: $('#Day option:selected').val(),
                         shift: $('#Shift option:selected').val()
+                    },
+                    function (response) {
+                        $.post("/Reports/UpdateGraphShift", {
+                            year: $('#Year option:selected').val(),
+                            month: $('#Month option:selected').val(),
+                            day: $('#Day option:selected').val(),
+                            shift: $('#Shift option:selected').val()
+                        })
+                            .done(function (data) {
+                                //alert(data["clip1"])
+                                updateChart(
+                                    data["clip1"],
+                                    data["clip2"],
+                                    data["ring"],
+                                    data["weight"],
+                                    data["TotalSuccessfulCycles"],
+                                    data["Barcode"]
+                                );
+                            });
+
+
+
                     }
 
                 );
 
-                $('#CardGraph').load(
-                    "/Reports/UpdateGraph"
-                );
 
             }
             else if ($('#RadioDay').prop('checked') == true) {
@@ -349,6 +368,27 @@
                         year: $('#Year option:selected').val(),
                         month: $('#Month option:selected').val(),
                         day: $('#Day option:selected').val()
+
+                    },
+                    function (response) {
+                        $.post("/Reports/UpdateGraphDay", {
+                            year: $('#Year option:selected').val(),
+                            month: $('#Month option:selected').val(),
+                            day: $('#Day option:selected').val()
+                        })
+                            .done(function (data) {
+                                //alert(data["clip1"])
+                                updateChart(
+                                    data["clip1"],
+                                    data["clip2"],
+                                    data["ring"],
+                                    data["weight"],
+                                    data["TotalSuccessfulCycles"],
+                                    data["Barcode"]
+                                );
+                            });
+
+
 
                     }
 
@@ -367,12 +407,29 @@
                     {
                         year: $('#Year option:selected').val(),
                         month: $('#Month option:selected').val()
+                    },
+                    function (response) {
+                        $.post("/Reports/UpdateGraphMonth", {
+                            year: $('#Year option:selected').val(),
+                            month: $('#Month option:selected').val() })
+                            .done(function (data) {
+                                //alert(data["clip1"])
+                                updateChart(
+                                    data["clip1"],
+                                    data["clip2"],
+                                    data["ring"],
+                                    data["weight"],
+                                    data["TotalSuccessfulCycles"],
+                                    data["Barcode"]
+                                );
+                            });
+
+
+
                     }
                 );
 
-                $('#CardGraph').load(
-                    "/Reports/UpdateGraph"
-                );
+               
             }
 
             else if ($('#RadioYear').prop('checked') == true) {
@@ -381,18 +438,57 @@
                     "/Reports/GenerateYearReport",
                     {
                         year: $('#Year option:selected').val(),
+                    },
+                    function (response) {
+                        $.post("/Reports/UpdateGraph", { year: $('#Year option:selected').val() })
+                            .done(function (data) {
+                                //alert(data["clip1"])
+                                updateChart(
+                                    data["clip1"],
+                                    data["clip2"],
+                                    data["ring"],
+                                    data["weight"],
+                                    data["TotalSuccessfulCycles"],
+                                    data["Barcode"]
+                                );
+                            });
+
+                        
+                
                     }
                 );
 
-                $('#CardGraph').load(
-                    "/Reports/UpdateGraph"
-                );
+                
             }
         });
     });
 
 
+    function updateChart(c1, c2, r, w, ts, label) {
+       
+        massPopChart.data.datasets[0].data = [
+            c1,//clip1
+            c2,//clip2
+            r,//ring
+            w,//weight
+            ts//successful cycle
+            //12,11,21,31,200
 
+        ];
+        //chart.options.title.text = 'new title';
+        massPopChart.options.title.text = label
+        // console.dir(massPopChart);
+        console.log("");
+        console.log(c1);
+        console.log(c2);
+        console.log(r);
+        console.log(w);
+        console.log(ts);
+        console.log(label);
+
+        massPopChart.update();
+
+    }
 
 
     //Operation to perform after a user have selected a year from the dropdown menu

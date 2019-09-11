@@ -1,0 +1,8 @@
+﻿@using MMi_BIS_PA.Models
+@model IEnumerable<MMi_BIS_PA.Models.currentdata>
+
+@foreach (var data in Model)
+{
+    @Html.Partial("_DataCard_reportCurrentData", data)
+}
+

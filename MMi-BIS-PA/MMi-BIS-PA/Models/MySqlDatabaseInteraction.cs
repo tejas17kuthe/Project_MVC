@@ -517,7 +517,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and  year(date_time) =" + year;
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and  year(date_time) =\'" + year+"\'";
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
