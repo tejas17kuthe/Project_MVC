@@ -354,6 +354,7 @@
     <Content Include="Views\Reports\_generateReportCurrentData.cshtml" />
     <Content Include="Views\Reports\_DataCard_reportCurrentData.cshtml" />
     <Content Include="Views\Reports\_pieChartReportDataModeling.cshtml" />
+    <Content Include="Views\Shared\_NavReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

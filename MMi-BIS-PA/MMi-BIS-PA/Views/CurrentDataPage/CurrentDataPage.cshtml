@@ -11,10 +11,20 @@
    
     function updateTbl() {
         //alert("inside function")
-        window.setInterval(function () {   
+        window.setInterval(function () {
             $('#barcode').load("/CurrentDataPage/UpdateBarcode");
             $('#dataCard').load("/CurrentDataPage/UpdateTable");
-            $('#jobCount').load("/CurrentDataPage/UpdateTotalCurrentShiftJobCount");
+            //$('#jobCount').load("/CurrentDataPage/UpdateTotalCurrentShiftJobCount");
+            $.post("/CurrentDataPage/UpdateTotalCurrentShiftJobCount")
+                .done(function (data) {
+                    //alert(data["clip1"])
+                    $('#SetCount').html('');
+                    $('#SetCount').append(data["CurrentShiftTotalJobCount"]);
+                    //console.log("count:")
+                    //console.log(data["CurrentShiftTotalJobCount"])
+                }
+                );
+                
          
             updateChart();         
         }, 1500);

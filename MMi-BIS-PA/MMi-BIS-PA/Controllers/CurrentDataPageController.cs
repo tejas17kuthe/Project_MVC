@@ -13,19 +13,19 @@ namespace MMi_BIS_PA.Controllers
 {
     public class CurrentDataPageController : Controller
     {
-        static CCoreScannerClass ccs;
+        CCoreScannerClass ccs;
         static string barcodeData;
         LoginData id;
-        static ProcessStartInfo myProcessStartInfo;
+        ProcessStartInfo myProcessStartInfo;
         PiechartData p;
-        static Barcode b;
+        Barcode b;
         int i;
-        static string barcode = "";
+        string barcode = "";
         int barcodeEventCallCount;
-        static int barcodeEventCallCount2;
-        static List<string> scannedBarcodeList;
+        int barcodeEventCallCount2;
+        List<string> scannedBarcodeList;
         bool initializeFlag;
-        static int tableCount;
+        int tableCount;
         public CurrentDataPageController()
         {
             p = new PiechartData();
@@ -221,12 +221,15 @@ namespace MMi_BIS_PA.Controllers
             return PartialView("_SearchBar");
         }
 
-        public PartialViewResult UpdateTotalCurrentShiftJobCount()
+
+        [HttpPost]
+        [Route("CurrentDataPage/UpdateTotalCurrentShiftJobCount")]
+        public JsonResult UpdateTotalCurrentShiftJobCount()
         {
             b.CurrentShiftTotalJobCount = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
             b.weightSetPoint = new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint();
             ViewBag.TotalCurrentShiftJobDone = b;
-            return PartialView("_totalCurrentJobCount");
+            return Json(b, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult UpdateTable()
@@ -336,17 +339,17 @@ namespace MMi_BIS_PA.Controllers
                 }
             }
             string temp = getbarcode(hashcode);
-            if (tableCount < 1)
-            {
-                scannedBarcodeList.Clear();
+            //if (tableCount < 1)
+            //{
+            //    scannedBarcodeList.Clear();
 
-            }
+            //}
 
-            if (tableCount == 1)
-            {
-                scannedBarcodeList.Clear();
-                scannedBarcodeList.Add(barcodeData);
-            }
+            //if (tableCount == 1)
+            //{
+            //    scannedBarcodeList.Clear();
+            //    scannedBarcodeList.Add(barcodeData);
+            //}
 
             bool countFlag = temp.Equals(barcode);
 
@@ -368,8 +371,9 @@ namespace MMi_BIS_PA.Controllers
             }
             else
             {
+                //Console.WriteLine("Same Barcode Scanned or callCount="+barcodeEventCallCount2);
                 barcodeEventCallCount2 = 0;
-               //barcodeData = barcodeEventCallCount2.ToString();
+                
             }
             //if (barcodeEventCallCount == 1)
             //{
