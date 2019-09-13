@@ -596,7 +596,26 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentshiftdata where status!=0";
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 ";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data.Count;
+            }
+        }
+
+        public int SuccessfulCycleCount(string year,string month, string day)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 and year(date_time) =" + year+ " month(date_time) ="+month+ " day(date_time) ="+day;
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data.Count;
+            }
+        }
+        public int SuccessfulCycleCount(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 and year(date_time) =" + year;
                 var data = db.currentshiftdatas.SqlQuery(query).ToList();
                 return data.Count;
             }
@@ -615,7 +634,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and  year(date_time) =\'" + year+"\'";
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time) =" + year;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
@@ -625,7 +644,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where  status=0 and year(date_time)=" + year + " and month(date_time)=" + month;
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
@@ -645,7 +664,7 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
+                string query = "select * from db_mmi_bis_pa.currentdata where status =0 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }

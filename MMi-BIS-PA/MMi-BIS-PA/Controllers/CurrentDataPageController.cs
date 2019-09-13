@@ -18,6 +18,7 @@ namespace MMi_BIS_PA.Controllers
         LoginData id;
         ProcessStartInfo myProcessStartInfo;
         PiechartData p;
+        CycleStatusCount cycle;
         Barcode b;
         int i;
         string barcode = "";
@@ -33,6 +34,7 @@ namespace MMi_BIS_PA.Controllers
         {
             p = new PiechartData();
             b = new Barcode();
+            cycle = new CycleStatusCount();
             myProcess = new Process();
 
         }
@@ -231,10 +233,13 @@ namespace MMi_BIS_PA.Controllers
         [Route("CurrentDataPage/UpdateTotalCurrentShiftJobCount")]
         public JsonResult UpdateTotalCurrentShiftJobCount()
         {
-            b.CurrentShiftTotalJobCount = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
-            b.weightSetPoint = new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint();
-            ViewBag.TotalCurrentShiftJobDone = b;
-            return Json(b, JsonRequestBehavior.AllowGet);
+
+            cycle.Total = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentShiftRejectedData().Count;
+
+            ViewBag.TotalCurrentShiftJobDone = cycle;
+            return Json(cycle, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult UpdateTable()
@@ -282,7 +287,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
             p.Barcode = barcodeData;
 
             ViewBag.pieData = p;

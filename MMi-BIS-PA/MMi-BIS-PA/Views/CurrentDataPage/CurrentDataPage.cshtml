@@ -19,7 +19,16 @@
                 .done(function (data) {
                     //alert(data["clip1"])
                     $('#SetCount').html('');
-                    $('#SetCount').append(data["CurrentShiftTotalJobCount"]);
+                    $('#SetCount').append(data["Total"]);
+
+
+                    $('#Accepted').html('');
+                    $('#Accepted').append(data["Accepted"]);
+
+                    $('#Rejected').html('');
+                    $('#Rejected').append(data["Rejected"]);
+
+
                     //console.log("count:")
                     //console.log(data["CurrentShiftTotalJobCount"])
                 }

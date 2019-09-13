@@ -931,7 +931,7 @@ namespace MMi_BIS_PA.Controllers
             ViewBag.clip2 = c2;
             ViewBag.ring = r;
             ViewBag.weight = w;
-            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            ViewBag.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
         }
 
         public void UpdatePieChart()
@@ -1018,7 +1018,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year).Count;
             
             p.Barcode = "Pie Chart - Yearly";
 
@@ -1067,7 +1067,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year,month).Count;
 
             p.Barcode = "Pie Chart - Monthly";
 
@@ -1116,7 +1116,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year, month, day).Count;
 
             p.Barcode = "Pie Chart - Daily";
 
@@ -1165,7 +1165,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
+            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year,month,day,shift).Count;
 
             p.Barcode = "Pie Chart - Shift Wise";
 
