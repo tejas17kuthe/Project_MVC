@@ -22,7 +22,7 @@
             <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Date : @Model.date_time.Date.ToString("dd-MM-yyyy")</div>
             <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:30%;">Time : @Model.date_time.ToString("hh:mm tt")</div>
             <div style="float:left; padding:12px 20px 12px 20px; font-weight:bold; color:#fff; height:100%; width:15%;"></div>
-            @if (@Model.c11 != 0 && @Model.c12 != 0 && @Model.r1 != 0 && @Model.c21 != 0 && @Model.c22 != 0 && @Model.r2 != 0 && @Model.c31 != 0 && @Model.c32 != 0 && @Model.r3 != 0 && @Model.c41 != 0 && @Model.c42 != 0 && @Model.r4 != 0)
+            @if (@Model.c11 != 0 && @Model.c12 != 0 && @Model.r1 != 0 && @Model.c21 != 0 && @Model.c22 != 0 && @Model.r2 != 0 && @Model.c31 != 0 && @Model.c32 != 0 && @Model.r3 != 0 && @Model.c41 != 0 && @Model.c42 != 0 && @Model.r4 != 0 && @Model.wd<= new MySqlDatabaseInteraction().GetWeightDifferenceSetPoint())
             {
                 <div class="bg-success" style="padding: 12px 20px 12px 20px; float:left; text-align:center; font-weight :bold; color:#fff; height:100%; width:25%;">Accepted</div>
             }

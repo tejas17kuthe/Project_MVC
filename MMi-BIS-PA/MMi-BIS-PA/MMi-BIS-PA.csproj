@@ -235,6 +235,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Barcode.cs" />
+    <Compile Include="Models\CycleStatusCount.cs" />
     <Compile Include="Models\LoginAndDataModel.cs" />
     <Compile Include="Models\LoginData.cs" />
     <Compile Include="Models\master_table.cs" />

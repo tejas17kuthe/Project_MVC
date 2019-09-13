@@ -1,5 +1,36 @@
 ﻿@model IEnumerable<MMi_BIS_PA.Models.currentshiftdata>
 
+<style>
+    .bg-success {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .fail {
+        color: #FFFFFF;
+        background-color: #F53B3B;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+@{
+    var count = ViewBag.Counts;
+}
+<div class="container-fluid">
+    <div class="card shadow mb-3" style=" width: 100%; height:50%">
+        <div class="card-header" style="padding:0; height:50px">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class=" col bg-success" style="padding: 12px 20px 12px 20px;  text-align:center; font-weight :bold; color:#fff; height:100%;">Accepted : @count.Accepted</div>
+                    <div class="col fail" style="padding: 12px 20px 12px 20px; float:left; text-align:center; font-weight :bold; color:#fff; height:100%; ">Rejected : @count.Rejected</div>
+                    <div class="col" style="padding: 12px 20px 12px 20px; float:left; text-align:center; font-weight :bold; color:#fff; background-color:#004883; height:100%; ">Total : @count.Total</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @foreach (var data in Model)
 {
     @Html.Partial("_DataCard_report", data)

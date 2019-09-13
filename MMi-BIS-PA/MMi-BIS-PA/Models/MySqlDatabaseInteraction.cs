@@ -239,12 +239,31 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentshiftdata";
+                string query = "select * from db_mmi_bis_pa.currentshiftdata order by time(date_time) desc";
                 var data = db.currentshiftdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
+        public List<currentshiftdata> GetCurrentShiftAcceptedData()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata where status=1";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentshiftdata> GetCurrentShiftRejectedData()
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentshiftdata where status=0";
+                var data = db.currentshiftdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
         public List<currentdata> GetCurrentData()
         {
             using (DB_Model db = new DB_Model())
@@ -260,12 +279,31 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " order by date_time desc";
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
+        public List<currentdata> GetCurrentDataAccepted(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 and year(date_time)=" + year;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> GetCurrentDataRejected(string year)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
         public List<string> GetPieChart(string year)
         {
             using (DB_Model db = new DB_Model())
@@ -293,36 +331,96 @@ namespace MMi_BIS_PA.Models
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month+ " order by date_time desc";
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
+        #region monthly accepted rejected count
+        public List<currentdata> GetCurrentDataAccepted(string year, string month)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 and year(date_time)=" + year + " and month(date_time)=" + month;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
 
+        public List<currentdata> GetCurrentDataRejected(string year, string month)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+        #endregion
 
         public List<currentdata> GetCurrentData(string year, string month, string day)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " order by date_time desc";
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
+        #region currentdata dayly accepted and rejected data
+        public List<currentdata> GetCurrentDataAccepted(string year, string month, string day)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status =1 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
 
+        public List<currentdata> GetCurrentDataRejected(string year, string month, string day)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status = 0 and year(date_time)= " + year + " and month(date_time)= " + month + " and day(date_time)= " + day;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+        #endregion
 
         public List<currentdata> GetCurrentData(string year, string month, string day, string shift)
         {
             using (DB_Model db = new DB_Model())
             {
-                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
+                string query = "select * from db_mmi_bis_pa.currentdata where year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift + " order by date_time desc";
                 var data = db.currentdatas.SqlQuery(query).ToList();
                 return data;
             }
         }
 
+
+        public List<currentdata> GetCurrentDataAccepted(string year, string month, string day, string shift)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=1 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
+
+        public List<currentdata> GetCurrentDataRejected(string year, string month, string day, string shift)
+        {
+            using (DB_Model db = new DB_Model())
+            {
+                string query = "select * from db_mmi_bis_pa.currentdata where status=0 and year(date_time)=" + year + " and month(date_time)=" + month + " and day(date_time)=" + day + " and shiftid=" + shift;
+                var data = db.currentdatas.SqlQuery(query).ToList();
+                return data;
+            }
+        }
 
 
 

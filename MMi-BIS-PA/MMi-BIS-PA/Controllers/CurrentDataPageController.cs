@@ -26,11 +26,14 @@ namespace MMi_BIS_PA.Controllers
         List<string> scannedBarcodeList;
         bool initializeFlag;
         int tableCount;
+        Process myProcess;
+
+
         public CurrentDataPageController()
         {
             p = new PiechartData();
             b = new Barcode();
-
+            myProcess = new Process();
 
         }
 
@@ -77,7 +80,9 @@ namespace MMi_BIS_PA.Controllers
         public PartialViewResult Delete()
         {
             barcodeEventCallCount2 = 0;
-            barcodeData = "Please scan the QR Code";
+            InitializeBarcodeReader();
+            myProcess.Close();
+            barcodeData = "Please Scan the QR Code";
             new MySqlDatabaseInteraction().RemoveTableData();
             return UpdateTable();
         }
@@ -133,7 +138,7 @@ namespace MMi_BIS_PA.Controllers
 
                 c.wd = i[3].wd;
 
-                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 || c.wd < i[3].set_point)
+                if (c.c11 != 0 && c.c12 != 0 && c.r1 != 0 && c.c21 != 0 && c.c22 != 0 && c.r2 != 0 && c.c31 != 0 && c.c32 != 0 && c.r3 != 0 && c.c41 != 0 && c.c42 != 0 && c.r4 != 0 && c.wd <= i[3].set_point)
                 {
                     c.status = 1;
                 }
@@ -184,7 +189,7 @@ namespace MMi_BIS_PA.Controllers
 
                 c2.wd = i[3].wd;
 
-                if (c2.c11 != 0 && c2.c12 != 0 && c2.r1 != 0 && c2.c21 != 0 && c2.c22 != 0 && c2.r2 != 0 && c2.c31 != 0 && c2.c32 != 0 && c2.r3 != 0 && c2.c41 != 0 && c2.c42 != 0 && c2.r4 != 0 || c2.wd < i[3].set_point)
+                if (c2.c11 != 0 && c2.c12 != 0 && c2.r1 != 0 && c2.c21 != 0 && c2.c22 != 0 && c2.r2 != 0 && c2.c31 != 0 && c2.c32 != 0 && c2.r3 != 0 && c2.c41 != 0 && c2.c42 != 0 && c2.r4 != 0 && c2.wd <= i[3].set_point)
                 {
                     c2.status = 1;
                 }
@@ -357,6 +362,7 @@ namespace MMi_BIS_PA.Controllers
             {
                 if (barcodeEventCallCount2 == 1)
                 {
+                    barcodeEventCallCount2++;//to prevent multiple internal barcode event calls
                     barcodeEventCallCount = 1;
                     barcodeData = temp;
                     //scannedBarcodeList.Add(barcodeData);
@@ -371,6 +377,10 @@ namespace MMi_BIS_PA.Controllers
             }
             else
             {
+                if(barcodeEventCallCount2==1)
+                {
+                    barcodeData = "same";
+                }
                 //Console.WriteLine("Same Barcode Scanned or callCount="+barcodeEventCallCount2);
                 barcodeEventCallCount2 = 0;
                 
@@ -454,7 +464,7 @@ namespace MMi_BIS_PA.Controllers
                     // 2nd and 3rd are actual arguments we want to send 
                     myProcessStartInfo.Arguments = myPythonApp + " " + x;
 
-                    Process myProcess = new Process();
+                    
                     // assign start information to the process 
                     myProcess.StartInfo = myProcessStartInfo;
 

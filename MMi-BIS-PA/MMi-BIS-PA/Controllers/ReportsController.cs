@@ -13,14 +13,20 @@ namespace MMi_BIS_PA.Controllers
     public class ReportsController : Controller
     {
         PiechartData p;
+        CycleStatusCount cycle;
         public ReportsController()
         {
             p = new PiechartData();
+            cycle = new CycleStatusCount();
         }
         // GET: Reports
         public ActionResult ViewReports()
         {
             List<currentshiftdata> data = new MySqlDatabaseInteraction().GetCurrentShiftData();
+            cycle.Total = data.Count;
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentShiftRejectedData().Count;
+            ViewBag.Counts = cycle;
             UpdateCurrentShiftDataPieChart();
             return View(data);
         }
@@ -75,6 +81,10 @@ namespace MMi_BIS_PA.Controllers
         {
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<currentdata> i = sql.GetCurrentData(year);
+            cycle.Total = i.Count;
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year).Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentDataRejected(year).Count;
+            ViewBag.Counts = cycle;
             UpdatePieChart(year);
             return PartialView("_generateReportCurrentData", i);
         }
@@ -86,6 +96,10 @@ namespace MMi_BIS_PA.Controllers
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             UpdatePieChart(year, month);
             List<currentdata> i = sql.GetCurrentData(year, month);
+            cycle.Total = i.Count;
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year, month).Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentDataRejected(year, month).Count;
+            ViewBag.Counts = cycle;
             return PartialView("_generateReportCurrentData", i);
         }
 
@@ -96,6 +110,10 @@ namespace MMi_BIS_PA.Controllers
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             UpdatePieChart(year, month, day);
             List<currentdata> i = sql.GetCurrentData(year, month, day);
+            cycle.Total = i.Count;
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year, month,day).Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentDataRejected(year, month, day).Count;
+            ViewBag.Counts = cycle;
             return PartialView("_generateReportCurrentData", i);
         }
 
@@ -106,6 +124,10 @@ namespace MMi_BIS_PA.Controllers
             MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             UpdatePieChart(year, month, day, shift);
             List<currentdata> i = sql.GetCurrentData(year, month, day, shift);
+            cycle.Total = i.Count;
+            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentDataAccepted(year, month, day, shift).Count;
+            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentDataRejected(year, month, day, shift).Count;
+            ViewBag.Counts = cycle;
             return PartialView("_generateReportCurrentData", i);
         }
 
@@ -998,7 +1020,7 @@ namespace MMi_BIS_PA.Controllers
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
             
-            p.Barcode = "Current Data Yearly Report Pie Chart";
+            p.Barcode = "Pie Chart - Yearly";
 
             ViewBag.pieData = p;
 
@@ -1047,7 +1069,7 @@ namespace MMi_BIS_PA.Controllers
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
 
-            p.Barcode = "Current Data Monthly Report Pie Chart";
+            p.Barcode = "Pie Chart - Monthly";
 
             ViewBag.pieData = p;
 
@@ -1096,7 +1118,7 @@ namespace MMi_BIS_PA.Controllers
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
 
-            p.Barcode = "Current Data Day Report Pie Chart";
+            p.Barcode = "Pie Chart - Daily";
 
             ViewBag.pieData = p;
 
@@ -1145,7 +1167,7 @@ namespace MMi_BIS_PA.Controllers
             p.weight = w;
             p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().SuccessfulCycleCount();
 
-            p.Barcode = "Current Data Shift Wise Report Pie Chart";
+            p.Barcode = "Pie Chart - Shift Wise";
 
             ViewBag.pieData = p;
 
