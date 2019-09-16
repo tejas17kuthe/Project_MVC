@@ -27,14 +27,21 @@
 
                     $('#Rejected').html('');
                     $('#Rejected').append(data["Rejected"]);
+          
+                }
+            );
 
+            $.post("/CurrentDataPage/Date_Time")
+                .done(function (data) {
+                    //alert(data["clip1"])
+                    $('#Date').html('');
+                    $('#Date').append(data["Date"]);
 
-                    //console.log("count:")
-                    //console.log(data["CurrentShiftTotalJobCount"])
+                    $('#Time').html('')
+                    $('#Time').append(data["Time"])
                 }
                 );
                 
-         
             updateChart();         
         }, 1500);
     }

@@ -28,7 +28,8 @@ namespace MMi_BIS_PA.Controllers
         bool initializeFlag;
         int tableCount;
         Process myProcess;
-
+        DateAndTime d;
+        MySqlDatabaseInteraction sql;
 
         public CurrentDataPageController()
         {
@@ -36,7 +37,8 @@ namespace MMi_BIS_PA.Controllers
             b = new Barcode();
             cycle = new CycleStatusCount();
             myProcess = new Process();
-
+            d = new DateAndTime();
+            sql = new MySqlDatabaseInteraction();
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -85,7 +87,8 @@ namespace MMi_BIS_PA.Controllers
             InitializeBarcodeReader();
             myProcess.Close();
             barcodeData = "Please Scan the QR Code";
-            new MySqlDatabaseInteraction().RemoveTableData();
+            ViewBag.QrCode = barcodeData;
+            sql.RemoveTableData();
             return UpdateTable();
         }
 
@@ -96,13 +99,13 @@ namespace MMi_BIS_PA.Controllers
             List<TableData> i = sql.GetTableData();
             if(i.Count == 4)
             {
-                new MySqlDatabaseInteraction().RemoveTableData();
+                sql.RemoveTableData();
             }
         }
 
         public void AddDataIntoCurrentTable()
         {
-            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            //MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
             ViewBag.Barcode = ++this.i;
             if (i.Count == 4)
@@ -149,7 +152,7 @@ namespace MMi_BIS_PA.Controllers
                     c.status = 0;
                 }
 
-                var shift = new MySqlDatabaseInteraction().getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
+                var shift = sql.getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
 
                 c.shiftid = shift[0].shift_id;
                 string date = DateTime.Now.ToString("yyyy-MM-dd");
@@ -200,7 +203,7 @@ namespace MMi_BIS_PA.Controllers
                     c2.status = 0;
                 }
 
-                var currentShift = new MySqlDatabaseInteraction().getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
+                var currentShift = sql.getshiftid(DateTime.Now.ToString("HH:mm:ss")).ToList();
 
                 c2.shiftid = shift[0].shift_id;
                 c2.date_time = DateTime.Parse(dateT);
@@ -211,8 +214,8 @@ namespace MMi_BIS_PA.Controllers
                 {
                     //float setpoint = (float)i[0].set_point;
                     //new MySqlDatabaseInteraction().UpdateWeightDifferenceSetPoint(setpoint);
-                    new MySqlDatabaseInteraction().AddCurrentData(c);
-                    new MySqlDatabaseInteraction().AddCurrentShiftData(c2,shift[0].shift_id);
+                    sql.AddCurrentData(c);
+                    sql.AddCurrentShiftData(c2,shift[0].shift_id);
                     
                     
                     scannedBarcodeList.Clear();
@@ -234,17 +237,30 @@ namespace MMi_BIS_PA.Controllers
         public JsonResult UpdateTotalCurrentShiftJobCount()
         {
 
-            cycle.Total = new MySqlDatabaseInteraction().CurrentShiftTotalJobCount();
-            cycle.Accepted = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
-            cycle.Rejected = new MySqlDatabaseInteraction().GetCurrentShiftRejectedData().Count;
+            cycle.Total = sql.CurrentShiftTotalJobCount();
+            cycle.Accepted = sql.GetCurrentShiftAcceptedData().Count;
+            cycle.Rejected = sql.GetCurrentShiftRejectedData().Count;
 
             ViewBag.TotalCurrentShiftJobDone = cycle;
             return Json(cycle, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpPost]
+        [Route("CurrentDataPage/Date_Time")]
+        public JsonResult Date_Time()
+        {
+
+            d.Date = DateTime.Now.Date.ToShortDateString();
+            d.Time = DateTime.Now.ToString("hh:mm tt");
+
+            ViewBag.TotalCurrentShiftJobDone = cycle;
+            return Json(d, JsonRequestBehavior.AllowGet);
+        }
+
         public PartialViewResult UpdateTable()
         {
-            MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+            //MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
             List<TableData> i = sql.GetTableData();
             tableCount = i.Count;
             UpdatePieChart();
@@ -255,7 +271,7 @@ namespace MMi_BIS_PA.Controllers
 
         public void UpdatePieChart()
         {
-            List<currentshiftdata> d = new MySqlDatabaseInteraction().UpdateCurrentShiftDataPieChart();
+            List<currentshiftdata> d = sql.UpdateCurrentShiftDataPieChart();
             int c1 = 0;
             int c2 = 0;
             int r = 0;
@@ -287,7 +303,7 @@ namespace MMi_BIS_PA.Controllers
             p.clip2 = c2;
             p.ring = r;
             p.weight = w;
-            p.TotalSuccessfulCycles = new MySqlDatabaseInteraction().GetCurrentShiftAcceptedData().Count;
+            p.TotalSuccessfulCycles = sql.GetCurrentShiftAcceptedData().Count;
             p.Barcode = barcodeData;
 
             ViewBag.pieData = p;

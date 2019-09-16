@@ -56,7 +56,7 @@
                 $('#Shift').prop("disabled", true)
 
 
-
+                $('#generateReportButton').prop("disabled",true)
 
             }
         });
@@ -73,7 +73,9 @@
                 success: function (response) {
                     if ($('#Year').prop("disabled") == true) {
                         $('#Year').prop("disabled", false);
+                        
                     }
+                    $('#generateReportButton').prop("disabled", true)
                     $('#Year').html('');
                     options = '';
                     options += '<option value="Select">Select Year</option>';
@@ -132,7 +134,9 @@
                 success: function (response) {
                     if ($('#Year').prop("disabled") == true) {
                         $('#Year').prop("disabled", false);
+                        
                     }
+                    $('#generateReportButton').prop("disabled", true)
                     $('#Year').html('');
                     options = '';
                     options += '<option value="Select">Select Year</option>';
@@ -192,7 +196,9 @@
                 success: function (response) {
                     if ($('#Year').prop("disabled") == true) {
                         $('#Year').prop("disabled", false);
+                        
                     }
+                    $('#generateReportButton').prop("disabled", true)
                     $('#Year').html('');
                     options = '';
                     options += '<option value="Select">Select Year</option>';
@@ -255,7 +261,9 @@
                 success: function (response) {
                     if ($('#Year').prop("disabled") == true) {
                         $('#Year').prop("disabled", false);
+                        
                     }
+                    $('#generateReportButton').prop("disabled", true)
                     $('#Year').html('');
                     options = '';
                     options += '<option value="Select">Select Year</option>';
@@ -525,6 +533,7 @@
                     options = '';
                     options += '<a href="/Reports/GenerateYearlyExcelFile?year=' + $('#Year option:selected').val() + '">Export to Excel</a>';
                     $('#excelButton').append(options);
+                    $('#generateReportButton').prop("disabled", false)
                 }
             }
         });
@@ -564,6 +573,7 @@
                     options = '';
                     options += '<a href="/Reports/GenerateMonthlyExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '">Export to Excel</a>';
                     $('#excelButton').append(options);
+                    $('#generateReportButton').prop("disabled", false)
                 }
             }
         });
@@ -595,6 +605,7 @@
                     options = '';
                     options += '<a href="/Reports/GenerateDailyExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '&day=' + $('#Day option:selected').val() + '">Export to Excel</a>';
                     $('#excelButton').append(options);
+                    $('#generateReportButton').prop("disabled", false)
                 }
             }
         });
@@ -606,6 +617,7 @@
             options = '';
             options += '<a href="/Reports/GenerateShiftWiseExcelFile?year=' + $('#Year option:selected').val() + '&month=' + $('#Month option:selected').val() + '&day=' + $('#Day option:selected').val() + '&shift=' + $('#Shift option:selected').val() + '">Export to Excel</a>';
             $('#excelButton').append(options);
+            $('#generateReportButton').prop("disabled", false)
         }
     });
 

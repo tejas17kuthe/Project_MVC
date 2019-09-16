@@ -175,10 +175,10 @@ namespace MMi_BIS_PA.Controllers
             int spacing = 0;
             foreach (currentdata d in i)
             {
-                csv.AppendLine(",,Yearly Report,,");
+                //csv.AppendLine(",,Yearly Report,,");
                 csv.AppendLine("");
 
-                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-MM-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
                 string rowOneData = "";
                 string rowTwoData = "";
                 string rowThreeData = "";
@@ -358,10 +358,10 @@ namespace MMi_BIS_PA.Controllers
             int spacing = 0;
             foreach (currentdata d in i)
             {
-                csv.AppendLine(",,Yearly Report,,");
+                //csv.AppendLine(",,Yearly Report,,");
                 csv.AppendLine("");
 
-                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-MM-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
                 string rowOneData = "";
                 string rowTwoData = "";
                 string rowThreeData = "";
@@ -489,7 +489,7 @@ namespace MMi_BIS_PA.Controllers
                         csv.AppendLine("");
                         csv.AppendLine("");
                     }
-                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine(",,Shift Wise Report,,");//row 1
                     csv.AppendLine("");//row 2
                     csv.AppendLine(dateTimeAndStatusHeader); //row 3
                     csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
@@ -522,7 +522,7 @@ namespace MMi_BIS_PA.Controllers
             }
 
             // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
-            string fileName = "Yearly.csv";
+            string fileName = "ShiftWise.csv";
             return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
 
         }
@@ -540,10 +540,10 @@ namespace MMi_BIS_PA.Controllers
             int spacing = 0;
             foreach (currentdata d in i)
             {
-                csv.AppendLine(",,Yearly Report,,");
+                //csv.AppendLine(",,Yearly Report,,");
                 csv.AppendLine("");
 
-                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-MM-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
                 string rowOneData = "";
                 string rowTwoData = "";
                 string rowThreeData = "";
@@ -671,7 +671,7 @@ namespace MMi_BIS_PA.Controllers
                         csv.AppendLine("");
                         csv.AppendLine("");
                     }
-                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine(",,Monthly Report,,");//row 1
                     csv.AppendLine("");//row 2
                     csv.AppendLine(dateTimeAndStatusHeader); //row 3
                     csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
@@ -704,7 +704,7 @@ namespace MMi_BIS_PA.Controllers
             }
 
             // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
-            string fileName = "Yearly.csv";
+            string fileName = "Monthly.csv";
             return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
 
         }
@@ -723,10 +723,10 @@ namespace MMi_BIS_PA.Controllers
             int spacing = 0;
             foreach (currentdata d in i)
             {
-                csv.AppendLine(",,Yearly Report,,");
+                //csv.AppendLine(",,Yearly Report,,");
                 csv.AppendLine("");
 
-                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-mm-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
+                string dateTimeAndStatusHeader = "Date," + d.date_time.Date.ToString("dd-MM-yyyy") + ", Time," + d.date_time.ToString("hh:mm tt") + ",Accepted";
                 string rowOneData = "";
                 string rowTwoData = "";
                 string rowThreeData = "";
@@ -854,7 +854,7 @@ namespace MMi_BIS_PA.Controllers
                         csv.AppendLine("");
                         csv.AppendLine("");
                     }
-                    csv.AppendLine(",,Yearly Report,,");//row 1
+                    csv.AppendLine(",,Day Wise Report,,");//row 1
                     csv.AppendLine("");//row 2
                     csv.AppendLine(dateTimeAndStatusHeader); //row 3
                     csv.AppendLine("Clip 1,Clip 2,Ring,Weight"); // row4
@@ -887,7 +887,7 @@ namespace MMi_BIS_PA.Controllers
             }
 
             // byte[] fileBytes = System.IO.File.ReadAllBytes(csv);
-            string fileName = "Yearly.csv";
+            string fileName = "DayWise.csv";
             return File(new System.Text.UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
 
         }

@@ -482,6 +482,21 @@ namespace MMi_BIS_PA.Models
             }
         }
 
+        //public string GetBarcodeData()
+        //{
+        //    using (DB_Model db = new DB_Model())
+        //    {
+        //        string query = "SELECT * FROM db_mmi_bis_pa.barcodedata where idBarcodeData=01";
+
+        //        List<barcodedata> data = db.barcodedata.SqlQuery(query).ToList();
+                
+        //        foreach (var d in data)
+        //        {
+        //            return d.BarcodeData.ToString(); 
+        //        }
+              
+        //    }
+        //}
 
         public List<int> GetDate(string year, string month)
         {

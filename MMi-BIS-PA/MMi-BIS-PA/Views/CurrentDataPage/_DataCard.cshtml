@@ -31,9 +31,9 @@
 
                 <div class="container-fluid">
                     <div class="row">
-                        <div class=" col" style="padding: 12px 20px 12px 20px;  text-align:left; font-weight :bold; color:#fff; height:100%;">Date : @DateTime.Now.Date.ToShortDateString()</div>
+                        <div class=" col" style="padding: 12px 20px 12px 20px;  text-align:left; font-weight :bold; color:#fff; height:100%;">Date : <span id="Date"></span> @*@DateTime.Now.Date.ToShortDateString()*@</div>
                         @Html.Partial("_totalCurrentJobCount")
-                        <div class="col" style="padding: 12px 20px 12px 20px; float:left; text-align:right; font-weight :bold; color:#fff; background-color:#004883; height:100%; ">Time : @DateTime.Now.ToString("hh:mm tt")</div>
+                        <div class="col" style="padding: 12px 20px 12px 20px; float:left; text-align:right; font-weight :bold; color:#fff; background-color:#004883; height:100%; ">Time : <span id="Time"></span>@*@DateTime.Now.ToString("hh:mm tt")*@</div>
                     </div>
                 </div>
 
