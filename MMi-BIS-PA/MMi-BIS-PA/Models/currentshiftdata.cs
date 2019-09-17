@@ -14,7 +14,7 @@ namespace MMi_BIS_PA.Models
         public long unicode { get; set; }
 
         [Required]
-        [StringLength(45)]
+        [StringLength(100)]
         public string qr1 { get; set; }
 
         public sbyte? c11 { get; set; }
@@ -26,7 +26,7 @@ namespace MMi_BIS_PA.Models
         public float? w1 { get; set; }
 
         [Required]
-        [StringLength(45)]
+        [StringLength(100)]
         public string qr2 { get; set; }
 
         public sbyte? c21 { get; set; }
@@ -38,7 +38,7 @@ namespace MMi_BIS_PA.Models
         public float? w2 { get; set; }
 
         [Required]
-        [StringLength(45)]
+        [StringLength(100)]
         public string qr3 { get; set; }
 
         public sbyte? c31 { get; set; }
@@ -50,7 +50,7 @@ namespace MMi_BIS_PA.Models
         public float? w3 { get; set; }
 
         [Required]
-        [StringLength(45)]
+        [StringLength(100)]
         public string qr4 { get; set; }
 
         public sbyte? c41 { get; set; }
