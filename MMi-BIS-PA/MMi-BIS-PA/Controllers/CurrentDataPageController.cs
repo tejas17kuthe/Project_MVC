@@ -30,7 +30,8 @@ namespace MMi_BIS_PA.Controllers
         Process myProcess;
         DateAndTime d;
         MySqlDatabaseInteraction sql;
-
+        currentdata c;
+        currentshiftdata c2;
         public CurrentDataPageController()
         {
             p = new PiechartData();
@@ -39,6 +40,8 @@ namespace MMi_BIS_PA.Controllers
             myProcess = new Process();
             d = new DateAndTime();
             sql = new MySqlDatabaseInteraction();
+            c = new currentdata();
+            c2 = new currentshiftdata();
         }
 
         [Route("CurrentDataPage/CurrentDataPage")]
@@ -106,14 +109,17 @@ namespace MMi_BIS_PA.Controllers
         public void AddDataIntoCurrentTable()
         {
             //MySqlDatabaseInteraction sql = new MySqlDatabaseInteraction();
+
             List<TableData> i = sql.GetTableData();
             ViewBag.Barcode = ++this.i;
             if (i.Count == 4)
             {
+                string unicode = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.ToLocalTime().ToString("HH") + DateTime.Now.ToLocalTime().ToString("mm") + DateTime.Now.ToLocalTime().ToString("ss");
                 #region Creating CurrentData object
-                currentdata c = new currentdata();
+
 
                 //row 1 data collection
+                c.unicode = Convert.ToInt64(unicode);
                 c.qr1 = i[0].qrcode;
                 c.c11 = i[0].c1;
                 c.c12 = i[0].c2;
@@ -162,9 +168,10 @@ namespace MMi_BIS_PA.Controllers
                 #endregion
 
                 #region currentShiftData
-                currentshiftdata c2 = new currentshiftdata();
+                //currentshiftdata c2 = new currentshiftdata();
 
                 //row 1 data collection
+                c2.unicode = c.unicode;
                 c2.qr1 = i[0].qrcode;
                 c2.c11 = i[0].c1;
                 c2.c12 = i[0].c2;
@@ -212,6 +219,7 @@ namespace MMi_BIS_PA.Controllers
 
                 if (barcodeEventCallCount == 1)
                 {
+                    barcodeEventCallCount = 0;
                     //float setpoint = (float)i[0].set_point;
                     //new MySqlDatabaseInteraction().UpdateWeightDifferenceSetPoint(setpoint);
                     sql.AddCurrentData(c);
@@ -390,6 +398,7 @@ namespace MMi_BIS_PA.Controllers
                     barcode = barcodeData;
                     RemoveTableData();
                     CallPythonDriver(barcodeData);
+                    AddDataIntoCurrentTable();
                 }
                 else
                 {
@@ -495,7 +504,7 @@ namespace MMi_BIS_PA.Controllers
                     myProcess.WaitForExit();
                     myProcess.Close();
 
-                    AddDataIntoCurrentTable();
+                   
                     barcodeEventCallCount2 = 0;
                     barcodeData = "Please Scan the QR Code";
                     // }

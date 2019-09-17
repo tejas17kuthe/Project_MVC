@@ -11,7 +11,7 @@ namespace MMi_BIS_PA.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int unicode { get; set; }
+        public long unicode { get; set; }
 
         [Required]
         [StringLength(45)]

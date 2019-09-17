@@ -39,17 +39,21 @@ namespace MMi_BIS_PA.Models
 
         public bool AddCurrentData(currentdata currentdata)
         {
-
-            using (DB_Model db = new DB_Model())
+            try
             {
+                using (DB_Model db = new DB_Model())
+                {
 
-                db.currentdatas.Add(currentdata);
-                db.SaveChanges();
+                    db.currentdatas.Add(currentdata);
+                    db.SaveChanges();
 
-                return true;
+                    return true;
 
 
+                }
             }
+            catch(Exception e)
+            { return false; }
 
         }
 
@@ -466,17 +470,17 @@ namespace MMi_BIS_PA.Models
         }
 
 
-        public List<int> GetMonth(string year)
+        public List<string> GetMonth(string year)
         {
             using (DB_Model db = new DB_Model())
             {
                 string query = "SELECT * FROM db_mmi_bis_pa.currentdata where year(date_time) =" + year + " group by month(date_time)";
 
                 List<currentdata> data = db.currentdatas.SqlQuery(query).ToList();
-                List<int> Month = new List<int>();
+                List<string> Month = new List<string>();
                 foreach (var d in data)
                 {
-                    Month.Add(d.date_time.Month);
+                    Month.Add(d.date_time.Month.ToString("MMM"));
                 }
                 return Month;
             }
